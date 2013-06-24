@@ -58,6 +58,7 @@ public class Anastasius implements ApplicationListener {
 
 	@Override
 	public void pause() {
+		//pause
 	}
 
 	@Override
