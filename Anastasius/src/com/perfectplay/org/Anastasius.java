@@ -1,5 +1,7 @@
 package com.perfectplay.org;
 
+import com.artemis.World;
+import org.jbox2d.*;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -33,6 +35,8 @@ public class Anastasius implements ApplicationListener {
 		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
+		
+		World world = new World();
 	}
 
 	@Override

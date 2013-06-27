@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="output" path="bin"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" exported="true" path="libs/gdx.jar" sourcepath="libs/gdx-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdx.jar" sourcepath="libs/gdx-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javi/Documents/GitHub/Anastasius/artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Javi/Documents/GitHub/Anastasius/jbox2d/target/jbox2d-library-2.2.1.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

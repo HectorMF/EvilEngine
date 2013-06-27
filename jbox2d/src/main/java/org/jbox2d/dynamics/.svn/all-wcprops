@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics
+END
+BodyType.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/BodyType.java
+END
+Profile.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/Profile.java
+END
+SolverData.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/SolverData.java
+END
+FixtureDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/FixtureDef.java
+END
+Filter.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/Filter.java
+END
+ContactManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/ContactManager.java
+END
+Fixture.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/Fixture.java
+END
+World.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/World.java
+END
+FixtureProxy.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/FixtureProxy.java
+END
+TimeStep.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/TimeStep.java
+END
+Island.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/Island.java
+END
+BodyDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/BodyDef.java
+END
+Body.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/Body.java
+END

@@ -1,0 +1,173 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints
+END
+PrismaticJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/PrismaticJoint.java
+END
+WeldJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/WeldJoint.java
+END
+FrictionJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/FrictionJointDef.java
+END
+GearJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/GearJointDef.java
+END
+JointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/JointDef.java
+END
+ConstantVolumeJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/ConstantVolumeJointDef.java
+END
+Jacobian.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/Jacobian.java
+END
+WheelJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/WheelJoint.java
+END
+JointEdge.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/JointEdge.java
+END
+RevoluteJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/RevoluteJoint.java
+END
+RopeJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/RopeJoint.java
+END
+MouseJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/MouseJointDef.java
+END
+DistanceJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/DistanceJointDef.java
+END
+PulleyJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/PulleyJoint.java
+END
+WeldJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/WeldJointDef.java
+END
+PrismaticJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/PrismaticJointDef.java
+END
+LimitState.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/LimitState.java
+END
+FrictionJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/FrictionJoint.java
+END
+GearJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/GearJoint.java
+END
+Joint.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/Joint.java
+END
+JointType.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/JointType.java
+END
+ConstantVolumeJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/ConstantVolumeJoint.java
+END
+WheelJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/WheelJointDef.java
+END
+RopeJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/RopeJointDef.java
+END
+RevoluteJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/RevoluteJointDef.java
+END
+MouseJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/MouseJoint.java
+END
+PulleyJointDef.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/PulleyJointDef.java
+END
+DistanceJoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/joints/DistanceJoint.java
+END

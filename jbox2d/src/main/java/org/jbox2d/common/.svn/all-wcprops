@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common
+END
+Vec2.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/Vec2.java
+END
+Vec3.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/Vec3.java
+END
+Settings.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/Settings.java
+END
+Rot.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/Rot.java
+END
+RaycastResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/RaycastResult.java
+END
+Color3f.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/Color3f.java
+END
+MathUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/MathUtils.java
+END
+Transform.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/Transform.java
+END
+PlatformMathUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/PlatformMathUtils.java
+END
+Timer.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/Timer.java
+END
+Sweep.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/Sweep.java
+END
+IViewportTransform.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/IViewportTransform.java
+END
+Mat22.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/Mat22.java
+END
+Mat33.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/Mat33.java
+END
+OBBViewportTransform.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/common/OBBViewportTransform.java
+END

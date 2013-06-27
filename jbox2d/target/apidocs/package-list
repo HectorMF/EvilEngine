@@ -1,0 +1,13 @@
+org.jbox2d.callbacks
+org.jbox2d.collision
+org.jbox2d.collision.broadphase
+org.jbox2d.collision.shapes
+org.jbox2d.common
+org.jbox2d.dynamics
+org.jbox2d.dynamics.contacts
+org.jbox2d.dynamics.joints
+org.jbox2d.pooling
+org.jbox2d.pooling.arrays
+org.jbox2d.pooling.normal
+org.jbox2d.pooling.stacks
+org.jbox2d.profile

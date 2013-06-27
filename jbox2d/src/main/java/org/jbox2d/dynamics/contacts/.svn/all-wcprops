@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts
+END
+ContactRegister.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/ContactRegister.java
+END
+PolygonContact.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/PolygonContact.java
+END
+ChainAndCircleContact.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/ChainAndCircleContact.java
+END
+Position.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/Position.java
+END
+PolygonAndCircleContact.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/PolygonAndCircleContact.java
+END
+EdgeAndPolygonContact.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/EdgeAndPolygonContact.java
+END
+ContactCreator.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/ContactCreator.java
+END
+CircleContact.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/CircleContact.java
+END
+ContactVelocityConstraint.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/ContactVelocityConstraint.java
+END
+ContactEdge.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/ContactEdge.java
+END
+ContactPositionConstraint.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/ContactPositionConstraint.java
+END
+EdgeAndCircleContact.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/EdgeAndCircleContact.java
+END
+ContactSolver.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/ContactSolver.java
+END
+ChainAndPolygonContact.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/ChainAndPolygonContact.java
+END
+Contact.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/Contact.java
+END
+Velocity.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/dynamics/contacts/Velocity.java
+END

@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision
+END
+TimeOfImpact.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/TimeOfImpact.java
+END
+WorldManifold.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/WorldManifold.java
+END
+ManifoldPoint.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/ManifoldPoint.java
+END
+AABB.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/AABB.java
+END
+RayCastInput.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/RayCastInput.java
+END
+RayCastOutput.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/RayCastOutput.java
+END
+ContactID.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/ContactID.java
+END
+Manifold.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/Manifold.java
+END
+Distance.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/Distance.java
+END
+DistanceInput.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/DistanceInput.java
+END
+DistanceOutput.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/DistanceOutput.java
+END
+Collision.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/collision/Collision.java
+END

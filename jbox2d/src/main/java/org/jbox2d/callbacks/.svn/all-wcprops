@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks
+END
+ContactFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks/ContactFilter.java
+END
+ContactListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks/ContactListener.java
+END
+QueryCallback.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks/QueryCallback.java
+END
+RayCastCallback.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks/RayCastCallback.java
+END
+TreeRayCastCallback.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks/TreeRayCastCallback.java
+END
+DebugDraw.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks/DebugDraw.java
+END
+PairCallback.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks/PairCallback.java
+END
+DestructionListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks/DestructionListener.java
+END
+ContactImpulse.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks/ContactImpulse.java
+END
+TreeCallback.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/676/tags/jbox2d-2.2.1.1/jbox2d-library/src/main/java/org/jbox2d/callbacks/TreeCallback.java
+END
