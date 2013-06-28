@@ -2,6 +2,7 @@ package com.perfectplay.org;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.perfectplay.org.Anastasius;
 
 public class Main {
 	public static void main(String[] args) {
