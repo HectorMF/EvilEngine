@@ -51,7 +51,7 @@ public class Anastasius implements ApplicationListener {
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		
-
+ 
 		
 		//artemis stuffs
 		world = new World();
