@@ -3,7 +3,11 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx.jar" sourcepath="libs/gdx-sources.jar"/>
+<<<<<<< HEAD
 	<classpathentry exported="true" kind="lib" path="../artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2.jar"/>
 	<classpathentry exported="true" kind="lib" path="../jbox2d/target/jbox2d-library-2.2.1.1.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/Users/Javi/Documents/GitHub/Anastasius/artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2.jar"/>
+>>>>>>> 43412e0f4bec05ff2de97b7ac5d5dcb911e190da
 	<classpathentry kind="output" path="bin"/>
 </classpath>

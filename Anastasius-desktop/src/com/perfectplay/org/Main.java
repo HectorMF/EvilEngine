@@ -8,9 +8,9 @@ public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Anastasius";
-		cfg.useGL20 = false;
-		cfg.width = 800;
-		cfg.height = 480;
+		cfg.useGL20 = true;
+		cfg.width = 1280;
+		cfg.height = 720;
 		
 		new LwjglApplication(new Anastasius(), cfg);
 	}
