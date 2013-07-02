@@ -1,67 +1,48 @@
 package com.perfectplay.org.components;
 
 import com.artemis.Component;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 
 public class Physics extends Component{
-	private float xVelocity;
-	private float yVelocity;
-	private float zVelocity;
+	private Body physicsBody;
+	private float velocityZ;
+	private Vector2 forceZ; //(force,point) respectively
+	
 
-	public Physics() {
-		this(0f,0f,0f);
+	public Physics(Body physicsBody) {
+		this(physicsBody, 0f);
+	}
+	
+	public Physics(Body physicsBody, float velocityZ) {
+		this.physicsBody = physicsBody;
+		this.velocityZ = velocityZ;
+		this.forceZ = new Vector2(0f, 0f);
 	}
 
-	public Physics(float xVelocity, float yVelocity, float zVelocity) {
-		this.xVelocity = xVelocity;
-		this.yVelocity = yVelocity;
-		this.zVelocity = zVelocity;
+	public Vector3 getVelocity(){
+		Vector2 bodyVelocity = physicsBody.getLinearVelocity();
+		return new Vector3(bodyVelocity.x, bodyVelocity.y, velocityZ);
 	}
 	
-	public Vector3 getVelocity() {
-		return new Vector3(xVelocity, yVelocity, zVelocity);
+	public void setVelocity(Vector3 newVelocity){
+		physicsBody.setLinearVelocity(newVelocity.x, newVelocity.y);
+		velocityZ = newVelocity.z;
 	}
 	
-	public float getXVelocity() {
-		return xVelocity;
+	public void applyForces(Vector3 force, Vector3 point){
+		physicsBody.applyForce(force.x, force.y, point.x, point.y);
+		forceZ = new Vector2(force.z, point.z); //Needs to be changed to either be a list of forces
+		//or automatically merge the new force with the current force.
 	}
 	
-	public float getYVelocity() {
-		return yVelocity;
+	public Vector2 getForceZ(){
+		return forceZ;
 	}
 	
-	public float getZVelocity() {
-		return zVelocity;
-	}
-	
-	public void setXVelocity(float xVelocity){
-		this.xVelocity = xVelocity;
-	}
-	
-	public void setYVelocity(float yVelocity){
-		this.yVelocity = yVelocity;
-	}
-	
-	public void setZVelocity(float zVelocity){
-		this.zVelocity = zVelocity;
-	}
-	
-	public void setPosition(float xVelocity, float yVelocity, float zVelocity){
-		this.xVelocity = xVelocity;
-		this.yVelocity = yVelocity;
-		this.zVelocity = zVelocity;
-	}
-	
-	public void addXVelocity(float xVelocity){
-		this.xVelocity += xVelocity;
-	}
-	
-	public void addYVelocity(float yVelocity){
-		this.yVelocity += yVelocity;
-	}
-	
-	public void addZ(float z){
-		this.zVelocity += zVelocity;
+	public Body getBody() {
+		return physicsBody;
 	}
 	
 }
