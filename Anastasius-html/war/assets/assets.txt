@@ -1,0 +1,4 @@
+d:
+d:data
+i:data/libgdx.png
+i:data/test.png

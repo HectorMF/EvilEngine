@@ -1,13 +1,13 @@
 package com.perfectplay.org.components;
 
 import com.artemis.Component;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class Transform extends Component {
-	private float x;
-	private float y;
-	private float z;
 	
+	private Vector2 position;
+	private float z;
 	private float originX;
 	private float originY;
 
@@ -33,8 +33,7 @@ public class Transform extends Component {
 	public Transform(float x, float y, float z, float originX, float originY, float width, float height,
 					float scaleX, float scaleY, float rotation, boolean horizontalFlip,
 					boolean verticalFlip) {
-		this.x = x;
-		this.y = y;
+		this.position = new Vector2(x,y);
 		this.z = z;
 		this.originX = originX;
 		this.originY = originY;
@@ -47,16 +46,16 @@ public class Transform extends Component {
 		this.verticalFlip = verticalFlip;
 	}
 
-	public Vector3 getPosition() {
-		return new Vector3(x, y, z);
+	public Vector2 getPosition() {
+		return position;
 	}
 	
 	public float getX() {
-		return x;
+		return position.x;
 	}
 	
 	public float getY() {
-		return y;
+		return position.y;
 	}
 	
 	public float getZ() {
@@ -101,11 +100,11 @@ public class Transform extends Component {
 
 	
 	public void setX(float x){
-		this.x = x;
+		this.position.x = x;
 	}
 	
 	public void setY(float y){
-		this.y = y;
+		this.position.y = y;
 	}
 	
 	public void setZ(float z){
@@ -113,17 +112,17 @@ public class Transform extends Component {
 	}
 	
 	public void setPosition(float x, float y, float z){
-		this.x = x;
-		this.y = y;
+		this.position.x = x;
+		this.position.y = y;
 		this.z = z;
 	}
 	
 	public void addX(float x){
-		this.x += x;
+		this.position.x += x;
 	}
 	
 	public void addY(float y){
-		this.y += y;
+		this.position.y += y;
 	}
 	
 	public void addZ(float z){

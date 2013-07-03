@@ -2,9 +2,6 @@ package com.perfectplay.org;
 
 import java.util.ArrayList;
 
-import box2dLight.ConeLight;
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
 
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
@@ -25,6 +22,9 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.perfectplay.org.box2dLight.ConeLight;
+import com.perfectplay.org.box2dLight.PointLight;
+import com.perfectplay.org.box2dLight.RayHandler;
 import com.perfectplay.org.components.SpriteRender;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.graphics.AnimatedSprite;
@@ -36,7 +36,8 @@ public class Anastasius implements ApplicationListener {
 	
 	//artemis entity system stuffs
 	private World world;
-	//private EntitySystem renderSystem;
+	private com.artemis.World world2;
+	private EntitySystem renderSystem;
 	
 	
 	private OrthographicCamera camera;
@@ -114,14 +115,14 @@ public class Anastasius implements ApplicationListener {
 		new PointLight(rayHandler,1000,Color.WHITE,150,w/2,h/2);
 		new PointLight(rayHandler,200,Color.RED,50,w/2-10,h/2+50);
 		new ConeLight(rayHandler,1000,Color.BLUE,200,w/2+50,h/2-50,110,40);
-		/*
-		//artemis stuffs
-		world = new World();
-		renderSystem = world.setSystem(new SpriteRenderSystem(batch), true);
-		world.initialize();
 
-		Entity e = world.createEntity();
-		e.addComponent(new Transform(0,0,0,512,275,0));
+		//artemis stuffs
+		world2 = new com.artemis.World();
+		renderSystem = world2.setSystem(new SpriteRenderSystem(batch), true);
+		world2.initialize();
+
+		Entity e = world2.createEntity();
+		e.addComponent(new Transform(0,0,0,15,15,0));
 		
 		//make an animated sprite
 		ArrayList<Sprite> frames = new ArrayList<Sprite>();
@@ -131,7 +132,7 @@ public class Anastasius implements ApplicationListener {
 		
 		e.addComponent(new SpriteRender(aSprite));
 		e.addToWorld();
-*/
+
 		
 	}
 
@@ -149,16 +150,19 @@ public class Anastasius implements ApplicationListener {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		camera.update();
-		//batch.setProjectionMatrix(camera.combined);
-		/*
-		world.setDelta(Gdx.graphics.getDeltaTime());
-		world.process();
+		batch.setProjectionMatrix(camera.combined);
+		
+		world2.setDelta(Gdx.graphics.getDeltaTime());
+		world2.process();
 		
 		batch.begin();
 		renderSystem.process();
 		batch.end();
-		*/
-		render.render(world,camera.combined);
+		batch.begin();
+		renderSystem.process();
+		batch.end();
+		
+		//render.render(world,camera.combined);
 		rayHandler.updateAndRender();
 		world.step(1/60f,6,2);
 		

@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.perfectplay.org.components.SpriteRender;
 import com.perfectplay.org.components.Transform;
 
@@ -24,9 +25,10 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
 	protected void process(Entity e) {
 		Transform t = transforms.get(e);
 		SpriteRender s = sprites.get(e);
+		
 		s.getSprite().update(world.delta*1000);
 
-		s.getSprite().draw(batch, t.getX(), t.getY(), t.getOriginX(),t.getOriginY(), t.getWidth(), 
+		s.getSprite().draw(batch, t.getX() + s.getOffset().x, t.getY() + s.getOffset().x, t.getOriginX(),t.getOriginY(), t.getWidth(), 
 							t.getHeight(), t.getScaleX(), t.getScaleY(), t.getRotation(), t.getHorizontalFlip(), t.getVerticalFlip());
 	}
 }
