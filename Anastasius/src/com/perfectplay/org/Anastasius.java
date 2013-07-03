@@ -50,22 +50,25 @@ public class Anastasius implements ApplicationListener {
 	private Box2DDebugRenderer render;
 	Body circleBody;
 	@Override
-	public void create() {		
+	public void create() {	
+		//Get screen data
 		float w = Gdx.graphics.getWidth()/5;
 		float h = Gdx.graphics.getHeight()/5;
 		
-
+		//Create and place camera
 		camera = new OrthographicCamera(w, h);      
         camera.position.set(w / 2, h/ 2, 0);
         camera.update();
 		batch = new SpriteBatch();
 		
+		//Create a world
 		world = new World(new Vector2(0,-9.8f),false);
 		
 		
 		
 		render = new Box2DDebugRenderer();
 		
+		//Make the circle
 		BodyDef circle = new BodyDef();
 		
 		circle.type = BodyType.DynamicBody;
@@ -75,6 +78,7 @@ public class Anastasius implements ApplicationListener {
 		CircleShape circleShape = new CircleShape();
 		circleShape.setRadius(5f);
 		
+		//Create a fixture for the circle
 		FixtureDef circleFixture = new FixtureDef();
 		
 		circleFixture.shape = circleShape;
@@ -82,15 +86,18 @@ public class Anastasius implements ApplicationListener {
 		circleFixture.friction = 0.2f;
 		circleFixture.restitution = 1f;
 		
+		//Assign the circle's fixture to it's body
 		circleBody.createFixture(circleFixture);
 		
-		
+		//Create ground
 		BodyDef groundDef = new BodyDef();
 		groundDef.position.set(0, 3);
 		
 		Body groundBody = world.createBody(groundDef);
 		
 		PolygonShape box = new PolygonShape();
+		
+		//camera.viewportWidth = screenWidth/2 here
 		box.setAsBox(camera.viewportWidth * 2, 3.0f);
 		
 		groundBody.createFixture(box,0f);
@@ -106,7 +113,7 @@ public class Anastasius implements ApplicationListener {
 		texture2 = new Texture(Gdx.files.internal("data/test.png"));
 		//no idea what this does
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		texture2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		
 		rayHandler = new RayHandler(world);
