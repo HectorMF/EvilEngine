@@ -14,8 +14,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.perfectplay.org.components.NormalRender;
 import com.perfectplay.org.components.Physics;
 import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.utils.Meter;
+import com.perfectplay.org.utils.Pixel;
 
 public class PhysicsSystem extends EntitySystem{
+	public static int PixelsPerMeter = 20;
 	@Mapper ComponentMapper<Transform> transforms;
 	@Mapper ComponentMapper<Physics> physics;
 	
@@ -33,7 +36,7 @@ public class PhysicsSystem extends EntitySystem{
 		Body physicsBody = physics.get(e).getBody();
 		physicsBody.setUserData(e);
 		float rotation = transforms.get(e).getRotation();
-		physicsBody.setTransform(transforms.get(e).getPosition(), (float)Math.toRadians(rotation));
+		physicsBody.setTransform(Pixel.toMeter(transforms.get(e).getPosition()), (float)Math.toRadians(rotation));
 		physicsBody.setActive(true);
 		//physicsBody.applyTorque(1f);
 	}
@@ -69,8 +72,9 @@ public class PhysicsSystem extends EntitySystem{
 		Transform t = transforms.get(e);
 		Physics p = physics.get(e);
 		Body body= p.getBody();
-		t.setX(body.getPosition().x);
-		t.setY(body.getPosition().y);
+		
+		t.setX(Meter.toPixel(body.getPosition().x));
+		t.setY(Meter.toPixel(body.getPosition().y));
 		t.setRotation((float)Math.toDegrees(body.getAngle()));
 		
 		System.out.println(p.getBody().getPosition());

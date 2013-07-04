@@ -28,7 +28,7 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
 		
 		s.getSprite().update(world.delta*1000);
 
-		s.getSprite().draw(batch, t.getX() + s.getOffset().x, t.getY() + s.getOffset().x, t.getOriginX(),t.getOriginY(), t.getWidth(), 
+		s.getSprite().draw(batch, t.getX() + s.getOffset().x, t.getY() + s.getOffset().y, t.getOriginX(),t.getOriginY(), t.getWidth(), 
 							t.getHeight(), t.getScaleX(), t.getScaleY(), t.getRotation(), t.getHorizontalFlip(), t.getVerticalFlip());
 	}
 }

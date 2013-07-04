@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -32,10 +33,13 @@ import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.systems.SpriteRenderSystem;
+import com.perfectplay.org.utils.Meter;
+import com.perfectplay.org.utils.Pixel;
 
 public class Anastasius implements ApplicationListener {
 	
-	
+	private static final float WORLD_TO_BOX = 0.01f;
+	  private static final float BOX_TO_WORLD = 100f;
 	//artemis entity system stuffs
 	private World world;
 	private com.artemis.World world2;
@@ -58,9 +62,11 @@ public class Anastasius implements ApplicationListener {
 		float h = Gdx.graphics.getHeight()/5;
 		
 		//Create and place camera
-		camera = new OrthographicCamera(w, h);      
-        camera.position.set(w / 2, h/ 2, 0);
-        camera.update();
+		//camera = new OrthographicCamera(w, h);   
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false);
+        //camera.position.set(w / 2, h/ 2, 0);
+        //camera.update();
 		batch = new SpriteBatch();
 		
 		render = new Box2DDebugRenderer();
@@ -92,7 +98,7 @@ public class Anastasius implements ApplicationListener {
 		//no idea what this does
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		texture2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
+		/*
 		
 		rayHandler = new RayHandler(world);
 		rayHandler.setCombinedMatrix(camera.combined);
@@ -100,7 +106,7 @@ public class Anastasius implements ApplicationListener {
 		new PointLight(rayHandler,1000,Color.WHITE,150,w/2,h/2);
 		new PointLight(rayHandler,200,Color.RED,50,w/2-10,h/2+50);
 		new ConeLight(rayHandler,1000,Color.BLUE,200,w/2+50,h/2-50,110,40);
-
+*/
 		//artemis stuffs
 		world2 = new com.artemis.World();
 		renderSystem = world2.setSystem(new SpriteRenderSystem(batch), true);
@@ -108,9 +114,11 @@ public class Anastasius implements ApplicationListener {
 		world2.initialize();
 
 		Entity e = world2.createEntity();
-		e.addComponent(new Transform(w/2,h/2,0,15,15,90));
 		
+		int meters = 2;
+		e.addComponent(new Transform(500,500,0,100,100,20));
 		
+		/*
 		//Make the circle
 		BodyDef circle = new BodyDef();
 		
@@ -148,19 +156,51 @@ public class Anastasius implements ApplicationListener {
 		PolygonShape box = new PolygonShape();
 		//camera.viewportWidth = screenWidth/2 here
 		
-		box.setAsBox(15, 15);
+		box.setAsBox(Pixel.toMeter(200), Pixel.toMeter(200));
 		
 		groundBody.createFixture(box,0f);
 		groundBody.setAngularVelocity(1f);
+		*/
 		
-		e.addComponent(new Physics(groundBody));
+		
+		
+		
+		BodyDef groundDef = new BodyDef();
+		groundDef.position.set(new Vector2((Gdx.graphics.getWidth() / 2) * WORLD_TO_BOX, 16f * WORLD_TO_BOX));
+		Body groundBody = physicsSystem.createBody(groundDef);
+		PolygonShape groundShape = new PolygonShape();
+		groundShape.setAsBox((Gdx.graphics.getWidth() / 2) * WORLD_TO_BOX, 16f * WORLD_TO_BOX);
+		groundBody.createFixture(groundShape, 0f);
+		groundShape.dispose();
+
+		// the player box
+
+		BodyDef playerDef = new BodyDef();
+		playerDef.type = BodyType.DynamicBody;
+		//playerDef.position.set(new Vector2(100 * WORLD_TO_BOX, 400 * WORLD_TO_BOX));
+		Body playerBody = physicsSystem.createBody(playerDef);
+
+		PolygonShape playerShape = new PolygonShape();
+		playerShape.setAsBox(50 * WORLD_TO_BOX, 50 * WORLD_TO_BOX);
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = playerShape;
+		fixtureDef.density = 0.5f; 
+		fixtureDef.friction = 0.4f;
+		fixtureDef.restitution = 0.7f;
+
+		Fixture fixture = playerBody.createFixture(fixtureDef);
+
+		
+		
+		e.addComponent(new Physics(playerBody));
 		//make an animated sprite
 		ArrayList<Sprite> frames = new ArrayList<Sprite>();
 		frames.add(new Sprite(texture,0,0,512,275));
 		frames.add(new Sprite(texture2,0,0,64,64));
 		AnimatedSprite aSprite = new AnimatedSprite(frames,1000);
 		
-		e.addComponent(new SpriteRender(aSprite));
+		e.addComponent(new SpriteRender(aSprite,new Vector2(-50,-50)));
 		e.addToWorld();
 
 		
@@ -171,7 +211,7 @@ public class Anastasius implements ApplicationListener {
 		batch.dispose();
 		texture.dispose();
 		texture2.dispose();
-		rayHandler.dispose();
+		//rayHandler.dispose();
 	}
 
 	@Override
@@ -179,18 +219,18 @@ public class Anastasius implements ApplicationListener {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		camera.update();
-		batch.setProjectionMatrix(camera.combined);
+		batch.setProjectionMatrix(camera.combined.cpy().scl(1));
 		
 		world2.setDelta(Gdx.graphics.getDeltaTime());
 		world2.process();
 		
-		physicsSystem.process();
 		
 		batch.begin();
 		renderSystem.process();
 		batch.end();
+		render.render(physicsSystem.getWorld(),camera.combined.cpy().scl(100f));
+		physicsSystem.process();
 		
-		render.render(physicsSystem.getWorld(),camera.combined);
 		//rayHandler.updateAndRender();
 		
 		
