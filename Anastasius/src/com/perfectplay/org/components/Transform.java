@@ -8,11 +8,13 @@ public class Transform extends Component {
 	
 	private Vector2 position;
 	private float z;
+	
 	private float originX;
 	private float originY;
 
 	private float width;
 	private float height;
+	private float depth;
 
 	private float scaleX;
 	private float scaleY;
@@ -76,6 +78,10 @@ public class Transform extends Component {
 
 	public float getHeight() {
 		return height;
+	}
+	
+	public float getDepth(){
+		return depth;
 	}
 
 	public float getScaleX() {

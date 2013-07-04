@@ -25,10 +25,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.perfectplay.org.box2dLight.ConeLight;
 import com.perfectplay.org.box2dLight.PointLight;
 import com.perfectplay.org.box2dLight.RayHandler;
+import com.perfectplay.org.components.Physics;
 import com.perfectplay.org.components.SpriteRender;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;
+import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.systems.SpriteRenderSystem;
 
 public class Anastasius implements ApplicationListener {
@@ -38,7 +40,7 @@ public class Anastasius implements ApplicationListener {
 	private World world;
 	private com.artemis.World world2;
 	private EntitySystem renderSystem;
-	
+	private PhysicsSystem physicsSystem;
 	
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
@@ -61,34 +63,10 @@ public class Anastasius implements ApplicationListener {
         camera.update();
 		batch = new SpriteBatch();
 		
-		//Create a world
-		world = new World(new Vector2(0,-9.8f),false);
-		
-		
-		
 		render = new Box2DDebugRenderer();
 		
-		//Make the circle
-		BodyDef circle = new BodyDef();
-		
-		circle.type = BodyType.DynamicBody;
-		circle.position.set(w/2, h/2-10);
-		circleBody = world.createBody(circle);
-		
-		CircleShape circleShape = new CircleShape();
-		circleShape.setRadius(5f);
-		
-		//Create a fixture for the circle
-		FixtureDef circleFixture = new FixtureDef();
-		
-		circleFixture.shape = circleShape;
-		circleFixture.density = 0.5f;
-		circleFixture.friction = 0.2f;
-		circleFixture.restitution = 1f;
-		
-		//Assign the circle's fixture to it's body
-		circleBody.createFixture(circleFixture);
-		
+
+		/*
 		//Create ground
 		BodyDef groundDef = new BodyDef();
 		groundDef.position.set(0, 3);
@@ -101,7 +79,7 @@ public class Anastasius implements ApplicationListener {
 		box.setAsBox(camera.viewportWidth * 2, 3.0f);
 		
 		groundBody.createFixture(box,0f);
-		
+		*/
 		
 		
 		
@@ -126,11 +104,56 @@ public class Anastasius implements ApplicationListener {
 		//artemis stuffs
 		world2 = new com.artemis.World();
 		renderSystem = world2.setSystem(new SpriteRenderSystem(batch), true);
+		physicsSystem = world2.setSystem(new PhysicsSystem(new World(new Vector2(0,-9f),false)),true);
 		world2.initialize();
 
 		Entity e = world2.createEntity();
-		e.addComponent(new Transform(0,0,0,15,15,0));
+		e.addComponent(new Transform(w/2,h/2,0,15,15,90));
 		
+		
+		//Make the circle
+		BodyDef circle = new BodyDef();
+		
+		circle.type = BodyType.DynamicBody;
+		//circle.position.set(w/2, h/2-10);
+		circleBody = physicsSystem.createBody(circle);
+		
+		CircleShape circleShape = new CircleShape();
+		circleShape.setRadius(5f);
+		
+		//Create a fixture for the circle
+		FixtureDef circleFixture = new FixtureDef();
+		
+		circleFixture.shape = circleShape;
+		circleFixture.density = 0.5f;
+		circleFixture.friction = 0.2f;
+		circleFixture.restitution = 1f;
+		
+		//Assign the circle's fixture to it's body
+		circleBody.createFixture(circleFixture);
+		
+		BodyDef rect1 = new BodyDef();
+		
+		Body groundBody1 = physicsSystem.createBody(rect1);
+		PolygonShape box1 = new PolygonShape();
+		//camera.viewportWidth = screenWidth/2 here
+		box1.setAsBox(1000, 3.0f);
+		groundBody1.createFixture(box1,0f);
+		
+		
+		BodyDef rect = new BodyDef();
+		rect.type = BodyType.DynamicBody;
+		
+		Body groundBody = physicsSystem.createBody(rect);
+		PolygonShape box = new PolygonShape();
+		//camera.viewportWidth = screenWidth/2 here
+		
+		box.setAsBox(15, 15);
+		
+		groundBody.createFixture(box,0f);
+		groundBody.setAngularVelocity(1f);
+		
+		e.addComponent(new Physics(groundBody));
 		//make an animated sprite
 		ArrayList<Sprite> frames = new ArrayList<Sprite>();
 		frames.add(new Sprite(texture,0,0,512,275));
@@ -149,7 +172,6 @@ public class Anastasius implements ApplicationListener {
 		texture.dispose();
 		texture2.dispose();
 		rayHandler.dispose();
-		world.dispose();
 	}
 
 	@Override
@@ -162,16 +184,15 @@ public class Anastasius implements ApplicationListener {
 		world2.setDelta(Gdx.graphics.getDeltaTime());
 		world2.process();
 		
-		batch.begin();
-		renderSystem.process();
-		batch.end();
+		physicsSystem.process();
+		
 		batch.begin();
 		renderSystem.process();
 		batch.end();
 		
-		//render.render(world,camera.combined);
-		rayHandler.updateAndRender();
-		world.step(1/60f,6,2);
+		render.render(physicsSystem.getWorld(),camera.combined);
+		//rayHandler.updateAndRender();
+		
 		
 		
 	}
