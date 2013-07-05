@@ -7,7 +7,6 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,16 +14,10 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.perfectplay.org.box2dLight.ConeLight;
-import com.perfectplay.org.box2dLight.PointLight;
-import com.perfectplay.org.box2dLight.RayHandler;
+//import com.perfectplay.org.box2dLight.RayHandler;
 import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.SpriteRender;
 import com.perfectplay.org.components.Transform;
@@ -32,8 +25,6 @@ import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.systems.SpriteRenderSystem;
-import com.perfectplay.org.utils.Meter;
-import com.perfectplay.org.utils.Pixel;
 
 public class Anastasius implements ApplicationListener {
 	
@@ -48,7 +39,7 @@ public class Anastasius implements ApplicationListener {
 	//textures
 	Texture texture;
 	Texture texture2;
-	private RayHandler rayHandler;
+	//private RayHandler rayHandler;
 	private Box2DDebugRenderer render;
 	Body circleBody;
 	Entity e;
@@ -128,7 +119,7 @@ public class Anastasius implements ApplicationListener {
 		renderSystem.process();
 		batch.end();
 		
-		render.render(physicsSystem.getWorld(),camera.combined.cpy().scl(20f));
+		render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(20f));
 		
 		//e.getComponent(Physics.class).getBody().setTransform(Pixel.toMeter(new Vector2(Gdx.input.getX(),
 		//		Gdx.graphics.getHeight() - Gdx.input.getY())),0);
