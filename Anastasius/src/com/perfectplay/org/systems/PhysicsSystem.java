@@ -8,26 +8,27 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.perfectplay.org.components.NormalRender;
-import com.perfectplay.org.components.Physics;
+import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.utils.Meter;
 import com.perfectplay.org.utils.Pixel;
 
 public class PhysicsSystem extends EntitySystem{
-	public static int PixelsPerMeter = 20;
+	protected static int PixelsPerMeter = 20;
 	@Mapper ComponentMapper<Transform> transforms;
-	@Mapper ComponentMapper<Physics> physics;
+	@Mapper ComponentMapper<RigidBody> physics;
 	
-	private World world;
+	public static World world;
 	
 	@SuppressWarnings("unchecked")
 	public PhysicsSystem(World world) {
-		super(Aspect.getAspectForAll(Transform.class, Physics.class));
-		this.world = world;
+		super(Aspect.getAspectForAll(Transform.class, RigidBody.class));
+		PhysicsSystem.world = world;
 	}
 	
 	@Override
@@ -35,10 +36,14 @@ public class PhysicsSystem extends EntitySystem{
 		super.inserted(e);
 		Body physicsBody = physics.get(e).getBody();
 		physicsBody.setUserData(e);
-		float rotation = transforms.get(e).getRotation();
-		physicsBody.setTransform(Pixel.toMeter(transforms.get(e).getPosition()), (float)Math.toRadians(rotation));
+		
+		Transform transform = transforms.get(e);
+		float rotation = transform.getRotation();
+		Vector2 position = new Vector2(transform.getX() + transform.getWidth()/2, 
+									   transform.getY() + transform.getHeight()/2);
+		
+		physicsBody.setTransform(Pixel.toMeter(position), (float)Math.toRadians(rotation));
 		physicsBody.setActive(true);
-		//physicsBody.applyTorque(1f);
 	}
 	
 	@Override
@@ -47,7 +52,7 @@ public class PhysicsSystem extends EntitySystem{
 		physics.get(e).getBody().setActive(false);
 	}
 	
-	public World getWorld(){
+	public static World getWorld(){
 		return world;
 	}
 	
@@ -64,19 +69,19 @@ public class PhysicsSystem extends EntitySystem{
             return true;
     }
     
-	public Body createBody(BodyDef definition){
+	public static Body createBody(BodyDef definition){
 		return world.createBody(definition);
 	}
 	
 	protected void process(Entity e) {
 		Transform t = transforms.get(e);
-		Physics p = physics.get(e);
+		RigidBody p = physics.get(e);
 		Body body= p.getBody();
 		
-		t.setX(Meter.toPixel(body.getPosition().x));
-		t.setY(Meter.toPixel(body.getPosition().y));
+		t.setX(Meter.toPixel(body.getPosition().x) - t.getWidth()/2);
+		t.setY(Meter.toPixel(body.getPosition().y) - t.getHeight()/2);
 		t.setRotation((float)Math.toDegrees(body.getAngle()));
 		
-		System.out.println(p.getBody().getPosition());
+	System.out.println(Meter.toPixel(body.getPosition().y) - t.getHeight()/2);
 	}
 }

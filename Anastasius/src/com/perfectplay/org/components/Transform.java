@@ -6,7 +6,8 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Transform extends Component {
 	
-	private Vector2 position;
+	private float x;
+	private float y;
 	private float z;
 	
 	private float originX;
@@ -35,7 +36,8 @@ public class Transform extends Component {
 	public Transform(float x, float y, float z, float originX, float originY, float width, float height,
 					float scaleX, float scaleY, float rotation, boolean horizontalFlip,
 					boolean verticalFlip) {
-		this.position = new Vector2(x,y);
+		this.x = x;
+		this.y = y;
 		this.z = z;
 		this.originX = originX;
 		this.originY = originY;
@@ -47,17 +49,29 @@ public class Transform extends Component {
 		this.horizontalFlip = horizontalFlip;
 		this.verticalFlip = verticalFlip;
 	}
-
-	public Vector2 getPosition() {
-		return position;
+	
+	public Vector2 getScreenPosition(){
+		return new Vector2(x,(float)(y - Math.sin(Math.toRadians(15))*z));
+	}
+	
+	public float getScreenX(){
+		return x;
+	}
+	
+	public float getScreenY(){
+		return (y - z);
+	}
+	
+	public Vector3 getPosition() {
+		return new Vector3(x,y,z);
 	}
 	
 	public float getX() {
-		return position.x;
+		return x;
 	}
 	
 	public float getY() {
-		return position.y;
+		return y;
 	}
 	
 	public float getZ() {
@@ -106,11 +120,11 @@ public class Transform extends Component {
 
 	
 	public void setX(float x){
-		this.position.x = x;
+		this.x = x;
 	}
 	
 	public void setY(float y){
-		this.position.y = y;
+		this.y = y;
 	}
 	
 	public void setZ(float z){
@@ -118,17 +132,17 @@ public class Transform extends Component {
 	}
 	
 	public void setPosition(float x, float y, float z){
-		this.position.x = x;
-		this.position.y = y;
+		this.x = x;
+		this.y = y;
 		this.z = z;
 	}
 	
 	public void addX(float x){
-		this.position.x += x;
+		this.x += x;
 	}
 	
 	public void addY(float y){
-		this.position.y += y;
+		this.y += y;
 	}
 	
 	public void addZ(float z){

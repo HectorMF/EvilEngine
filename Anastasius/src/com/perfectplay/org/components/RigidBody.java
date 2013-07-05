@@ -4,18 +4,45 @@ import com.artemis.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.perfectplay.org.systems.PhysicsSystem;
+import com.perfectplay.org.utils.Pixel;
 
-public class Physics extends Component{
+public class RigidBody extends Component{
 	private Body physicsBody;
 	private float velocityZ;
 	private Vector2 forceZ; //(force,point) respectively
 	
 
-	public Physics(Body physicsBody) {
+	public RigidBody(Body physicsBody) {
 		this(physicsBody, 0f);
 	}
 	
-	public Physics(Body physicsBody, float velocityZ) {
+	public static Body CreateBox(BodyType type, int width, int height){
+		BodyDef boxDef = new BodyDef();
+		boxDef.type = type;
+		Body boxBody = PhysicsSystem.createBody(boxDef);
+		
+		PolygonShape boxShape = new PolygonShape();
+		boxShape.setAsBox(Pixel.toMeter(width/2), Pixel.toMeter(height/2));
+		
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = boxShape;
+		fixtureDef.density = 0.5f; 
+		fixtureDef.friction = 0.4f;
+		fixtureDef.restitution = 0.7f;
+
+		boxBody.createFixture(fixtureDef);
+		boxShape.dispose();
+		boxBody.setActive(false);
+		return boxBody;
+	}
+	
+	public RigidBody(Body physicsBody, float velocityZ) {
 		this.physicsBody = physicsBody;
 		this.velocityZ = velocityZ;
 		this.forceZ = new Vector2(0f, 0f);
@@ -44,5 +71,6 @@ public class Physics extends Component{
 	public Body getBody() {
 		return physicsBody;
 	}
+	
 	
 }
