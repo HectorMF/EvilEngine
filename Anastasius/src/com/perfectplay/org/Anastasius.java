@@ -91,13 +91,13 @@ public class Anastasius implements ApplicationListener {
 		e = world.createEntity();
 		e.addComponent(new Transform(450,510,0,50,50,60));
 		e.addComponent(new RigidBody(RigidBody.CreateBox(BodyType.DynamicBody, 50, 50)));
-		e.addComponent(new SpriteRender(aSprite));
+		e.addComponent(new SpriteRender(aSprite.clone()));
 		e.addToWorld();
 			
 		e = world.createEntity();
 		e.addComponent(new Transform(300,100,0,Gdx.graphics.getWidth()/2,16,0));
 		e.addComponent(new RigidBody(RigidBody.CreateBox(BodyType.StaticBody, Gdx.graphics.getWidth()/2, 16)));
-		e.addComponent(new SpriteRender(aSprite));
+		e.addComponent(new SpriteRender(aSprite.clone()));
 		e.addToWorld();
 		
 	}

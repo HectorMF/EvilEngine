@@ -17,4 +17,6 @@ public interface ISprite {
     boolean isAnimated();
 
     boolean isPlaying();
+    
+    ISprite clone();
 }

@@ -89,4 +89,9 @@ public class AnimatedSprite implements ISprite{
 	public boolean isAnimated() {
 		return true;
 	}
+	
+	@Override
+	public ISprite clone(){
+		return new AnimatedSprite(frames,interval);
+	}
 }

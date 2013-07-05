@@ -60,4 +60,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 		public boolean isPlaying() {
 			return false;
 		}
+		
+		@Override
+		public ISprite clone(){
+			return this;
+		}
 }
