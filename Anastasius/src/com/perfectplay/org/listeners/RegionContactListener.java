@@ -1,10 +1,11 @@
-package com.perfectplay.org.utils;
+package com.perfectplay.org.listeners;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.perfectplay.org.events.CollisionEvent;
 
 public class RegionContactListener implements ContactListener{
 

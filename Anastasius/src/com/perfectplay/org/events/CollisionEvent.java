@@ -1,4 +1,5 @@
-package com.perfectplay.org.utils;
+package com.perfectplay.org.events;
+
 
 public class CollisionEvent extends Event{
 	private boolean onCollide;
