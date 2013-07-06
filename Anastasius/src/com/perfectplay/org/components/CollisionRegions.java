@@ -46,5 +46,8 @@ public class CollisionRegions extends Component {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width, height, position, angle);
 	}
-
+	
+	public Body getBody(){
+		return regions;
+	}
 }
