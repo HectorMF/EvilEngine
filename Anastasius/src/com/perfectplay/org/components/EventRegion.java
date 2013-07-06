@@ -1,6 +1,7 @@
 package com.perfectplay.org.components;
 
 import com.artemis.Component;
+import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -11,13 +12,18 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.perfectplay.org.events.CollisionEvent;
 import com.perfectplay.org.systems.PhysicsSystem;
+import com.perfectplay.org.utils.EntityBodyMapper;
 
-public class CollisionRegions extends Component {
+public class EventRegion extends Component {
 	private Body regions;
-	public CollisionRegions(){
+	public EventRegion(Entity entity){
 		BodyDef bodDef = new BodyDef();
-		bodDef.type = BodyType.DynamicBody;
-		regions = PhysicsSystem.createBody(bodDef);
+		bodDef.type = BodyType.StaticBody;
+		if(EntityBodyMapper.getInstance().hasBody(entity)){
+			regions = EntityBodyMapper.getInstance().getBody(entity);
+		}else{
+			regions = PhysicsSystem.createBody(bodDef);
+		}
 	}
 	
 	public void addRegion(FixtureDef region, CollisionEvent event){

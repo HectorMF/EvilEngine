@@ -17,30 +17,34 @@ public class RegionContactListener implements ContactListener{
 	public void beginContact(Contact contact) {
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
-		CollisionEvent collisionEvent;
+		CollisionEvent collisionEvent = null;
 		if(fixtureA.isSensor()){
 			collisionEvent = (CollisionEvent) fixtureA.getUserData();
-		}else{
+		}else if(fixtureB.isSensor()){
 			collisionEvent = (CollisionEvent) fixtureB.getUserData();
 		}
-		if(collisionEvent.occursOnCollide()){
-			collisionEvent.Fire();
-		}	
+		if(collisionEvent != null){
+			if(collisionEvent.occursOnCollide()){
+				collisionEvent.Fire();
+			}	
+		}
 	}
 
 	@Override
 	public void endContact(Contact contact) {
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
-		CollisionEvent collisionEvent;
+		CollisionEvent collisionEvent = null;
 		if(fixtureA.isSensor()){
 			collisionEvent = (CollisionEvent) fixtureA.getUserData();
-		}else{
+		}else if(fixtureB.isSensor()){
 			collisionEvent = (CollisionEvent) fixtureB.getUserData();
 		}
-		if(!collisionEvent.occursOnCollide()){
-			collisionEvent.Fire();
-		}	
+		if(collisionEvent != null){
+			if(!collisionEvent.occursOnCollide()){
+				collisionEvent.Fire();
+			}	
+		}
 	}
 
 	@Override

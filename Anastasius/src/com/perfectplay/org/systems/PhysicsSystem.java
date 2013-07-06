@@ -32,7 +32,7 @@ public class PhysicsSystem extends EntitySystem{
 		super.inserted(e);
 		Body physicsBody = physics.get(e).getBody();
 		physicsBody.setUserData(e);
-		
+
 		Transform transform = transforms.get(e);
 		float rotation = transform.getRotation();
 		Vector2 position = new Vector2(transform.getX() + transform.getWidth()/2, 
@@ -54,7 +54,9 @@ public class PhysicsSystem extends EntitySystem{
 	
 	@Override
     protected final void processEntities(ImmutableBag<Entity> entities) {
+		
 		world.step(1/60f,6,2);
+		
 		for (int i = 0, s = entities.size(); s > i; i++) {
         	process(entities.get(i));
     	}

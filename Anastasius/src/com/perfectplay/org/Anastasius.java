@@ -18,13 +18,17 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 //import com.perfectplay.org.box2dLight.RayHandler;
+import com.perfectplay.org.components.EventRegion;
 import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.SpriteRender;
 import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.events.CollisionEvent;
 import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;
 import com.perfectplay.org.systems.PhysicsSystem;
+import com.perfectplay.org.systems.RegionSystem;
 import com.perfectplay.org.systems.SpriteRenderSystem;
+import com.perfectplay.org.utils.BodyRemover;
 
 public class Anastasius implements ApplicationListener {
 	
@@ -65,7 +69,9 @@ public class Anastasius implements ApplicationListener {
 		world = new com.artemis.World();
 		renderSystem = world.setSystem(new SpriteRenderSystem(batch), true);
 		physicsSystem = world.setSystem(new PhysicsSystem(new World(new Vector2(0,-1f),false)),true);
+		world.setSystem(new RegionSystem());
 		world.initialize();
+		BodyRemover.getInstance().setWorld(PhysicsSystem.getWorld());
 		
 		//make an animated sprite
 		ArrayList<Sprite> frames = new ArrayList<Sprite>();
@@ -74,20 +80,33 @@ public class Anastasius implements ApplicationListener {
 		AnimatedSprite aSprite = new AnimatedSprite(frames,1000);
 		
 	    e = world.createEntity();
-		e.addComponent(new Transform(680,300,0,50,50,60));
-		e.addComponent(new RigidBody(RigidBody.CreateBox(BodyType.DynamicBody, 50, 50, .5f,.3f,.2f)));
+		e.addComponent(new Transform(480,300,0,50,50,60));
+		RigidBody body = new RigidBody(e,BodyType.DynamicBody);
+		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f));
+		e.addComponent(body);
 		e.addComponent(new SpriteRender(aSprite));
 		e.addToWorld();
 		
 		e = world.createEntity();
-		e.addComponent(new Transform(450,510,0,50,50,60));
-		e.addComponent(new RigidBody(RigidBody.CreateBox(BodyType.DynamicBody, 50, 50,.2f,.2f,.5f)));
+		e.addComponent(new Transform(550,510,0,50,50,60));
+		body = new RigidBody(e,BodyType.DynamicBody);
+		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f,  .4f, .3f, .9f));
+		
+		EventRegion region = new EventRegion(e);
+		region.addRegion(EventRegion.createCircleRegion(1f, Vector2.Zero, (short)-1, (short)-1, (short)-1), new CollisionEvent());
+		
+		e.addComponent(body);
+		e.addComponent(region);
 		e.addComponent(new SpriteRender(aSprite.clone()));
+
 		e.addToWorld();
 			
 		e = world.createEntity();
 		e.addComponent(new Transform(300,100,0,Gdx.graphics.getWidth()/2,16,0));
-		e.addComponent(new RigidBody(RigidBody.CreateBox(BodyType.StaticBody, Gdx.graphics.getWidth()/2, 16,.5f,.5f,.5f)));
+		body = new RigidBody(e,BodyType.StaticBody);
+		body.addFixture(RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f, Vector2.Zero, 0f,  .5f, 0f, .5f));
+	
+		e.addComponent(body);
 		e.addComponent(new SpriteRender(aSprite.clone()));
 		e.addToWorld();
 		
@@ -117,12 +136,15 @@ public class Anastasius implements ApplicationListener {
 		world.process();
 		
 		physicsSystem.process();
+		
 		batch.begin();
 		renderSystem.process();
 		batch.end();
-		
 		render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(20f));
+		//render.
+		//if(!PhysicsSystem.getWorld().isLocked())
 		
+		//render.
 		//e.getComponent(Physics.class).getBody().setTransform(Pixel.toMeter(new Vector2(Gdx.input.getX(),
 		//		Gdx.graphics.getHeight() - Gdx.input.getY())),0);
 		//rayHandler.setCombinedMatrix(camera.combined.cpy().scl(1f));
