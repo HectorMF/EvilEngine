@@ -18,7 +18,7 @@ public class EventRegion extends Component {
 	private Body regions;
 	public EventRegion(Entity entity){
 		BodyDef bodDef = new BodyDef();
-		bodDef.type = BodyType.StaticBody;
+		bodDef.type = BodyType.DynamicBody;
 		if(EntityBodyMapper.getInstance().hasBody(entity)){
 			regions = EntityBodyMapper.getInstance().getBody(entity);
 		}else{

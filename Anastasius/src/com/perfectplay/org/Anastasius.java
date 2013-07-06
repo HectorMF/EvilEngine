@@ -80,17 +80,17 @@ public class Anastasius implements ApplicationListener {
 		AnimatedSprite aSprite = new AnimatedSprite(frames,1000);
 		
 	    e = world.createEntity();
-		e.addComponent(new Transform(480,300,0,50,50,60));
-		RigidBody body = new RigidBody(e,BodyType.DynamicBody);
+		e.addComponent(new Transform(540,300,0,50,50,60));
+		RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f));
 		e.addComponent(body);
 		e.addComponent(new SpriteRender(aSprite));
 		e.addToWorld();
 		
 		e = world.createEntity();
-		e.addComponent(new Transform(550,510,0,50,50,60));
-		body = new RigidBody(e,BodyType.DynamicBody);
-		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f,  .4f, .3f, .9f));
+		e.addComponent(new Transform(680,510,0,110,60,80));
+		body = new RigidBody(e, BodyType.DynamicBody);
+		body.addFixture(RigidBody.createBoxFixture(110f, 60f, Vector2.Zero, 0f,  .4f, .6f, .9f));
 		
 		EventRegion region = new EventRegion(e);
 		region.addRegion(EventRegion.createCircleRegion(1f, Vector2.Zero, (short)-1, (short)-1, (short)-1), new CollisionEvent());
@@ -140,6 +140,7 @@ public class Anastasius implements ApplicationListener {
 		batch.begin();
 		renderSystem.process();
 		batch.end();
+		render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(100f));
 		render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(20f));
 		//render.
 		//if(!PhysicsSystem.getWorld().isLocked())

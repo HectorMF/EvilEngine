@@ -1,5 +1,6 @@
 package com.perfectplay.org.listeners;
 
+import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -17,16 +18,23 @@ public class RegionContactListener implements ContactListener{
 	public void beginContact(Contact contact) {
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
+		
+		if(!fixtureA.isSensor() & !fixtureB.isSensor())
+			return;
+		
+		if(fixtureA.getBody().getUserData()  == fixtureB.getBody().getUserData())
+			return;
+		
 		CollisionEvent collisionEvent = null;
+		
 		if(fixtureA.isSensor()){
 			collisionEvent = (CollisionEvent) fixtureA.getUserData();
-		}else if(fixtureB.isSensor()){
+		}else{
 			collisionEvent = (CollisionEvent) fixtureB.getUserData();
 		}
+		
 		if(collisionEvent != null){
-			if(collisionEvent.occursOnCollide()){
-				collisionEvent.Fire();
-			}	
+			collisionEvent.beginCollision((Entity)fixtureA.getBody().getUserData(), (Entity)fixtureB.getBody().getUserData());
 		}
 	}
 
@@ -34,16 +42,20 @@ public class RegionContactListener implements ContactListener{
 	public void endContact(Contact contact) {
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
+		
+		if(!fixtureA.isSensor() & !fixtureB.isSensor())
+			return;
+		
 		CollisionEvent collisionEvent = null;
+		
 		if(fixtureA.isSensor()){
 			collisionEvent = (CollisionEvent) fixtureA.getUserData();
-		}else if(fixtureB.isSensor()){
+		}else{
 			collisionEvent = (CollisionEvent) fixtureB.getUserData();
 		}
+		
 		if(collisionEvent != null){
-			if(!collisionEvent.occursOnCollide()){
-				collisionEvent.Fire();
-			}	
+			collisionEvent.endCollision((Entity)fixtureA.getBody().getUserData(), (Entity)fixtureB.getBody().getUserData());
 		}
 	}
 
