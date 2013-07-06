@@ -21,7 +21,7 @@ public class RigidBody extends Component{
 		this(physicsBody, 0f);
 	}
 	
-	public static Body CreateBox(BodyType type, int width, int height){
+	public static Body CreateBox(BodyType type, int width, int height, float density, float friction, float restitution){
 		BodyDef boxDef = new BodyDef();
 		boxDef.type = type;
 		Body boxBody = PhysicsSystem.createBody(boxDef);
@@ -31,13 +31,14 @@ public class RigidBody extends Component{
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = boxShape;
-		fixtureDef.density = 0.5f; 
-		fixtureDef.friction = 0.4f;
-		fixtureDef.restitution = 0.7f;
-
+		fixtureDef.density = density; 
+		fixtureDef.friction = friction;
+		fixtureDef.restitution = restitution;
+		
 		boxBody.createFixture(fixtureDef);
 		boxShape.dispose();
 		boxBody.setActive(false);
+		
 		return boxBody;
 	}
 	

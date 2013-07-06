@@ -24,9 +24,10 @@ public class NormalRenderSystem extends EntityProcessingSystem {
 	protected void process(Entity e) {
 		Transform t = transforms.get(e);
 		NormalRender s = sprites.get(e);
+		
 		s.getSprite().update(world.delta*1000);
 
-		s.getSprite().draw(batch, t.getX(), t.getY(), t.getOriginX(),t.getOriginY(), t.getWidth(), 
+		s.getSprite().draw(batch, t.getScreenX() + s.getOffset().x, t.getScreenY() + s.getOffset().y, t.getOriginX(),t.getOriginY(), t.getWidth(), 
 							t.getHeight(), t.getScaleX(), t.getScaleY(), t.getRotation(), t.getHorizontalFlip(), t.getVerticalFlip());
 	}
 }
