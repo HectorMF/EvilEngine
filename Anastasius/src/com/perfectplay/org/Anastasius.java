@@ -53,6 +53,7 @@ public class Anastasius implements ApplicationListener {
 	Body circleBody;
 	Entity e;
 	Transform t = new Transform(680,510,-70,110,60,80);
+	RigidBody b;
 	@Override
 	public void create() {	
 		//Get screen data
@@ -96,13 +97,13 @@ public class Anastasius implements ApplicationListener {
 		
 		e = world.createEntity();
 		e.addComponent(t);
-		body = new RigidBody(e, BodyType.DynamicBody);
-		body.addFixture(RigidBody.createBoxFixture(110f, 60f, Vector2.Zero, 0f,  .4f, .6f, .9f));
+		b= new RigidBody(e, BodyType.DynamicBody);
+		b.addFixture(RigidBody.createBoxFixture(110f, 60f, Vector2.Zero, 0f,  .4f, .6f, .9f));
 		
 		EventRegion region = new EventRegion(e);
 		region.addRegion(EventRegion.createCircleRegion(1f, Vector2.Zero, (short)-1, (short)-1, (short)-1), new CollisionEvent());
 		
-		e.addComponent(body);
+		e.addComponent(b);
 		e.addComponent(region);
 		e.addComponent(new SpriteRender(aSprite.clone()));
 
@@ -142,6 +143,16 @@ public class Anastasius implements ApplicationListener {
 		//PhysicsSystem.getWorld().re
 		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) 
 			t.setZ(t.getZ() + Gdx.graphics.getDeltaTime() * speed);
+		
+		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT))
+			b.getBody().setLinearVelocity(-1, 0);
+			
+		//PhysicsSystem.getWorld().re
+		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) 
+			b.getBody().setLinearVelocity(1, 0);
+		
+		if(Gdx.input.isKeyPressed(Keys.SPACE))
+			b.getBody().setLinearVelocity(0,1);
 		
 		//System.out.println(t.getZ());
 		Gdx.gl.glClearColor(0, 0, 0, 1);
