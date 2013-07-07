@@ -52,7 +52,7 @@ public class Anastasius implements ApplicationListener {
 	private Box2DDebugRenderer render;
 	Body circleBody;
 	Entity e;
-	Transform t = new Transform(680,510,-70,110,60,80);
+	Transform t = new Transform(680,510,-70,110,60,90);
 	RigidBody b;
 	@Override
 	public void create() {	
@@ -99,7 +99,7 @@ public class Anastasius implements ApplicationListener {
 		e.addComponent(t);
 		b= new RigidBody(e, BodyType.DynamicBody);
 		b.addFixture(RigidBody.createBoxFixture(110f, 60f, Vector2.Zero, 0f,  .4f, .6f, .9f));
-		
+		b.getBody().setFixedRotation(true);
 		EventRegion region = new EventRegion(e);
 		region.addRegion(EventRegion.createCircleRegion(1f, Vector2.Zero, (short)-1, (short)-1, (short)-1), new CollisionEvent());
 		
