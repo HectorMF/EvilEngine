@@ -6,12 +6,14 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.events.CollisionEvent;
+import com.perfectplay.org.systems.PhysicsSystem;
 
 public class RegionContactListener implements ContactListener{
-
+	private ZContactFilter dynamicFilter;
 	public RegionContactListener(){
-		
+		dynamicFilter = new ZContactFilter();
 	}
 	
 	@Override
@@ -63,12 +65,20 @@ public class RegionContactListener implements ContactListener{
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
+		Fixture fixtureA = contact.getFixtureA();
+		Fixture fixtureB = contact.getFixtureB();
+		Entity entityA = (Entity)fixtureA.getBody().getUserData();
+		Entity entityB = (Entity)fixtureB.getBody().getUserData();
 		
+		if(entityA.getComponent(Transform.class).isDirty() || entityB.getComponent(Transform.class).isDirty()){
+			contact.setEnabled(dynamicFilter.shouldCollide(contact.getFixtureA(), contact.getFixtureB()));
+		}
 		
 	}
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
+		
 	}
 	
 

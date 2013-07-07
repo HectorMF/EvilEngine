@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Transform extends Component {
 	
+	private boolean isDirty;
+	
 	private float x;
 	private float y;
 	private float z;
@@ -49,6 +51,7 @@ public class Transform extends Component {
 		this.horizontalFlip = horizontalFlip;
 		this.verticalFlip = verticalFlip;
 		this.depth = 10;
+		this.isDirty = false;
 	}
 	
 	public Vector2 getScreenPosition(){
@@ -118,7 +121,10 @@ public class Transform extends Component {
 	public boolean getVerticalFlip() {
 		return verticalFlip;
 	}
-
+	
+	public boolean isDirty() {
+		return isDirty;
+	}
 	
 	public void setX(float x){
 		this.x = x;
@@ -130,6 +136,11 @@ public class Transform extends Component {
 	
 	public void setZ(float z){
 		this.z = z;
+		this.isDirty = true;
+	}
+	
+	public void setDirty(boolean dirty){
+		this.isDirty = dirty;
 	}
 	
 	public void setPosition(float x, float y, float z){
@@ -148,6 +159,7 @@ public class Transform extends Component {
 	
 	public void addZ(float z){
 		this.z += z;
+		this.isDirty = true;
 	}
 	
 	public void setOriginX(float x) {
