@@ -22,20 +22,22 @@ public class RegionContactListener implements ContactListener{
 		if(!fixtureA.isSensor() & !fixtureB.isSensor())
 			return;
 		
-		if(fixtureA.getBody().getUserData()  == fixtureB.getBody().getUserData())
+		Entity entityA = (Entity)fixtureA.getBody().getUserData();
+		Entity entityB = (Entity)fixtureB.getBody().getUserData();
+		
+		if(entityA  == entityB)
 			return;
-		
-		CollisionEvent collisionEvent = null;
-		
-		if(fixtureA.isSensor()){
-			collisionEvent = (CollisionEvent) fixtureA.getUserData();
-		}else{
-			collisionEvent = (CollisionEvent) fixtureB.getUserData();
-		}
-		
-		if(collisionEvent != null){
-			collisionEvent.beginCollision((Entity)fixtureA.getBody().getUserData(), (Entity)fixtureB.getBody().getUserData());
-		}
+			CollisionEvent collisionEvent = null;
+			
+			if(fixtureA.isSensor()){
+				collisionEvent = (CollisionEvent) fixtureA.getUserData();
+			}else{
+				collisionEvent = (CollisionEvent) fixtureB.getUserData();
+			}
+			
+			if(collisionEvent != null){
+				collisionEvent.beginCollision((Entity)fixtureA.getBody().getUserData(), (Entity)fixtureB.getBody().getUserData());
+			}
 	}
 
 	@Override

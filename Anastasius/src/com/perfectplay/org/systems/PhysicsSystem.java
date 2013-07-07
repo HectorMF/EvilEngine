@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.listeners.ZContactFilter;
 import com.perfectplay.org.utils.Meter;
 import com.perfectplay.org.utils.Pixel;
 
@@ -25,6 +26,7 @@ public class PhysicsSystem extends EntitySystem{
 	public PhysicsSystem(World world) {
 		super(Aspect.getAspectForAll(Transform.class, RigidBody.class));
 		PhysicsSystem.world = world;
+		PhysicsSystem.world.setContactFilter(new ZContactFilter());
 	}
 	
 	@Override

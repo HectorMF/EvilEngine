@@ -7,6 +7,7 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,8 +17,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 //import com.perfectplay.org.box2dLight.RayHandler;
+import com.perfectplay.org.components.BackgroundRender;
 import com.perfectplay.org.components.EventRegion;
 import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.SpriteRender;
@@ -25,6 +28,7 @@ import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.events.CollisionEvent;
 import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;
+import com.perfectplay.org.systems.BackgroundRenderSystem;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.systems.RegionSystem;
 import com.perfectplay.org.systems.SpriteRenderSystem;
@@ -36,6 +40,7 @@ public class Anastasius implements ApplicationListener {
 	private com.artemis.World world;
 	private EntitySystem renderSystem;
 	private PhysicsSystem physicsSystem;
+	private BackgroundRenderSystem bgRender;
 	
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
@@ -47,6 +52,7 @@ public class Anastasius implements ApplicationListener {
 	private Box2DDebugRenderer render;
 	Body circleBody;
 	Entity e;
+	Transform t = new Transform(680,510,10,110,60,80);
 	@Override
 	public void create() {	
 		//Get screen data
@@ -59,7 +65,7 @@ public class Anastasius implements ApplicationListener {
 		render = new Box2DDebugRenderer();
  
 		
-		texture = new Texture(Gdx.files.internal("data/libgdx.png"));
+		texture = new Texture(Gdx.files.internal("data/castlea.jpg"));
 		texture2 = new Texture(Gdx.files.internal("data/test.png"));
 		//no idea what this does
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -69,6 +75,7 @@ public class Anastasius implements ApplicationListener {
 		world = new com.artemis.World();
 		renderSystem = world.setSystem(new SpriteRenderSystem(batch), true);
 		physicsSystem = world.setSystem(new PhysicsSystem(new World(new Vector2(0,-1f),false)),true);
+		bgRender = world.setSystem(new BackgroundRenderSystem(batch), true);
 		world.setSystem(new RegionSystem());
 		world.initialize();
 		BodyRemover.getInstance().setWorld(PhysicsSystem.getWorld());
@@ -88,7 +95,7 @@ public class Anastasius implements ApplicationListener {
 		e.addToWorld();
 		
 		e = world.createEntity();
-		e.addComponent(new Transform(680,510,0,110,60,80));
+		e.addComponent(t);
 		body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture(RigidBody.createBoxFixture(110f, 60f, Vector2.Zero, 0f,  .4f, .6f, .9f));
 		
@@ -102,12 +109,15 @@ public class Anastasius implements ApplicationListener {
 		e.addToWorld();
 			
 		e = world.createEntity();
-		e.addComponent(new Transform(300,100,0,Gdx.graphics.getWidth()/2,16,0));
+		Transform test = new Transform(300,100,0,550,309,0);
+		test.setDepth(200);
+		e.addComponent(test);
 		body = new RigidBody(e,BodyType.StaticBody);
-		body.addFixture(RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f, Vector2.Zero, 0f,  .5f, 0f, .5f));
+		FixtureDef def = RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f, Vector2.Zero, 0f,  .5f, 0f, .5f);
+		body.addFixture(def);
 	
 		e.addComponent(body);
-		e.addComponent(new SpriteRender(aSprite.clone()));
+		e.addComponent(new BackgroundRender(new Sprite(texture, 0, 0, 550,309), new Vector2(0,150)));
 		e.addToWorld();
 		
 
@@ -125,8 +135,15 @@ public class Anastasius implements ApplicationListener {
 	@Override
 	public void render() {	
 		
+		int speed = 60;
+		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) 
+			t.setZ(t.getZ() - Gdx.graphics.getDeltaTime() * speed);
+			
+		//PhysicsSystem.getWorld().re
+		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) 
+			t.setZ(t.getZ() + Gdx.graphics.getDeltaTime() * speed);
 		
-		
+		//System.out.println(t.getZ());
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		camera.update();
@@ -138,6 +155,7 @@ public class Anastasius implements ApplicationListener {
 		physicsSystem.process();
 		
 		batch.begin();
+		bgRender.process();
 		renderSystem.process();
 		batch.end();
 		render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(100f));

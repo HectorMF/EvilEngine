@@ -48,6 +48,7 @@ public class Transform extends Component {
 		this.scaleY = scaleY;
 		this.horizontalFlip = horizontalFlip;
 		this.verticalFlip = verticalFlip;
+		this.depth = 10;
 	}
 	
 	public Vector2 getScreenPosition(){
@@ -170,6 +171,10 @@ public class Transform extends Component {
 		this.height = height;
 	}
 
+	public void setDepth(float depth) {
+		this.depth = depth;
+	}
+	
 	public void setDimension(float width, float height) {
 		setWidth(width);
 		setHeight(height);
