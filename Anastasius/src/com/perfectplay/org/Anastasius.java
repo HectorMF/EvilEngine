@@ -137,6 +137,7 @@ public class Anastasius implements ApplicationListener {
 	public void render() {	
 		
 		int speed = 60;
+		
 		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) 
 			t.setZ(t.getZ() - Gdx.graphics.getDeltaTime() * speed);
 			
@@ -145,15 +146,15 @@ public class Anastasius implements ApplicationListener {
 			t.setZ(t.getZ() + Gdx.graphics.getDeltaTime() * speed);
 		
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT))
-			b.getBody().setLinearVelocity(-1, 0);
+			b.getBody().setLinearVelocity(-1, b.getVelocity().y);
 			
 		//PhysicsSystem.getWorld().re
 		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) 
-			b.getBody().setLinearVelocity(1, 0);
+			b.getBody().setLinearVelocity(1, b.getVelocity().y);
 		
 		if(Gdx.input.isKeyPressed(Keys.SPACE))
-			b.getBody().setLinearVelocity(0,1);
-		
+			b.getBody().setLinearVelocity(b.getVelocity().x, 1);
+		      
 		//System.out.println(t.getZ());
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);

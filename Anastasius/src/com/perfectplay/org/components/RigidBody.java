@@ -3,6 +3,7 @@ package com.perfectplay.org.components;
 import com.artemis.Component;
 import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -15,7 +16,7 @@ import com.perfectplay.org.utils.Pixel;
 
 public class RigidBody extends Component{
 	private Body rigidBody;
-	//private float velocityZ;
+    private float velocityZ;
 	private Vector2 forceZ; //(force,point) respectively
 	
 
@@ -72,13 +73,13 @@ public class RigidBody extends Component{
 		this.physicsBody = physicsBody;
 		this.velocityZ = velocityZ;
 		this.forceZ = new Vector2(0f, 0f);
-	}
+	}*/
 
 	public Vector3 getVelocity(){
-		Vector2 bodyVelocity = physicsBody.getLinearVelocity();
+		Vector2 bodyVelocity = rigidBody.getLinearVelocity();
 		return new Vector3(bodyVelocity.x, bodyVelocity.y, velocityZ);
 	}
-	
+	/*
 	public void setVelocity(Vector3 newVelocity){
 		physicsBody.setLinearVelocity(newVelocity.x, newVelocity.y);
 		velocityZ = newVelocity.z;
