@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.events.CollisionEvent;
-import com.perfectplay.org.systems.PhysicsSystem;
 
 public class RegionContactListener implements ContactListener{
 	private ZContactFilter dynamicFilter;
@@ -69,9 +68,9 @@ public class RegionContactListener implements ContactListener{
 		Fixture fixtureB = contact.getFixtureB();
 		Entity entityA = (Entity)fixtureA.getBody().getUserData();
 		Entity entityB = (Entity)fixtureB.getBody().getUserData();
-		
+		contact.setEnabled(dynamicFilter.shouldCollide(contact.getFixtureA(), contact.getFixtureB()));
 		if(entityA.getComponent(Transform.class).isDirty() || entityB.getComponent(Transform.class).isDirty()){
-			contact.setEnabled(dynamicFilter.shouldCollide(contact.getFixtureA(), contact.getFixtureB()));
+
 		}
 		
 	}

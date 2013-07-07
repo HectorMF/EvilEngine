@@ -52,7 +52,7 @@ public class Anastasius implements ApplicationListener {
 	private Box2DDebugRenderer render;
 	Body circleBody;
 	Entity e;
-	Transform t = new Transform(680,510,10,110,60,80);
+	Transform t = new Transform(680,510,-70,110,60,80);
 	@Override
 	public void create() {	
 		//Get screen data
@@ -87,7 +87,7 @@ public class Anastasius implements ApplicationListener {
 		AnimatedSprite aSprite = new AnimatedSprite(frames,1000);
 		
 	    e = world.createEntity();
-		e.addComponent(new Transform(540,300,0,50,50,60));
+		e.addComponent(new Transform(540,300,-40,50,50,60));
 		RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f));
 		e.addComponent(body);
@@ -110,7 +110,7 @@ public class Anastasius implements ApplicationListener {
 			
 		e = world.createEntity();
 		Transform test = new Transform(300,100,0,550,309,0);
-		test.setDepth(200);
+		test.setDepth(130);
 		e.addComponent(test);
 		body = new RigidBody(e,BodyType.StaticBody);
 		FixtureDef def = RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f, Vector2.Zero, 0f,  .5f, 0f, .5f);
@@ -158,7 +158,7 @@ public class Anastasius implements ApplicationListener {
 		bgRender.process();
 		renderSystem.process();
 		batch.end();
-		render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(100f));
+		//render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(100f));
 		render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(20f));
 		//render.
 		//if(!PhysicsSystem.getWorld().isLocked())
