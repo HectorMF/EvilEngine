@@ -1,22 +1,16 @@
 package com.perfectplay.org.systems;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
-import com.artemis.systems.EntityProcessingSystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.perfectplay.org.components.SpriteRender;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.utils.EntityComponentContainer;
-import com.perfectplay.org.utils.Pixel;
 
 public class SpriteRenderSystem extends EntitySystem {
 	@Mapper ComponentMapper<Transform> transforms;
