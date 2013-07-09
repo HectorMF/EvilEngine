@@ -16,6 +16,7 @@ import com.perfectplay.org.utils.Pixel;
 
 public class RigidBody extends Component{
 	private Body rigidBody;
+	
     private float velocityZ;
 	private Vector2 forceZ; //(force,point) respectively
 	
@@ -67,24 +68,25 @@ public class RigidBody extends Component{
 		fixtureDef.friction = friction;
 		return fixtureDef;
 	}
-	
-	/*
-	public RigidBody(Body physicsBody, float velocityZ) {
-		this.physicsBody = physicsBody;
-		this.velocityZ = velocityZ;
-		this.forceZ = new Vector2(0f, 0f);
-	}*/
 
 	public Vector3 getVelocity(){
 		Vector2 bodyVelocity = rigidBody.getLinearVelocity();
 		return new Vector3(bodyVelocity.x, bodyVelocity.y, velocityZ);
 	}
-	/*
-	public void setVelocity(Vector3 newVelocity){
-		physicsBody.setLinearVelocity(newVelocity.x, newVelocity.y);
-		velocityZ = newVelocity.z;
+	
+	public float getZVelocity(){
+		return velocityZ;
 	}
 	
+	public void setLinearVelocity(Vector3 velocity){
+		rigidBody.setLinearVelocity(velocity.x, velocity.y);
+		velocityZ = velocity.z;
+	}
+	
+	public void setLinearDamping(float damping){
+		rigidBody.setLinearDamping(damping);
+	}
+	/*
 	public void applyForces(Vector3 force, Vector3 point){
 		physicsBody.applyForce(force.x, force.y, point.x, point.y);
 		forceZ = new Vector2(force.z, point.z); //Needs to be changed to either be a list of forces

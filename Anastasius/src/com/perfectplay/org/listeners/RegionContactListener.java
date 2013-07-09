@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.events.CollisionEvent;
 
@@ -68,7 +69,13 @@ public class RegionContactListener implements ContactListener{
 		Fixture fixtureB = contact.getFixtureB();
 		Entity entityA = (Entity)fixtureA.getBody().getUserData();
 		Entity entityB = (Entity)fixtureB.getBody().getUserData();
-		contact.setEnabled(dynamicFilter.shouldCollide(contact.getFixtureA(), contact.getFixtureB()));
+		boolean contactOccured = dynamicFilter.shouldCollide(contact.getFixtureA(), contact.getFixtureB());
+		contact.setEnabled(contactOccured);
+		if(contactOccured){
+			float velocity = entityA.getComponent(RigidBody.class).getZVelocity();
+			float velocity2 = entityB.getComponent(RigidBody.class).getZVelocity();
+			
+		}
 		if(entityA.getComponent(Transform.class).isDirty() || entityB.getComponent(Transform.class).isDirty()){
 
 		}

@@ -59,7 +59,7 @@ public class Anastasius implements ApplicationListener {
 		batch = new SpriteBatch();
 		render = new Box2DDebugRenderer();
  
-		level = new Level(100,100,batch, new Vector2(0,-2f),false);
+		level = new Level(100,100,100, batch, new Vector2(0,-2f),false);
 		
 		
 		texture = new Texture(Gdx.files.internal("data/castlea.jpg"));
@@ -98,7 +98,7 @@ public class Anastasius implements ApplicationListener {
 		e.addComponent(new SpriteRender(aSprite.clone()));
 
 		e.addToWorld();
-		e.disable();
+
 		e = level.createEntity();
 		Transform test = new Transform(300,100,0,550,309,0);
 		test.setDepth(130);
