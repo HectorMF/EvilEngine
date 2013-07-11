@@ -36,7 +36,7 @@ public class SpatialGrid {
 	public void clear(){
         for (int row = 0; row < rows; row++)
             for (int col = 0; col < columns; col++)
-                buckets[row][col].clear();
+               	buckets[row][col].clear();
 	}
 	
     public void insertEntity(Entity entity)
@@ -50,22 +50,23 @@ public class SpatialGrid {
         int column = (int)(transform.getX() / bucketSize);
         int row2 = (int)((transform.getY() - 1 + transform.getHeight()) / bucketSize);
         int column2 = (int)((transform.getX() - 1 + transform.getWidth()) /bucketSize);
+        
         ArrayList<Bucket> bList = new ArrayList<Bucket>();
+        
         for (int y = row; y <= row2; ++y)
             for (int x = column; x <= column2; ++x)
                 if (x >= 0 && y >= 0)
-                    if (x < columns && y < rows)
+                    if (x < columns && y < rows){
                     	bList.add(buckets[y][x]);
+                    }
         transform.setBuckets(bList);
+        entity.disable();
         for(Bucket b : bList){
         	b.insertEntity(entity);
         }
         
-        System.out.println("Row1: "+row + " Row2: " +row2);
-        System.out.println("col1: "+column + " col2: " +column2);
-        System.out.println("");
         //ARGH THIS IS WRONG BUT IM LEAVING IT FOR NOW
-        //entity.disable();
+        
     }
     
     public void removeEntity(Entity entity)
@@ -97,7 +98,7 @@ public class SpatialGrid {
     
     
     public void activateBucketsOnScreen(int x, int y, int width, int height){
-    	int testval = 0;
+    	int testval = 00;
         int row1 = (int)((y+testval)/ bucketSize);
         int row2 = (int)(((y-testval)- 1 + height) / bucketSize);
         int column1 = (int)((x+testval) / bucketSize);
@@ -105,10 +106,22 @@ public class SpatialGrid {
         //optimize this later
         for(int r = activeRow1; r < activeRow2; r++ ){
             for(int c = activeCol1; c < activeCol2; c++ ){
-            	if (c >= 0 && r >= 0)
-                    if (c < columns && r < rows)
-                    	if(buckets[r][c].isEnabled())
-                    		buckets[r][c].disable();
+            	if (c >= 0 && r >= 0){
+                    if (c < columns && r < rows){
+                    	if(r <= row2 && r >= row1 && c <= column2 && c >= column1){
+                    	//	System.out.println("r: " + r + " c: "+c);
+                    	}
+                    	else{
+                    		System.out.println("r: " + r + " c: "+c);
+                        	if(buckets[r][c].isEnabled())
+                        	{
+                        		//System.out.println("r: " + r + " c: "+c);
+                        		//buckets[r][c].disable();
+                        	}	
+                    	}
+                    }
+            	}
+
             }
         }
         
@@ -116,8 +129,7 @@ public class SpatialGrid {
             for(int c = column1; c < column2; c++ ){
             	if (c >= 0 && r >= 0)
                     if (c < columns && r < rows)
-                    	if(!buckets[r][c].isEnabled())
-                    	buckets[r][c].enable();
+                    		buckets[r][c].enable();
             }
         }
         

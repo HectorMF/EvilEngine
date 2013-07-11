@@ -55,7 +55,7 @@ public class Anastasius implements ApplicationListener {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		camera = new OrthographicCamera(w,h);
-        camera.position.set(w / 2, h/ 2, 0);
+        camera.position.set(400+(w / 2), 400+(h/ 2), 0);
         camera.update();
         
 		batch = new SpriteBatch();

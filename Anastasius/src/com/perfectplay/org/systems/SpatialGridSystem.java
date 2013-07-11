@@ -35,7 +35,7 @@ public class SpatialGridSystem extends EntitySystem{
 	@Override
 	protected void removed(Entity e) {
 		super.removed(e);
-		spatialGrid.removeEntity(e);
+		//spatialGrid.removeEntity(e);
 	}
 	
 	protected void process(Entity e) {
