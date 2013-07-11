@@ -29,7 +29,6 @@ public class SpriteRenderSystem extends EntitySystem {
 	@Override
 	protected void inserted(Entity e) {
 		super.inserted(e);
-		
 		int i = 0;
 		while(i < entityContainer.size() && entityContainer.get(i).getComponent().getZ() > transforms.get(e).getZ())
 			i++;

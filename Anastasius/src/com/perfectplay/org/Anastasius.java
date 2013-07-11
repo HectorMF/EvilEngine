@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -44,8 +45,9 @@ public class Anastasius implements ApplicationListener {
 	
 	Body circleBody;
 	Entity e;
-	Transform t = new Transform(680,510,-70,110,60,90);
+	Transform t = new Transform(680,510,-70,110,60,10,90);
 	RigidBody b;
+	ShapeRenderer debug;
 	
 	@Override
 	public void create() {	
@@ -58,8 +60,9 @@ public class Anastasius implements ApplicationListener {
         
 		batch = new SpriteBatch();
 		render = new Box2DDebugRenderer();
+		debug = new ShapeRenderer();
  
-		level = new Level(100,100,100, batch, new Vector2(0,-2f),false);
+		level = new Level(4000,4000,100, batch, new Vector2(0,-2f),false);
 		
 		
 		texture = new Texture(Gdx.files.internal("data/castlea.jpg"));
@@ -78,10 +81,10 @@ public class Anastasius implements ApplicationListener {
 		AnimatedSprite aSprite = new AnimatedSprite(frames,1000);
 		
 	    e = level.createEntity();
-		e.addComponent(new Transform(540,300,-40,50,50,60));
+		e.addComponent(new Transform(0,0,-40,50,50,50,60));
 		RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f));
-		e.addComponent(body);
+		//e.addComponent(body);
 		e.addComponent(new SpriteRender(aSprite));
 		e.addToWorld();
 		
@@ -100,8 +103,8 @@ public class Anastasius implements ApplicationListener {
 		e.addToWorld();
 
 		e = level.createEntity();
-		Transform test = new Transform(300,100,0,550,309,0);
-		test.setDepth(130);
+		Transform test = new Transform(300,100,0,550,309,130,0);
+	
 		e.addComponent(test);
 		body = new RigidBody(e,BodyType.StaticBody);
 		FixtureDef def = RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f, Vector2.Zero, 0f,  .5f, 0f, .5f);
@@ -127,34 +130,43 @@ public class Anastasius implements ApplicationListener {
 		int speed = 60;
 		
 		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) 
-			t.setZ(t.getZ() - Gdx.graphics.getDeltaTime() * speed);
+			camera.position.y += 3;
+		
+			//t.setZ(t.getZ() - Gdx.graphics.getDeltaTime() * speed);
 			
 		//PhysicsSystem.getWorld().re
 		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) 
-			t.setZ(t.getZ() + Gdx.graphics.getDeltaTime() * speed);
+			camera.position.y -= 3;
+			//t.setZ(t.getZ() + Gdx.graphics.getDeltaTime() * speed);
 		
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT))
-			b.getBody().setLinearVelocity(-1, b.getVelocity().y);
+			camera.position.x -= 3;
+		//	b.getBody().setLinearVelocity(-1, b.getVelocity().y);
 			
 		//PhysicsSystem.getWorld().re
 		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) 
-			b.getBody().setLinearVelocity(1, b.getVelocity().y);
+			camera.position.x += 3;
+		//	b.getBody().setLinearVelocity(1, b.getVelocity().y);
 		
 		if(Gdx.input.isKeyPressed(Keys.SPACE))
-			b.getBody().setLinearVelocity(b.getVelocity().x, 1);
+		//	b.getBody().setLinearVelocity(b.getVelocity().x, 1);
 		      
 		//System.out.println(t.getZ());
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
-		
+		debug.setProjectionMatrix(camera.combined);
+		level.setCamera(camera);
 		level.setDelta(Gdx.graphics.getDeltaTime());
 		level.process();
 		
 		batch.begin();
 		level.render();
 		batch.end();
+		
+		
+		level.getSpatialGrid().debugRender(debug);
 		//render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(100f));
 		render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(20f));
 		

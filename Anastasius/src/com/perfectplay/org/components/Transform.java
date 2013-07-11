@@ -1,10 +1,15 @@
 package com.perfectplay.org.components;
 
+import java.util.ArrayList;
+
 import com.artemis.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.perfectplay.org.utils.Bucket;
 
 public class Transform extends Component {
+	
+	private ArrayList<Bucket> buckets;
 	
 	private boolean isDirty;
 	
@@ -28,14 +33,14 @@ public class Transform extends Component {
 	private boolean verticalFlip;
 
 	public Transform() {
-		this(0f,0f,0f,0f, 0f, 10, 10, 1f, 1f, 0f, false, false);
+		this(0f,0f,0f,0f, 0f, 10, 10, 10, 1f, 1f, 0f, false, false);
 	}
 
-	public Transform(float x, float y, float z, float width, float height, float rotation) {
-		this(x, y, z, width/2, height/2, width, height, 1f, 1f, rotation, false, false);
+	public Transform(float x, float y, float z, float width, float height, float depth, float rotation) {
+		this(x, y, z, width/2, height/2, width, height, depth, 1f, 1f, rotation, false, false);
 	}
 
-	public Transform(float x, float y, float z, float originX, float originY, float width, float height,
+	public Transform(float x, float y, float z, float originX, float originY, float width, float height, float depth,
 					float scaleX, float scaleY, float rotation, boolean horizontalFlip,
 					boolean verticalFlip) {
 		this.x = x;
@@ -50,8 +55,12 @@ public class Transform extends Component {
 		this.scaleY = scaleY;
 		this.horizontalFlip = horizontalFlip;
 		this.verticalFlip = verticalFlip;
-		this.depth = 10;
-		this.isDirty = false;
+		this.depth = depth;
+		this.isDirty = true;
+	}
+	
+	public ArrayList<Bucket> getBuckets(){
+		return buckets;
 	}
 	
 	public Vector2 getScreenPosition(){
@@ -128,18 +137,24 @@ public class Transform extends Component {
 	
 	public void setX(float x){
 		this.x = x;
+		setDirty(true);
 	}
 	
 	public void setY(float y){
 		this.y = y;
+		setDirty(true);
+	}
+	
+	public void setBuckets(ArrayList<Bucket> buckets){
+		this.buckets = buckets;
 	}
 	
 	public void setZ(float z){
 		this.z = z;
-		this.isDirty = true;
+		setDirty(true);
 	}
 	
-	public void setDirty(boolean dirty){
+	private void setDirty(boolean dirty){
 		this.isDirty = dirty;
 	}
 	
@@ -147,19 +162,22 @@ public class Transform extends Component {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		setDirty(true);
 	}
 	
 	public void addX(float x){
 		this.x += x;
+		setDirty(true);
 	}
 	
 	public void addY(float y){
 		this.y += y;
+		setDirty(true);
 	}
 	
 	public void addZ(float z){
 		this.z += z;
-		this.isDirty = true;
+		setDirty(true);
 	}
 	
 	public void setOriginX(float x) {

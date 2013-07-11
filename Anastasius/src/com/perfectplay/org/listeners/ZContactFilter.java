@@ -21,8 +21,6 @@ public class ZContactFilter implements ContactFilter{
 		
 		if(transformA == null || transformB == null)
 			return false;
-		transformA.setDirty(false);
-		transformB.setDirty(false);
 		float minA = transformA.getZ() - transformA.getDepth();
 		float maxA = transformA.getZ();
 		float minB = transformB.getZ() - transformB.getDepth();
