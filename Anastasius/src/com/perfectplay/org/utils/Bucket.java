@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 import com.artemis.Entity;
 
-public class Bucket {
-	private ArrayList<Entity> entityList;
+public class Bucket{
+	
+	private ArrayList<SpatialNode> nodeList;
 	
 	private boolean isEnabled;
 	private boolean isOverlapping;
+	
 	public Bucket(){
-		entityList = new ArrayList<Entity>();
+		nodeList = new ArrayList<SpatialNode>();
 		isEnabled = false;
 	}
 	
@@ -22,34 +24,49 @@ public class Bucket {
 		return isOverlapping;
 	}
 	
-	public void insertEntity(Entity entity){
-		entityList.add(entity);
+	public void insertNode(SpatialNode node){
+		nodeList.add(node);
+	}
+	
+	public void setActive(boolean active){
+		for(SpatialNode node : nodeList){
+			node.setActive(active);
+		}
 	}
 	
 	public void enable(){
-		for(Entity e : entityList){
-			if(!e.isEnabled()){
-				e.enable();
+		for(SpatialNode node : nodeList){
+			if(!node.isEnabled()){
+				node.enable();
 			}
 		}
 		isEnabled = true;
 	}
 	
 	public void disable(){
-		for(Entity e : entityList){
-			if(e.isEnabled())
-				e.disable();
+		for(SpatialNode node : nodeList){
+			if(node.isEnabled())
+				node.disable();
 		}
 		
 		isEnabled = false;
 	}
 	
 	public void disableSome(ArrayList<Entity> list){
-		for(Entity e : entityList){
-			if(!list.contains(e))
-				if(e.isEnabled())
-					e.disable();
+		for(SpatialNode node : nodeList){
+			if(!list.contains(node))
+				if(node.isEnabled())
+					node.disable();
 		}
+		isEnabled = false;
+	}
+	
+	public void disableInactives(){
+		for(SpatialNode node : nodeList){
+			if(!node.isActive())
+				node.disable();
+		}
+		
 		isEnabled = false;
 	}
 	
@@ -58,15 +75,15 @@ public class Bucket {
 	}
 	
 	public void clear(){
-		entityList.clear();
+		nodeList.clear();
 	}
 	
 	public void removeEntity(Entity entity){
-		entityList.remove(entity);
+		nodeList.remove(entity);
 	}
 	
 	public int size(){
-		return entityList.size();
+		return nodeList.size();
 	}
 	
 	public boolean isEmpty(){
@@ -74,13 +91,12 @@ public class Bucket {
 	}
 	
 	public boolean contains(Entity entity){
-		return entityList.contains(entity);
+		return nodeList.contains(entity);
 	}
 	
-	public ArrayList<Entity> getEntities(){
-		return entityList;
+	public ArrayList<SpatialNode> getNodes(){
+		return nodeList;
 	}
-	
-	
+
 	
 }

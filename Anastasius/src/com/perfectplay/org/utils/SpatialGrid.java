@@ -25,7 +25,7 @@ public class SpatialGrid {
 	
 	private int activeRow1, activeRow2;
 	private int activeCol1, activeCol2;
-	private ArrayList<Entity> activeEntities;
+	private ArrayList<SpatialNode> activeEntities;
 	
 	public SpatialGrid(int width, int height, int bucketSize){
 		this.columns = width/bucketSize;
@@ -36,7 +36,8 @@ public class SpatialGrid {
 		this.activeCol1 = 0;
 		this.activeCol2 = 0;
 		this.buckets = new Bucket[rows][columns];
-		this.activeEntities = new ArrayList<Entity>();
+		this.activeEntities = new ArrayList<SpatialNode>();
+		
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < columns; c++)
                 buckets[r][c] = new Bucket();
@@ -49,30 +50,29 @@ public class SpatialGrid {
                	buckets[row][col].clear();
 	}
 	
-    public void insertEntity(Entity entity)
+    public void insertEntity(Entity entity, Transform transform)
     {
+    	SpatialNode node = new SpatialNode(entity,transform);
     	
-        Transform transform = entity.getComponent(Transform.class);
-
-        if (transform == null) return;
-
+    	ArrayList<Bucket> bList = new ArrayList<Bucket>();
+    	
+    	//calculate the area which holds the entity
         int row = (int)(transform.getY() / bucketSize);
         int column = (int)(transform.getX() / bucketSize);
         int row2 = (int)((transform.getY() - 1 + transform.getHeight()) / bucketSize);
         int column2 = (int)((transform.getX() - 1 + transform.getWidth()) /bucketSize);
         
-        ArrayList<Bucket> bList = new ArrayList<Bucket>();
-        
+        //add the buckets to the list of buckets which hold the entity
         for (int y = row; y <= row2; ++y)
             for (int x = column; x <= column2; ++x)
                 if (x >= 0 && y >= 0)
-                    if (x < columns && y < rows){
+                    if (x < columns && y < rows)
                     	bList.add(buckets[y][x]);
-                    }
+
         transform.setBuckets(bList);
        	boolean isEnabled = false;
         for(Bucket b : bList){
-        	b.insertEntity(entity);
+        	b.insertNode(node);
         	if(b.isEnabled())
         		isEnabled = true;
         }
@@ -80,9 +80,6 @@ public class SpatialGrid {
         if(!isEnabled){
         	entity.disable();
         }
-        
-        //ARGH THIS IS WRONG BUT IM LEAVING IT FOR NOW
-        
     }
     
     public void removeEntity(Entity entity)
@@ -95,12 +92,12 @@ public class SpatialGrid {
             bucket.removeEntity(entity);
     }
     
-    public void updateEntity(Entity entity){
-    	removeEntity(entity);
-    	insertEntity(entity);
+    public void updateEntity(Entity entity, Transform transform){
+    	//removeEntity(entity);
+    	//insertEntity(entity);
     }
     
-    public ArrayList<Entity> retrieveNearbyEntities(Entity entity)
+   /* public ArrayList<Entity> retrieveNearbyEntities(Entity entity)
     {
         ArrayList<Entity> entities = new ArrayList<Entity>();
         for(Bucket bucket : (entity.getComponent(Transform.class).getBuckets()))
@@ -110,7 +107,7 @@ public class SpatialGrid {
                     entities.add(entity);
         }
         return entities;
-    }
+    }*/
     
     
     public void activateBucketsOnScreen(int x, int y, int width, int height){
@@ -123,28 +120,54 @@ public class SpatialGrid {
         
         activeEntities.clear();
         
+        //set all buckets in previous frame to inactive
         for(int r = activeRow1; r < activeRow2; r++ ){
             for(int c = activeCol1; c < activeCol2; c++ ){
             	if (c >= 0 && r >= 0){
                     if (c < columns && r < rows){
-                    	if(r < row2 && r >= row1 && c < column2 && c >= column1){
-                    	//	System.out.println("r: " + r + " c: "+c);
-                    		activeEntities.addAll(buckets[r][c].getEntities());
-                    	}
-                    	else{
-                    		System.out.println("r: " + r + " c: "+c);
-                        	if(buckets[r][c].isEnabled())
-                        	{
-                        		//System.out.println("r: " + r + " c: "+c);
-                        		buckets[r][c].disableSome(activeEntities);
-                        	}	
-                    	}
+                    	buckets[r][c].setActive(false);
                     }
             	}
-
             }
         }
         
+        //calculate overlapping area
+        int startRow = 0, endRow = 0;
+        int startCol = 0, endCol = 0;
+        if (activeRow1 <= row2 && activeRow2  >= row2){
+        	startRow = activeRow1;
+        	endRow = row2;
+        }
+        if (row1 <= activeRow2 && row2  >= activeRow2){
+        	startRow = row1;
+        	endRow = activeRow2;
+        }
+        
+        if (activeCol1 <= column2 && activeCol2  >= column2){
+        	startCol = activeCol1;
+        	endCol = column2;
+        }
+        if (column1 <= activeCol2 && column2  >= activeCol2){
+        	startCol = column1;
+        	endCol = activeCol2;
+        }
+        
+        //set overlap entities to active
+        for(int r = startRow; r < endRow; r++)
+        	for(int c = startCol; c < endCol; c++)
+            	if (c >= 0 && r >= 0)
+                    if (c < columns && r < rows)
+                    	buckets[r][c].setActive(true);
+        
+        //disable non-overlap entities
+        for(int r = activeRow1; r < activeRow2; r++ )
+            for(int c = activeCol1; c < activeCol2; c++ )
+            	if (c >= 0 && r >= 0)
+                    if (c < columns && r < rows)
+                    	if(buckets[r][c].isEnabled())
+                    		buckets[r][c].disableInactives();
+        
+        //enable buckets in new area
         for(int r = row1; r < row2; r++ ){
             for(int c = column1; c < column2; c++ ){
             	if (c >= 0 && r >= 0)
