@@ -9,6 +9,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.perfectplay.org.components.Transform;
 
 public class SpatialGrid {
+	
+	
+	// THINGS THAT NEED TO HAPPEN.
+	
+	// MAKE A CUSTOM CLASS THAT HOLDS ENTITY, IT'S TRANSFORM, AND FLAGS.  
+	
+	//REWRITE THE SPATIAL GRID WELL. 
+	
 	private Bucket[][] buckets;
 	
 	private int columns;
@@ -17,6 +25,7 @@ public class SpatialGrid {
 	
 	private int activeRow1, activeRow2;
 	private int activeCol1, activeCol2;
+	private ArrayList<Entity> activeEntities;
 	
 	public SpatialGrid(int width, int height, int bucketSize){
 		this.columns = width/bucketSize;
@@ -27,6 +36,7 @@ public class SpatialGrid {
 		this.activeCol1 = 0;
 		this.activeCol2 = 0;
 		this.buckets = new Bucket[rows][columns];
+		this.activeEntities = new ArrayList<Entity>();
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < columns; c++)
                 buckets[r][c] = new Bucket();
@@ -60,9 +70,15 @@ public class SpatialGrid {
                     	bList.add(buckets[y][x]);
                     }
         transform.setBuckets(bList);
-        entity.disable();
+       	boolean isEnabled = false;
         for(Bucket b : bList){
         	b.insertEntity(entity);
+        	if(b.isEnabled())
+        		isEnabled = true;
+        }
+        
+        if(!isEnabled){
+        	entity.disable();
         }
         
         //ARGH THIS IS WRONG BUT IM LEAVING IT FOR NOW
@@ -98,25 +114,29 @@ public class SpatialGrid {
     
     
     public void activateBucketsOnScreen(int x, int y, int width, int height){
-    	int testval = 00;
+    	int testval = 200;
         int row1 = (int)((y+testval)/ bucketSize);
         int row2 = (int)(((y-testval)- 1 + height) / bucketSize);
         int column1 = (int)((x+testval) / bucketSize);
         int column2 = (int)(((x-testval) - 1 + width) / bucketSize);
         //optimize this later
+        
+        activeEntities.clear();
+        
         for(int r = activeRow1; r < activeRow2; r++ ){
             for(int c = activeCol1; c < activeCol2; c++ ){
             	if (c >= 0 && r >= 0){
                     if (c < columns && r < rows){
-                    	if(r <= row2 && r >= row1 && c <= column2 && c >= column1){
+                    	if(r < row2 && r >= row1 && c < column2 && c >= column1){
                     	//	System.out.println("r: " + r + " c: "+c);
+                    		activeEntities.addAll(buckets[r][c].getEntities());
                     	}
                     	else{
                     		System.out.println("r: " + r + " c: "+c);
                         	if(buckets[r][c].isEnabled())
                         	{
                         		//System.out.println("r: " + r + " c: "+c);
-                        		//buckets[r][c].disable();
+                        		buckets[r][c].disableSome(activeEntities);
                         	}	
                     	}
                     }
@@ -129,7 +149,7 @@ public class SpatialGrid {
             for(int c = column1; c < column2; c++ ){
             	if (c >= 0 && r >= 0)
                     if (c < columns && r < rows)
-                    		buckets[r][c].enable();
+                    	buckets[r][c].enable();
             }
         }
         

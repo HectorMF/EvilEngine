@@ -8,15 +8,21 @@ public class Bucket {
 	private ArrayList<Entity> entityList;
 	
 	private boolean isEnabled;
-	
+	private boolean isOverlapping;
 	public Bucket(){
 		entityList = new ArrayList<Entity>();
 		isEnabled = false;
 	}
 	
+	public void setOverlapping(boolean overlap){
+		this.isOverlapping = overlap;
+	}
+	
+	public boolean isOverlapping(){
+		return isOverlapping;
+	}
+	
 	public void insertEntity(Entity entity){
-		if(isEnabled && !entity.isEnabled())
-			entity.enable();
 		entityList.add(entity);
 	}
 	
@@ -30,12 +36,20 @@ public class Bucket {
 	}
 	
 	public void disable(){
-		System.out.println("Test");
 		for(Entity e : entityList){
 			if(e.isEnabled())
 				e.disable();
 		}
 		
+		isEnabled = false;
+	}
+	
+	public void disableSome(ArrayList<Entity> list){
+		for(Entity e : entityList){
+			if(!list.contains(e))
+				if(e.isEnabled())
+					e.disable();
+		}
 		isEnabled = false;
 	}
 	
