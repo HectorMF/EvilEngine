@@ -78,8 +78,14 @@ public class Bucket{
 		nodeList.clear();
 	}
 	
-	public void removeEntity(Entity entity){
-		nodeList.remove(entity);
+	public void removeNodesContainingEntity(Entity entity){
+		
+		for(int i = nodeList.size()-1; i >= 0; i --)
+			if(entity.getId() == nodeList.get(i).getEntity().getId()){
+				nodeList.remove(i);
+				System.out.println("node cleared");
+			}
+		
 	}
 	
 	public int size(){

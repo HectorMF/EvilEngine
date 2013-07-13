@@ -13,9 +13,8 @@ public class SpatialGrid {
 	
 	// THINGS THAT NEED TO HAPPEN.
 	
-	// MAKE A CUSTOM CLASS THAT HOLDS ENTITY, IT'S TRANSFORM, AND FLAGS.  
+	// does not handle rotation, scaling, or sprite offsets
 	
-	//REWRITE THE SPATIAL GRID WELL. 
 	
 	private Bucket[][] buckets;
 	
@@ -57,17 +56,19 @@ public class SpatialGrid {
     	ArrayList<Bucket> bList = new ArrayList<Bucket>();
     	
     	//calculate the area which holds the entity
-        int row = (int)(transform.getY() / bucketSize);
-        int column = (int)(transform.getX() / bucketSize);
-        int row2 = (int)((transform.getY() - 1 + transform.getHeight()) / bucketSize);
-        int column2 = (int)((transform.getX() - 1 + transform.getWidth()) /bucketSize);
+        int row = (int)(transform.getScreenY() / bucketSize);
+        int column = (int)(transform.getScreenX() / bucketSize);
+        int row2 = (int)((transform.getScreenY() - 1 + transform.getHeight()) / bucketSize);
+        int column2 = (int)((transform.getScreenX() - 1 + transform.getWidth()) /bucketSize);
         
         //add the buckets to the list of buckets which hold the entity
         for (int y = row; y <= row2; ++y)
             for (int x = column; x <= column2; ++x)
                 if (x >= 0 && y >= 0)
-                    if (x < columns && y < rows)
+                    if (x < columns && y < rows){
                     	bList.add(buckets[y][x]);
+                    	System.out.println("row1: " + y +" : col: " + x);
+                    }
 
         transform.setBuckets(bList);
        	boolean isEnabled = false;
@@ -82,19 +83,20 @@ public class SpatialGrid {
         }
     }
     
-    public void removeEntity(Entity entity)
+    public void removeEntity(Entity entity, Transform transform)
     {
-    	Transform transform = entity.getComponent(Transform.class);
-
+    	System.out.println("Entity: " + entity.getId() + " has been removed.");
         if (transform == null) return;
-
+        System.out.println(transform.getBuckets().size());
         for(Bucket bucket : transform.getBuckets())
-            bucket.removeEntity(entity);
+            bucket.removeNodesContainingEntity(entity);
     }
     
     public void updateEntity(Entity entity, Transform transform){
-    	//removeEntity(entity);
-    	//insertEntity(entity);
+    	
+    	removeEntity(entity, transform);
+    	insertEntity(entity,transform);
+    	System.out.println("Entity: " + entity.getId() + " has been added.");
     }
     
    /* public ArrayList<Entity> retrieveNearbyEntities(Entity entity)
@@ -110,19 +112,21 @@ public class SpatialGrid {
     }*/
     
     
-    public void activateBucketsOnScreen(int x, int y, int width, int height){
-    	int testval = 200;
-        int row1 = (int)((y+testval)/ bucketSize);
-        int row2 = (int)(((y-testval)- 1 + height) / bucketSize);
-        int column1 = (int)((x+testval) / bucketSize);
-        int column2 = (int)(((x-testval) - 1 + width) / bucketSize);
-        //optimize this later
-        
-        activeEntities.clear();
+    public void activateBucketsOnScreen(int x1, int y1, int width1, int height1){
+    	
+    	int x= x1 + 100;
+    	int y = y1 +100;
+    	int width = 100;
+    	int height = 100;
+    	int testval = 000;
+        int row1 = (int)(y / bucketSize);
+        int row2 = (int)((y - 1 + height) / bucketSize);
+        int column1 = (int)(x / bucketSize);
+        int column2 = (int)((x - 1 + width) / bucketSize);
         
         //set all buckets in previous frame to inactive
-        for(int r = activeRow1; r < activeRow2; r++ ){
-            for(int c = activeCol1; c < activeCol2; c++ ){
+        for(int r = activeRow1; r <= activeRow2; r++ ){
+            for(int c = activeCol1; c <= activeCol2; c++ ){
             	if (c >= 0 && r >= 0){
                     if (c < columns && r < rows){
                     	buckets[r][c].setActive(false);
@@ -151,25 +155,26 @@ public class SpatialGrid {
         	startCol = column1;
         	endCol = activeCol2;
         }
-        
+        //System.out.println("r: " + startRow + " : " + endRow);
+        //System.out.println("c: " + startCol + " : " + endCol);
         //set overlap entities to active
-        for(int r = startRow; r < endRow; r++)
-        	for(int c = startCol; c < endCol; c++)
+        for(int r = startRow; r <= endRow; r++)
+        	for(int c = startCol; c <= endCol; c++)
             	if (c >= 0 && r >= 0)
                     if (c < columns && r < rows)
                     	buckets[r][c].setActive(true);
         
         //disable non-overlap entities
-        for(int r = activeRow1; r < activeRow2; r++ )
-            for(int c = activeCol1; c < activeCol2; c++ )
+        for(int r = activeRow1; r <= activeRow2; r++ )
+            for(int c = activeCol1; c <= activeCol2; c++ )
             	if (c >= 0 && r >= 0)
                     if (c < columns && r < rows)
                     	if(buckets[r][c].isEnabled())
                     		buckets[r][c].disableInactives();
         
         //enable buckets in new area
-        for(int r = row1; r < row2; r++ ){
-            for(int c = column1; c < column2; c++ ){
+        for(int r = row1; r <= row2; r++ ){
+            for(int c = column1; c <= column2; c++ ){
             	if (c >= 0 && r >= 0)
                     if (c < columns && r < rows)
                     	buckets[r][c].enable();
@@ -203,15 +208,16 @@ public class SpatialGrid {
     	 shapeRenderer.begin(ShapeType.Rectangle);
     	 shapeRenderer.setColor(1, 1, 0, 1);
     	 
-         for(int r = activeRow1; r < activeRow2; r++ ){
-             for(int c = activeCol1; c < activeCol2; c++ ){
+         for(int r = activeRow1; r <= activeRow2; r++ ){
+             for(int c = activeCol1; c <= activeCol2; c++ ){
              	if (c >= 0 && r >= 0)
                      if (c < columns && r < rows)
                     	 shapeRenderer.rect(c*bucketSize, r*bucketSize, bucketSize, bucketSize);
              }
          }
     	 
-    	 
+    	 shapeRenderer.setColor(1,0,1,1);
+      	 shapeRenderer.rect(0*bucketSize, 0*bucketSize, bucketSize, bucketSize);
     	 shapeRenderer.end();
     }
   

@@ -135,12 +135,18 @@ public class Transform extends Component {
 		return isDirty;
 	}
 	
+	public void setDirty(boolean dirty){
+		this.isDirty = dirty;
+	}
+	
 	public void setX(float x){
+		if(this.x == x) return;
 		this.x = x;
 		setDirty(true);
 	}
 	
 	public void setY(float y){
+		if(this.y == y) return;
 		this.y = y;
 		setDirty(true);
 	}
@@ -150,15 +156,13 @@ public class Transform extends Component {
 	}
 	
 	public void setZ(float z){
+		if(this.z == z) return;
 		this.z = z;
 		setDirty(true);
 	}
 	
-	private void setDirty(boolean dirty){
-		this.isDirty = dirty;
-	}
-	
 	public void setPosition(float x, float y, float z){
+		if(this.x == x && this.y == y && this.z == z) return;
 		this.x = x;
 		this.y = y;
 		this.z = z;

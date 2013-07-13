@@ -45,7 +45,7 @@ public class Anastasius implements ApplicationListener {
 	
 	Body circleBody;
 	Entity e;
-	Transform t = new Transform(680,510,-70,110,60,10,90);
+	Transform t = new Transform(600,500,0,110,60,10,00);
 	RigidBody b;
 	ShapeRenderer debug;
 	
@@ -81,7 +81,7 @@ public class Anastasius implements ApplicationListener {
 		AnimatedSprite aSprite = new AnimatedSprite(frames,1000);
 		
 	    e = level.createEntity();
-		e.addComponent(new Transform(0,0,-40,50,50,50,60));
+		e.addComponent(new Transform(190,190,100,150,150,50,0));
 		RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f));
 		//e.addComponent(body);
@@ -103,7 +103,7 @@ public class Anastasius implements ApplicationListener {
 		e.addToWorld();
 
 		e = level.createEntity();
-		Transform test = new Transform(300,100,0,550,309,130,0);
+		Transform test = new Transform(300,100,0,550,290,130,0);
 	
 		e.addComponent(test);
 		body = new RigidBody(e,BodyType.StaticBody);
@@ -111,7 +111,7 @@ public class Anastasius implements ApplicationListener {
 		body.addFixture(def);
 		
 		e.addComponent(body);
-		e.addComponent(new BackgroundRender(new Sprite(texture, 0, 0, 550,309), new Vector2(0,150)));
+		e.addComponent(new BackgroundRender(new Sprite(texture, 0, 0, 550,309), new Vector2(0,0)));
 		e.addToWorld();
 
 	}

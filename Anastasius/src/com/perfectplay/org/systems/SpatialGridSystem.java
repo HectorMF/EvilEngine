@@ -22,6 +22,7 @@ public class SpatialGridSystem extends EntitySystem{
 	@Override
 	protected void inserted(Entity e) {
 		super.inserted(e);
+		if(transforms.get(e).getBuckets() == null)
 		spatialGrid.insertEntity(e, transforms.get(e));
 	}
 	
@@ -40,7 +41,8 @@ public class SpatialGridSystem extends EntitySystem{
 	
 	protected void process(Entity e) {
 		if(transforms.get(e).isDirty()){
-			//spatialGrid.updateEntity(e);
+			spatialGrid.updateEntity(e,transforms.get(e));
+			transforms.get(e).setDirty(false);
 		}
 	}
 
