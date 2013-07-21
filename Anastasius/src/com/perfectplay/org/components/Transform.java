@@ -2,12 +2,11 @@ package com.perfectplay.org.components;
 
 import java.util.ArrayList;
 
-import com.artemis.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.perfectplay.org.utils.Bucket;
 
-public class Transform extends Component {
+public class Transform extends ScriptableComponent {
 	
 	private ArrayList<Bucket> buckets;
 	

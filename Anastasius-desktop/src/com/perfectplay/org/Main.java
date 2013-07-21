@@ -11,6 +11,8 @@ public class Main {
 		cfg.useGL20 = true;
 		cfg.width = 1280;
 		cfg.height = 720;
+		//cfg.useCPUSynch = false;
+		cfg.vSyncEnabled = true;
 		
 		new LwjglApplication(new Anastasius(), cfg);
 	}

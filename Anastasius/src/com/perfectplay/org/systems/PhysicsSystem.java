@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,6 +16,7 @@ import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.listeners.ZContactFilter;
 import com.perfectplay.org.utils.Meter;
 import com.perfectplay.org.utils.Pixel;
+import com.perfectplay.org.scripting.*;
 
 public class PhysicsSystem extends EntitySystem{
 	@Mapper ComponentMapper<Transform> transforms;
@@ -47,7 +49,7 @@ public class PhysicsSystem extends EntitySystem{
 	@Override
 	protected void removed(Entity e) {
 		super.removed(e);
-		//physics.get(e).getBody().setActive(false);
+		physics.get(e).getBody().setActive(false);
 	}
 	
 	public static World getWorld(){
@@ -57,7 +59,7 @@ public class PhysicsSystem extends EntitySystem{
 	@Override
     protected final void processEntities(ImmutableBag<Entity> entities) {
 		
-		world.step(1/60f,6,2);
+		world.step(Gdx.graphics.getDeltaTime(),6,2);
 		
 		for (int i = 0, s = entities.size(); s > i; i++) {
         	process(entities.get(i));
@@ -81,6 +83,9 @@ public class PhysicsSystem extends EntitySystem{
 		transform.setX(Meter.toPixel(body.getPosition().x) - transform.getWidth()/2);
 		transform.setY(Meter.toPixel(body.getPosition().y) - transform.getHeight()/2);
 		transform.setRotation((float)Math.toDegrees(body.getAngle()));
+		
+		if(transform.isDirty() && transform.hasDelegate())
+			((TransformDelegate)transform.getDelegate()).onMove(e, transform);
 		
 	}
 }

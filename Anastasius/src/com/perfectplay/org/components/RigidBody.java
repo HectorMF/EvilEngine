@@ -1,6 +1,5 @@
 package com.perfectplay.org.components;
 
-import com.artemis.Component;
 import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -14,7 +13,7 @@ import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.utils.EntityBodyMapper;
 import com.perfectplay.org.utils.Pixel;
 
-public class RigidBody extends Component{
+public class RigidBody extends ScriptableComponent{
 	private Body rigidBody;
 	
     private float velocityZ;

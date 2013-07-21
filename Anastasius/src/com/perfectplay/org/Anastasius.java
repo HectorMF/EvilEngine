@@ -7,6 +7,7 @@ import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,11 +23,13 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.perfectplay.org.components.BackgroundRender;
 import com.perfectplay.org.components.EventRegion;
 import com.perfectplay.org.components.RigidBody;
+import com.perfectplay.org.components.Script;
 import com.perfectplay.org.components.SpriteRender;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.events.CollisionEvent;
 import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;
+import com.perfectplay.org.scripting.TestDelegate;
 import com.perfectplay.org.systems.PhysicsSystem;
 
 public class Anastasius implements ApplicationListener {
@@ -48,9 +51,11 @@ public class Anastasius implements ApplicationListener {
 	Transform t = new Transform(600,500,0,110,60,10,00);
 	RigidBody b;
 	ShapeRenderer debug;
+	FPSLogger log = new FPSLogger();
 	
 	@Override
 	public void create() {	
+		
 		//set up camera
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
@@ -62,14 +67,14 @@ public class Anastasius implements ApplicationListener {
 		render = new Box2DDebugRenderer();
 		debug = new ShapeRenderer();
  
-		level = new Level(4000,4000,100, batch, new Vector2(0,-2f),false);
+		level = new Level(4000,4000,100, batch, new Vector2(1f,-2f),false);
 		
 		
 		texture = new Texture(Gdx.files.internal("data/castlea.jpg"));
 		texture2 = new Texture(Gdx.files.internal("data/test.png"));
 		//no idea what this does
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		texture2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		texture.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
+		texture2.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
 		
 
 		level.initialize();
@@ -79,13 +84,16 @@ public class Anastasius implements ApplicationListener {
 		frames.add(new Sprite(texture,0,0,512,275));
 		frames.add(new Sprite(texture2,0,0,64,64));
 		AnimatedSprite aSprite = new AnimatedSprite(frames,1000);
+		Script testScript = new Script();
+		testScript.addDelegate(new TestDelegate());
 		
 	    e = level.createEntity();
-		e.addComponent(new Transform(190,190,100,150,150,50,0));
+		//e.addComponent(new Transform(400,590,00,50,50,50,0));
 		RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f));
 		//e.addComponent(body);
-		e.addComponent(new SpriteRender(aSprite));
+		//e.addComponent(new SpriteRender(aSprite));
+		e.addComponent(testScript);
 		e.addToWorld();
 		
 		e = level.createEntity();
@@ -99,7 +107,7 @@ public class Anastasius implements ApplicationListener {
 		e.addComponent(b);
 		e.addComponent(region);
 		e.addComponent(new SpriteRender(aSprite.clone()));
-
+		e.addComponent(testScript);
 		e.addToWorld();
 
 		e = level.createEntity();
@@ -113,7 +121,6 @@ public class Anastasius implements ApplicationListener {
 		e.addComponent(body);
 		e.addComponent(new BackgroundRender(new Sprite(texture, 0, 0, 550,309), new Vector2(0,0)));
 		e.addToWorld();
-
 	}
 
 	@Override
@@ -126,8 +133,8 @@ public class Anastasius implements ApplicationListener {
 
 	@Override
 	public void render() {	
-		
-		int speed = 60;
+		//log.log();
+		//int speed = 60;
 		
 		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) 
 			camera.position.y += 3;
@@ -166,7 +173,7 @@ public class Anastasius implements ApplicationListener {
 		batch.end();
 		
 		
-		level.getSpatialGrid().debugRender(debug);
+		//level.getSpatialGrid().debugRender(debug);
 		//render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(100f));
 		render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(20f));
 		

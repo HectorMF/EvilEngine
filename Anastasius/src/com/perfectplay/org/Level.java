@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.perfectplay.org.systems.BackgroundRenderSystem;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.systems.RegionSystem;
+import com.perfectplay.org.systems.ScriptSystem;
 import com.perfectplay.org.systems.SpatialGridSystem;
 import com.perfectplay.org.systems.SpriteRenderSystem;
 import com.perfectplay.org.utils.SpatialGrid;
@@ -19,22 +20,27 @@ public class Level extends World {
 	private SpatialGridSystem spatialGridSystem;
 	private PhysicsSystem physicsSystem;
 	private RegionSystem regionSystem;
-	
+	private ScriptSystem scriptSystem;
+
 	private int width,height;
 	
 	private SpatialGrid spatialGrid;
+	
+	private Camera camera;
 	
 	public Level(int width, int height, int bucketSize, SpriteBatch batch, Vector2 gravity, boolean doSleep){
 		
 		this.width = width;
 		this.height = height;
 		this.spatialGrid = new SpatialGrid(width, height, bucketSize);
-		//can grab these systems if later needed
+		
+		//can grab these systems if needed later
 		physicsSystem = setSystem(new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, doSleep)), true);
 		regionSystem = setSystem(new RegionSystem(), true);
 		renderSystem = setSystem(new SpriteRenderSystem(batch), true);
 		bgRender = setSystem(new BackgroundRenderSystem(batch), true);
 		spatialGridSystem = setSystem(new SpatialGridSystem(spatialGrid), true);
+		scriptSystem = setSystem(new ScriptSystem(), false);
 	}
 	
 	@Override
@@ -49,9 +55,17 @@ public class Level extends World {
 	}
 	
 	public void setCamera(Camera camera){
-        
-		spatialGrid.activateBucketsOnScreen((int)(camera.position.x-(camera.viewportWidth/2)), (int)(camera.position.y-(camera.viewportHeight/2)), (int)camera.viewportWidth, (int)camera.viewportHeight);
+		this.camera = camera;
 	}
+	
+	private void updateSpatialGrid(){
+		spatialGrid.activateBucketsOnScreen(
+				(int)(camera.position.x-(camera.viewportWidth/2)), 
+				(int)(camera.position.y-(camera.viewportHeight/2)), 
+				(int)camera.viewportWidth, 
+				(int)camera.viewportHeight);
+	}
+	
 	public static void saveLevel(Level level){
 		
 	}
@@ -64,6 +78,7 @@ public class Level extends World {
 	@Override
 	public void process(){
 		super.process();
+		updateSpatialGrid();
 		spatialGridSystem.process();
 		physicsSystem.process();
 		regionSystem.process();

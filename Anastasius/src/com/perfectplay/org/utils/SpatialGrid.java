@@ -3,7 +3,6 @@ package com.perfectplay.org.utils;
 import java.util.ArrayList;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.perfectplay.org.components.Transform;
@@ -24,7 +23,6 @@ public class SpatialGrid {
 	
 	private int activeRow1, activeRow2;
 	private int activeCol1, activeCol2;
-	private ArrayList<SpatialNode> activeEntities;
 	
 	public SpatialGrid(int width, int height, int bucketSize){
 		this.columns = width/bucketSize;
@@ -35,7 +33,6 @@ public class SpatialGrid {
 		this.activeCol1 = 0;
 		this.activeCol2 = 0;
 		this.buckets = new Bucket[rows][columns];
-		this.activeEntities = new ArrayList<SpatialNode>();
 		
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < columns; c++)
@@ -67,7 +64,6 @@ public class SpatialGrid {
                 if (x >= 0 && y >= 0)
                     if (x < columns && y < rows){
                     	bList.add(buckets[y][x]);
-                    	System.out.println("row1: " + y +" : col: " + x);
                     }
 
         transform.setBuckets(bList);
@@ -85,9 +81,7 @@ public class SpatialGrid {
     
     public void removeEntity(Entity entity, Transform transform)
     {
-    	System.out.println("Entity: " + entity.getId() + " has been removed.");
         if (transform == null) return;
-        System.out.println(transform.getBuckets().size());
         for(Bucket bucket : transform.getBuckets())
             bucket.removeNodesContainingEntity(entity);
     }
@@ -96,7 +90,6 @@ public class SpatialGrid {
     	
     	removeEntity(entity, transform);
     	insertEntity(entity,transform);
-    	System.out.println("Entity: " + entity.getId() + " has been added.");
     }
     
    /* public ArrayList<Entity> retrieveNearbyEntities(Entity entity)
@@ -112,13 +105,13 @@ public class SpatialGrid {
     }*/
     
     
-    public void activateBucketsOnScreen(int x1, int y1, int width1, int height1){
+    public void activateBucketsOnScreen(int x, int y, int width, int height){
     	
-    	int x= x1 + 100;
-    	int y = y1 +100;
-    	int width = 100;
-    	int height = 100;
-    	int testval = 000;
+    	//int x= x1 + 100;
+    	//int y = y1 +100;
+    	//int width = 100;
+    	//int height = 100;
+    	//int testval = 000;
         int row1 = (int)(y / bucketSize);
         int row2 = (int)((y - 1 + height) / bucketSize);
         int column1 = (int)(x / bucketSize);
