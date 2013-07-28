@@ -40,8 +40,12 @@ public class SpatialGridSystem extends EntitySystem{
 	}
 	
 	protected void process(Entity e) {
-		if(transforms.get(e).isDirty()){
-			spatialGrid.updateEntity(e,transforms.get(e));
+		Transform transform = transforms.get(e);
+		if(transform.isDirty()){
+			if(transform.hasDelegates()){
+				transform.getDelegateForEntity(e).onMove(e, transform);
+			}
+			spatialGrid.updateEntity(e,transform);
 			transforms.get(e).setDirty(false);
 		}
 	}

@@ -3,11 +3,11 @@ package com.perfectplay.org.scripting;
 import com.artemis.Entity;
 import com.perfectplay.org.components.Transform;
 
-public class TestDelegate extends TransformDelegate{
+public class TestScript extends Script implements TransformDelegate{
 
 	@Override
 	public void onMove(Entity entity, Transform transform) {
-		System.out.println("Entity: " + entity.getId() +" Position: " + transform.getX() +" : " + transform.getY());
+		System.out.println("Script " + this.getID() + ": onMove applied to entity " + entity.getId() +". Position: " + transform.getX() +" : " + transform.getY());
 		//transform.setWidth((float)(transform.getWidth()+10*Gdx.graphics.getDeltaTime()));
 	}
 

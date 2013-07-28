@@ -9,11 +9,13 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.perfectplay.org.scripting.PhysicsDelegate;
+import com.perfectplay.org.scripting.ScriptableComponent;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.utils.EntityBodyMapper;
 import com.perfectplay.org.utils.Pixel;
 
-public class RigidBody extends ScriptableComponent{
+public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
 	private Body rigidBody;
 	
     private float velocityZ;
@@ -21,6 +23,7 @@ public class RigidBody extends ScriptableComponent{
 	
 
 	public RigidBody(Entity entity, BodyType type) {
+		super(RigidBody.class, PhysicsDelegate.class);
 		if(EntityBodyMapper.getInstance().hasBody(entity)){
 			rigidBody = EntityBodyMapper.getInstance().getBody(entity);
 		}else{

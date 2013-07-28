@@ -16,7 +16,6 @@ import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.listeners.ZContactFilter;
 import com.perfectplay.org.utils.Meter;
 import com.perfectplay.org.utils.Pixel;
-import com.perfectplay.org.scripting.*;
 
 public class PhysicsSystem extends EntitySystem{
 	@Mapper ComponentMapper<Transform> transforms;
@@ -83,9 +82,5 @@ public class PhysicsSystem extends EntitySystem{
 		transform.setX(Meter.toPixel(body.getPosition().x) - transform.getWidth()/2);
 		transform.setY(Meter.toPixel(body.getPosition().y) - transform.getHeight()/2);
 		transform.setRotation((float)Math.toDegrees(body.getAngle()));
-		
-		if(transform.isDirty() && transform.hasDelegate())
-			((TransformDelegate)transform.getDelegate()).onMove(e, transform);
-		
 	}
 }

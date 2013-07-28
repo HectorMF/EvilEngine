@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.perfectplay.org.scripting.ScriptableComponent;
+import com.perfectplay.org.scripting.TransformDelegate;
 import com.perfectplay.org.utils.Bucket;
 
-public class Transform extends ScriptableComponent {
+public class Transform extends ScriptableComponent<TransformDelegate> {
 	
 	private ArrayList<Bucket> buckets;
 	
@@ -42,6 +44,8 @@ public class Transform extends ScriptableComponent {
 	public Transform(float x, float y, float z, float originX, float originY, float width, float height, float depth,
 					float scaleX, float scaleY, float rotation, boolean horizontalFlip,
 					boolean verticalFlip) {
+		super(Transform.class, TransformDelegate.class);
+		
 		this.x = x;
 		this.y = y;
 		this.z = z;

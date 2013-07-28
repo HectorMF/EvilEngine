@@ -23,13 +23,14 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.perfectplay.org.components.BackgroundRender;
 import com.perfectplay.org.components.EventRegion;
 import com.perfectplay.org.components.RigidBody;
-import com.perfectplay.org.components.Script;
+import com.perfectplay.org.components.Scriptable;
 import com.perfectplay.org.components.SpriteRender;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.events.CollisionEvent;
 import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;
-import com.perfectplay.org.scripting.TestDelegate;
+import com.perfectplay.org.scripting.Script;
+import com.perfectplay.org.scripting.TestScript;
 import com.perfectplay.org.systems.PhysicsSystem;
 
 public class Anastasius implements ApplicationListener {
@@ -48,7 +49,7 @@ public class Anastasius implements ApplicationListener {
 	
 	Body circleBody;
 	Entity e;
-	Transform t = new Transform(600,500,0,110,60,10,00);
+	Transform t = new Transform(600,500,0,100,100,10,00);
 	RigidBody b;
 	ShapeRenderer debug;
 	FPSLogger log = new FPSLogger();
@@ -67,11 +68,11 @@ public class Anastasius implements ApplicationListener {
 		render = new Box2DDebugRenderer();
 		debug = new ShapeRenderer();
  
-		level = new Level(4000,4000,100, batch, new Vector2(1f,-2f),false);
+		level = new Level(4000,4000,100, batch, new Vector2(0,-2f),false);
 		
 		
-		texture = new Texture(Gdx.files.internal("data/castlea.jpg"));
-		texture2 = new Texture(Gdx.files.internal("data/test.png"));
+		texture = new Texture(Gdx.files.internal("data/forest.png"));
+		texture2 = new Texture(Gdx.files.internal("data/fire.png.bmp"));
 		//no idea what this does
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
 		texture2.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
@@ -81,18 +82,31 @@ public class Anastasius implements ApplicationListener {
 		
 		//make an animated sprite
 		ArrayList<Sprite> frames = new ArrayList<Sprite>();
-		frames.add(new Sprite(texture,0,0,512,275));
-		frames.add(new Sprite(texture2,0,0,64,64));
-		AnimatedSprite aSprite = new AnimatedSprite(frames,1000);
-		Script testScript = new Script();
-		testScript.addDelegate(new TestDelegate());
+		frames.add(new Sprite(texture2,0,0,100,100));
+		frames.add(new Sprite(texture2,100,0,100,100));
+		frames.add(new Sprite(texture2,200,0,100,100));
+		frames.add(new Sprite(texture2,300,0,100,100));
+		frames.add(new Sprite(texture2,400,0,100,100));
+		frames.add(new Sprite(texture2,500,0,100,100));
+		frames.add(new Sprite(texture2,600,0,100,100));
+		frames.add(new Sprite(texture2,700,0,100,100));
+		frames.add(new Sprite(texture2,800,0,100,100));
+		frames.add(new Sprite(texture2,900,0,100,100));
+		frames.add(new Sprite(texture2,1000,0,100,100));
+		frames.add(new Sprite(texture2,1100,0,100,100));
+		frames.add(new Sprite(texture2,1200,0,100,100));
+		frames.add(new Sprite(texture2,1300,0,100,100));
+		
+		AnimatedSprite aSprite = new AnimatedSprite(frames,90);
+		Scriptable testScript = new Scriptable();
+		testScript.addScript(new TestScript());
 		
 	    e = level.createEntity();
-		//e.addComponent(new Transform(400,590,00,50,50,50,0));
+		e.addComponent(new Transform(600,590,00,50,50,50,0));
 		RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f));
-		//e.addComponent(body);
-		//e.addComponent(new SpriteRender(aSprite));
+		e.addComponent(body);
+		e.addComponent(new SpriteRender(aSprite));
 		e.addComponent(testScript);
 		e.addToWorld();
 		
@@ -106,12 +120,12 @@ public class Anastasius implements ApplicationListener {
 		
 		e.addComponent(b);
 		e.addComponent(region);
-		e.addComponent(new SpriteRender(aSprite.clone()));
+		e.addComponent(new SpriteRender(aSprite));
 		e.addComponent(testScript);
 		e.addToWorld();
 
 		e = level.createEntity();
-		Transform test = new Transform(300,100,0,550,290,130,0);
+		Transform test = new Transform(300,100,0,1026,768,130,0);
 	
 		e.addComponent(test);
 		body = new RigidBody(e,BodyType.StaticBody);
@@ -119,7 +133,7 @@ public class Anastasius implements ApplicationListener {
 		body.addFixture(def);
 		
 		e.addComponent(body);
-		e.addComponent(new BackgroundRender(new Sprite(texture, 0, 0, 550,309), new Vector2(0,0)));
+		e.addComponent(new BackgroundRender(new Sprite(texture), new Vector2(0,0)));
 		e.addToWorld();
 	}
 
