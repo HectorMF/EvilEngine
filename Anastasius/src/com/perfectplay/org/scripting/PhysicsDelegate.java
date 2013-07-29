@@ -7,5 +7,5 @@ import com.perfectplay.org.components.Transform;
 public abstract class PhysicsDelegate implements Delegate{
 
 	public abstract void onCollide(Entity entity, RigidBody body);
-	public abstract void onRotate(Entity entity, Transform transform);
+	
 }

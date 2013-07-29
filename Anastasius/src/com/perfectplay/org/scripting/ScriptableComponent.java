@@ -10,7 +10,7 @@ public abstract class ScriptableComponent<T extends Delegate> extends Component{
 	protected static HashMap<Class<? extends Delegate>, Class<? extends ScriptableComponent<? extends Delegate>>> delegateMapping 
 			   = new HashMap<Class<? extends Delegate>, Class<? extends ScriptableComponent<? extends Delegate>>>();
 	
-	protected HashMap<Integer,Script> delegates = new HashMap<Integer,Script>();
+	protected HashMap<Integer,T> delegates = new HashMap<Integer,T>();
 	protected boolean hasDelegates = false;
 	protected Class<T> delegateType;
 	
@@ -29,8 +29,12 @@ public abstract class ScriptableComponent<T extends Delegate> extends Component{
 	}
 	
 	public void addDelegate(Entity e, Script val){
-		this.delegates.put(e.getId(), val);
-		this.hasDelegates = true;
+		try {
+			this.delegates.put(e.getId(), delegateType.cast(val));
+			this.hasDelegates = true;
+        } catch (ClassCastException exc) {
+            
+        }
 	}
 	
 	public void removeEntityDelegate(Entity e){
@@ -40,7 +44,7 @@ public abstract class ScriptableComponent<T extends Delegate> extends Component{
 	}
 	
 	public T getDelegateForEntity(Entity e){
-		return getDelegateType().cast(delegates.get(e.getId()));
+		return delegates.get(e.getId());
 	}
 	
 	public boolean hasDelegates(){
