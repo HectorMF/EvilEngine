@@ -4,19 +4,19 @@ import com.artemis.World;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.perfectplay.org.graphics.SpriteLayer;
 import com.perfectplay.org.systems.BackgroundRenderSystem;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.systems.RegionSystem;
 import com.perfectplay.org.systems.ScriptSystem;
 import com.perfectplay.org.systems.SpatialGridSystem;
-import com.perfectplay.org.systems.SpriteRenderSystem;
+import com.perfectplay.org.systems.RenderSystem;
 import com.perfectplay.org.utils.SpatialGrid;
 
 public class Level extends World {
 	
 	//sprite render systems
-	private SpriteRenderSystem renderSystem;
-	private BackgroundRenderSystem bgRender;
+	private RenderSystem renderSystem;
 	private SpatialGridSystem spatialGridSystem;
 	private PhysicsSystem physicsSystem;
 	private RegionSystem regionSystem;
@@ -37,10 +37,13 @@ public class Level extends World {
 		//can grab these systems if needed later
 		physicsSystem = setSystem(new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, doSleep)), true);
 		regionSystem = setSystem(new RegionSystem(), true);
-		renderSystem = setSystem(new SpriteRenderSystem(batch), true);
-		bgRender = setSystem(new BackgroundRenderSystem(batch), true);
+		renderSystem = setSystem(new RenderSystem(batch), true);
 		spatialGridSystem = setSystem(new SpatialGridSystem(spatialGrid), true);
 		scriptSystem = setSystem(new ScriptSystem(), false);
+	}
+	
+	public void addSpriteLayer(String name, SpriteLayer layer){
+		renderSystem.addLayer(name, layer);
 	}
 	
 	@Override
@@ -71,7 +74,6 @@ public class Level extends World {
 	}
 	
 	public void render(){
-		bgRender.process();
 		renderSystem.process();
 	}
 	

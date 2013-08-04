@@ -4,7 +4,8 @@ import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.ContactFilter;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.utils.Spatial;
 
 public class ZContactFilter implements ContactFilter{
 
@@ -16,15 +17,15 @@ public class ZContactFilter implements ContactFilter{
 		if(entityA  == entityB)
 			return false;
 		
-		Transform transformA = entityA.getComponent(Transform.class);
-		Transform transformB = entityB.getComponent(Transform.class);
+		Spatial spatialA = entityA.getComponent(SpatialComponent.class).getSpatial();
+		Spatial spatialB = entityB.getComponent(SpatialComponent.class).getSpatial();
 		
-		if(transformA == null || transformB == null)
+		if(spatialA == null || spatialB == null)
 			return false;
-		float minA = transformA.getZ() - transformA.getDepth();
-		float maxA = transformA.getZ();
-		float minB = transformB.getZ() - transformB.getDepth();
-		float maxB = transformB.getZ();
+		float minA = spatialA.getZ() - spatialA.getDepth();
+		float maxA = spatialA.getZ();
+		float minB = spatialB.getZ() - spatialB.getDepth();
+		float maxB = spatialB.getZ();
 		
 		//zs match, this is a collision, filter based on filter data
 		if(minA < maxB && minB < maxA){

@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.components.SpatialComponent;
 import com.perfectplay.org.events.CollisionEvent;
 
 public class RegionContactListener implements ContactListener{
@@ -76,7 +76,7 @@ public class RegionContactListener implements ContactListener{
 			
 			//fixtureA.get
 		}
-		if(entityA.getComponent(Transform.class).isDirty() || entityB.getComponent(Transform.class).isDirty()){
+		if(entityA.getComponent(SpatialComponent.class).isDirty() || entityB.getComponent(SpatialComponent.class).isDirty()){
 
 		}
 		

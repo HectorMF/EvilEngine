@@ -1,25 +1,25 @@
 package com.perfectplay.org.scripting;
 
 import com.artemis.Entity;
-import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.components.SpatialComponent;
 
-public class TestScript extends Script implements TransformDelegate{
+public class TestScript extends Script implements SpatialDelegate{
 	private boolean isMoving = false;
 	@Override
-	public void onMove(Entity entity, Transform transform) {
-		System.out.println("Script " + this.getID() + ": onMove call to entity " + entity.getId() +". Position: " + transform.getX() +" : " + transform.getY());
+	public void onMove(Entity entity, SpatialComponent spatial) {
+		System.out.println("Script " + this.getID() + ": onMove call to entity " + entity.getId() +". Position: " + spatial.getSpatial().getX() +" : " + spatial.getSpatial().getY());
 		//transform.setWidth((float)(transform.getWidth()+10*Gdx.graphics.getDeltaTime()));
 		isMoving = true;
 	}
 
 	@Override
-	public void onRotate(Entity entity, Transform transform) {
+	public void onRotate(Entity entity, SpatialComponent spatial) {
 		System.out.println("Entity: " + entity.getId() +" has transformed!");
 		
 	}
 
 	@Override
-	public void onStay(Entity entity, Transform transform) {
+	public void onStay(Entity entity, SpatialComponent spatial) {
 		//testing onStop call functionality
 		if(isMoving){
 			isMoving = false;

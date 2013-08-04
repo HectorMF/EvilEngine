@@ -9,18 +9,19 @@ import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.perfectplay.org.components.EventRegion;
-import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.components.SpatialComponent;
 import com.perfectplay.org.listeners.RegionContactListener;
 import com.perfectplay.org.utils.Pixel;
+import com.perfectplay.org.utils.Spatial;
 
 public class RegionSystem extends EntitySystem{
-	@Mapper ComponentMapper<Transform> transforms;
+	@Mapper ComponentMapper<SpatialComponent> spatialComponents;
 	@Mapper ComponentMapper<EventRegion> regions;
 	
 	RegionContactListener contactListener;
 	@SuppressWarnings("unchecked")
 	public RegionSystem() {
-		super(Aspect.getAspectForAll(Transform.class, EventRegion.class));
+		super(Aspect.getAspectForAll(SpatialComponent.class, EventRegion.class));
 		contactListener = new RegionContactListener();
 		PhysicsSystem.getWorld().setContactListener(contactListener);
 	}
@@ -29,13 +30,15 @@ public class RegionSystem extends EntitySystem{
 	protected void inserted(Entity e) {
 		super.inserted(e);
 		Body body = regions.get(e).getBody();
-		Transform transform = transforms.get(e);
-		body.setUserData(e);
+		Spatial spatial = spatialComponents.get(e).getSpatial();
 		
-		float rotation = transform.getRotation();
-		Vector2 position = new Vector2(transform.getX() + transform.getWidth()/2, 
-									   transform.getY() + transform.getHeight()/2);
+		body.setUserData(e);
+		/*
+		float rotation = spatial.getRotation();
+		Vector2 position = new Vector2(spatial.getX() + spatial.getWidth()/2, 
+									   spatial.getY() + spatial.getHeight()/2);
 		body.setTransform(Pixel.toMeter(position), (float)Math.toRadians(rotation));
+		*/
 		body.setActive(true);
 	}
 	
@@ -58,14 +61,16 @@ public class RegionSystem extends EntitySystem{
     }
     
 	protected void process(Entity e) {
-		Transform transform = transforms.get(e);
+		/*
+		Spatial spatial = spatialComponents.get(e).getSpatial();
 		EventRegion region = regions.get(e);
 		Body body = region.getBody();
 		
-		float rotation = transform.getRotation();
-		Vector2 position = new Vector2(transform.getX() + transform.getWidth()/2, 
-									   transform.getY() + transform.getHeight()/2);
+		float rotation = spatial.getRotation();
+		Vector2 position = new Vector2(spatial.getX() + spatial.getWidth()/2, 
+									   spatial.getY() + spatial.getHeight()/2);
 		
 		body.setTransform(Pixel.toMeter(position), (float)Math.toRadians(rotation));
+		*/
 	}
 }

@@ -1,24 +1,23 @@
 package com.perfectplay.org.utils;
 
 import com.artemis.Entity;
-import com.perfectplay.org.components.Transform;
 
 public class SpatialNode {
 	private Entity entity;
-	private Transform transform;
+	private Spatial spatial;
 	private boolean isActive;
 	
-	public SpatialNode(Entity entity, Transform transform){
+	public SpatialNode(Entity entity, Spatial spatial){
 		this.entity = entity;
-		this.transform = transform;
+		this.spatial = spatial;
 	}
 	
 	public Entity getEntity(){
 		return entity;
 	}
 	
-	public Transform getTransform(){
-		return transform;
+	public Spatial getSpatial(){
+		return spatial;
 	}
 	
 	public boolean isActive(){

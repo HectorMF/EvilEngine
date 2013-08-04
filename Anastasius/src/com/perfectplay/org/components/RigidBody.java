@@ -29,6 +29,7 @@ public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
 		}else{
 			BodyDef bodDef = new BodyDef();
 			rigidBody = PhysicsSystem.createBody(bodDef);
+			EntityBodyMapper.getInstance().registerBody(entity, rigidBody);
 		}
 		rigidBody.setType(type);
 	}

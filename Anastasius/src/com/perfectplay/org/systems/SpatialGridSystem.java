@@ -6,24 +6,24 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
-import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.components.SpatialComponent;
 import com.perfectplay.org.utils.SpatialGrid;
 
 public class SpatialGridSystem extends EntitySystem{
-	@Mapper ComponentMapper<Transform> transforms;
+	@Mapper ComponentMapper<SpatialComponent> spatialComponents;
 	
 	private SpatialGrid spatialGrid;
 	@SuppressWarnings("unchecked")
 	public SpatialGridSystem(SpatialGrid spatialGrid) {
-		super(Aspect.getAspectForAll(Transform.class));
+		super(Aspect.getAspectForAll(SpatialComponent.class));
 		this.spatialGrid = spatialGrid;
 	}
 
 	@Override
 	protected void inserted(Entity e) {
 		super.inserted(e);
-		if(transforms.get(e).getBuckets() == null)
-		spatialGrid.insertEntity(e, transforms.get(e));
+		if(spatialComponents.get(e).getBuckets() == null)
+			spatialGrid.insertEntity(e, spatialComponents.get(e));
 	}
 	
 	@Override
@@ -40,16 +40,16 @@ public class SpatialGridSystem extends EntitySystem{
 	}
 	
 	protected void process(Entity e) {
-		Transform transform = transforms.get(e);
-		if(transform.isDirty()){
-			if(transform.hasDelegates()){
-				transform.getDelegateForEntity(e).onMove(e, transform);
+		SpatialComponent SpatialComponent = spatialComponents.get(e);
+		if(SpatialComponent.isDirty()){
+			if(SpatialComponent.hasDelegates()){
+				SpatialComponent.getDelegateForEntity(e).onMove(e, SpatialComponent);
 			}
-			spatialGrid.updateEntity(e,transform);
-			transforms.get(e).setDirty(false);
+			spatialGrid.updateEntity(e,SpatialComponent);
+			spatialComponents.get(e).setDirty(false);
 		}else{
-			if(transform.hasDelegates()){
-				transform.getDelegateForEntity(e).onStay(e, transform);
+			if(SpatialComponent.hasDelegates()){
+				SpatialComponent.getDelegateForEntity(e).onStay(e, SpatialComponent);
 			}
 		}
 	}

@@ -5,21 +5,21 @@ import java.util.Queue;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class BodyRemover {
+public class BodyRemoverQueue {
 	private static Queue<Body> bodiesScheduledForRemoval;
-	private static BodyRemover instance = new BodyRemover();
+	private static BodyRemoverQueue instance = new BodyRemoverQueue();
 	private static World world;
 	
-	private BodyRemover(){
+	private BodyRemoverQueue(){
 		bodiesScheduledForRemoval = new PriorityQueue<Body>();
 	}
 	public void setWorld(World world){
-		BodyRemover.world = world;
+		BodyRemoverQueue.world = world;
 	}
 	public void scheduleBodyForRemoval(Body body){
 		bodiesScheduledForRemoval.add(body);
 	}
-	public static BodyRemover getInstance(){
+	public static BodyRemoverQueue getInstance(){
 		return instance;
 	}
 	public void removeBodies(){

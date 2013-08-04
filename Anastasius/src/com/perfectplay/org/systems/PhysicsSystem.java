@@ -12,20 +12,21 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.perfectplay.org.components.RigidBody;
-import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.components.SpatialComponent;
 import com.perfectplay.org.listeners.ZContactFilter;
 import com.perfectplay.org.utils.Meter;
 import com.perfectplay.org.utils.Pixel;
+import com.perfectplay.org.utils.Spatial;
 
 public class PhysicsSystem extends EntitySystem{
-	@Mapper ComponentMapper<Transform> transforms;
+	@Mapper ComponentMapper<SpatialComponent> spatials;
 	@Mapper ComponentMapper<RigidBody> physics;
 	
 	protected static World world;
 	
 	@SuppressWarnings("unchecked")
 	public PhysicsSystem(World world) {
-		super(Aspect.getAspectForAll(Transform.class, RigidBody.class));
+		super(Aspect.getAspectForAll(SpatialComponent.class, RigidBody.class));
 		PhysicsSystem.world = world;
 		PhysicsSystem.world.setContactFilter(new ZContactFilter());
 	}
@@ -35,13 +36,6 @@ public class PhysicsSystem extends EntitySystem{
 		super.inserted(e);
 		Body physicsBody = physics.get(e).getBody();
 		physicsBody.setUserData(e);
-
-		Transform transform = transforms.get(e);
-		float rotation = transform.getRotation();
-		Vector2 position = new Vector2(transform.getX() + transform.getWidth()/2, 
-									   transform.getY() + transform.getHeight()/2);
-		
-		physicsBody.setTransform(Pixel.toMeter(position), (float)Math.toRadians(rotation));
 		physicsBody.setActive(true);
 	}
 	
@@ -75,12 +69,5 @@ public class PhysicsSystem extends EntitySystem{
 	}
 	
 	protected void process(Entity e) {
-		Transform transform = transforms.get(e);
-		RigidBody rBody = physics.get(e);
-		Body body = rBody.getBody();
-		
-		transform.setX(Meter.toPixel(body.getPosition().x) - transform.getWidth()/2);
-		transform.setY(Meter.toPixel(body.getPosition().y) - transform.getHeight()/2);
-		transform.setRotation((float)Math.toDegrees(body.getAngle()));
 	}
 }

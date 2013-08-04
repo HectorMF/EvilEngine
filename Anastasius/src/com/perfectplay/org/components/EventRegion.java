@@ -23,6 +23,7 @@ public class EventRegion extends Component {
 			regions = EntityBodyMapper.getInstance().getBody(entity);
 		}else{
 			regions = PhysicsSystem.createBody(bodDef);
+			EntityBodyMapper.getInstance().registerBody(entity, regions);
 		}
 	}
 	

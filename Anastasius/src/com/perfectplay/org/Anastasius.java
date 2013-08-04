@@ -19,19 +19,18 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-//import com.perfectplay.org.box2dLight.RayHandler;
-import com.perfectplay.org.components.BackgroundRender;
 import com.perfectplay.org.components.EventRegion;
 import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.Scriptable;
-import com.perfectplay.org.components.SpriteRender;
-import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.components.Renderable;
+import com.perfectplay.org.components.SpatialComponent;
 import com.perfectplay.org.events.CollisionEvent;
 import com.perfectplay.org.graphics.AnimatedSprite;
+import com.perfectplay.org.graphics.DepthSortedSpriteLayer;
 import com.perfectplay.org.graphics.Sprite;
-import com.perfectplay.org.scripting.Script;
 import com.perfectplay.org.scripting.TestScript;
 import com.perfectplay.org.systems.PhysicsSystem;
+import com.perfectplay.org.utils.RigidBodySpatial;
 
 public class Anastasius implements ApplicationListener {
 	
@@ -49,7 +48,8 @@ public class Anastasius implements ApplicationListener {
 	
 	Body circleBody;
 	Entity e;
-	Transform t = new Transform(600,500,0,100,100,10,00);
+	//Transform t = new Transform(600,500,0,100,100,10,00);
+	RigidBodySpatial s;
 	RigidBody b;
 	ShapeRenderer debug;
 	FPSLogger log = new FPSLogger();
@@ -61,7 +61,7 @@ public class Anastasius implements ApplicationListener {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		camera = new OrthographicCamera(w,h);
-        camera.position.set(400+(w / 2), 400+(h/ 2), 0);
+        camera.position.set(100+(w / 2),100+(h/ 2), 0);
         camera.update();
         
 		batch = new SpriteBatch();
@@ -100,40 +100,47 @@ public class Anastasius implements ApplicationListener {
 		AnimatedSprite aSprite = new AnimatedSprite(frames,90);
 		Scriptable testScript = new Scriptable();
 		testScript.addScript(new TestScript());
-		
+		DepthSortedSpriteLayer layer = new DepthSortedSpriteLayer();
+		level.addSpriteLayer("test", layer);
 	    e = level.createEntity();
-		e.addComponent(new Transform(600,590,00,50,50,50,0));
+		
 		RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f));
 		e.addComponent(body);
-		e.addComponent(new SpriteRender(aSprite));
+		RigidBodySpatial sp = new RigidBodySpatial(body.getBody());
+		sp.setPosition(100, 200,10);
+		sp.setSize(100,100, 10);
+		e.addComponent(new SpatialComponent(sp));
+		e.addComponent(new Renderable(aSprite,layer));
 		e.addComponent(testScript);
 		e.addToWorld();
 		
 		e = level.createEntity();
-		e.addComponent(t);
 		b= new RigidBody(e, BodyType.DynamicBody);
 		b.addFixture(RigidBody.createBoxFixture(110f, 60f, Vector2.Zero, 0f,  .4f, .6f, .9f));
 		b.getBody().setFixedRotation(true);
-		EventRegion region = new EventRegion(e);
-		region.addRegion(EventRegion.createCircleRegion(1f, Vector2.Zero, (short)-1, (short)-1, (short)-1), new CollisionEvent());
-		
 		e.addComponent(b);
+		EventRegion region = new EventRegion(e);
+		region.addRegion(EventRegion.createCircleRegion(1f, new Vector2(0,0), (short)-1, (short)-1, (short)-1), new CollisionEvent());
 		e.addComponent(region);
-		e.addComponent(new SpriteRender(aSprite));
+		sp = new RigidBodySpatial(b.getBody());
+		sp.setPosition(100, 700,10);
+		sp.setSize(100,100, 10);
+		e.addComponent(new SpatialComponent(sp));
+		e.addComponent(new Renderable(aSprite,layer));
 		e.addComponent(testScript);
 		e.addToWorld();
 
 		e = level.createEntity();
-		Transform test = new Transform(300,100,0,1026,768,130,0);
-	
-		e.addComponent(test);
 		body = new RigidBody(e,BodyType.StaticBody);
 		FixtureDef def = RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f, Vector2.Zero, 0f,  .5f, 0f, .5f);
 		body.addFixture(def);
-		
+		sp = new RigidBodySpatial(body.getBody());
+		sp.setPosition(100, 100,10);
+		sp.setSize(100,100, 100);
 		e.addComponent(body);
-		e.addComponent(new BackgroundRender(new Sprite(texture), new Vector2(0,0)));
+		e.addComponent(new SpatialComponent(sp));
+		e.addComponent(new Renderable(new Sprite(texture), new Vector2(0,0),layer));
 		e.addToWorld();
 	}
 

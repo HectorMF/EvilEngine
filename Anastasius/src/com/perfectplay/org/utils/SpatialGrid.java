@@ -5,15 +5,9 @@ import java.util.ArrayList;
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.components.SpatialComponent;
 
 public class SpatialGrid {
-	
-	
-	// THINGS THAT NEED TO HAPPEN.
-	
-	// does not handle rotation, scaling, or sprite offsets
-	
 	
 	private Bucket[][] buckets;
 	
@@ -25,9 +19,11 @@ public class SpatialGrid {
 	private int activeCol1, activeCol2;
 	
 	public SpatialGrid(int width, int height, int bucketSize){
+		
 		this.columns = width/bucketSize;
 		this.rows = height/bucketSize;
 		this.bucketSize = bucketSize;
+		
 		this.activeRow1 = 0;
 		this.activeRow2 = 0;
 		this.activeCol1 = 0;
@@ -46,17 +42,21 @@ public class SpatialGrid {
                	buckets[row][col].clear();
 	}
 	
-    public void insertEntity(Entity entity, Transform transform)
+    public void insertEntity(Entity entity, SpatialComponent spatialComponent)
     {
-    	SpatialNode node = new SpatialNode(entity,transform);
+    	Spatial spatial = spatialComponent.getSpatial();
+    	SpatialNode node = new SpatialNode(entity,spatial);
     	
     	ArrayList<Bucket> bList = new ArrayList<Bucket>();
     	
     	//calculate the area which holds the entity
-        int row = (int)(transform.getScreenY() / bucketSize);
-        int column = (int)(transform.getScreenX() / bucketSize);
-        int row2 = (int)((transform.getScreenY() - 1 + transform.getHeight()) / bucketSize);
-        int column2 = (int)((transform.getScreenX() - 1 + transform.getWidth()) /bucketSize);
+    	float screenX = spatial.getScreenPosition().x;
+    	float screenY = spatial.getScreenPosition().y;
+    	
+        int row = (int)(screenY / bucketSize);
+        int column = (int)(screenX / bucketSize);
+        int row2 = (int)((screenY - 1 + spatial.getHeight()) / bucketSize);
+        int column2 = (int)((screenX - 1 + spatial.getWidth()) /bucketSize);
         
         //add the buckets to the list of buckets which hold the entity
         for (int y = row; y <= row2; ++y)
@@ -66,7 +66,7 @@ public class SpatialGrid {
                     	bList.add(buckets[y][x]);
                     }
 
-        transform.setBuckets(bList);
+        spatialComponent.setBuckets(bList);
        	boolean isEnabled = false;
         for(Bucket b : bList){
         	b.insertNode(node);
@@ -79,17 +79,16 @@ public class SpatialGrid {
         }
     }
     
-    public void removeEntity(Entity entity, Transform transform)
+    public void removeEntity(Entity entity, SpatialComponent spatialComponent)
     {
-        if (transform == null) return;
-        for(Bucket bucket : transform.getBuckets())
+        for(Bucket bucket : spatialComponent.getBuckets())
             bucket.removeNodesContainingEntity(entity);
     }
     
-    public void updateEntity(Entity entity, Transform transform){
+    public void updateEntity(Entity entity, SpatialComponent spatialComponent){
     	
-    	removeEntity(entity, transform);
-    	insertEntity(entity,transform);
+    	removeEntity(entity, spatialComponent);
+    	insertEntity(entity, spatialComponent);
     }
     
    /* public ArrayList<Entity> retrieveNearbyEntities(Entity entity)
