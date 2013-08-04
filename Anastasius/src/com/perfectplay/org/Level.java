@@ -4,8 +4,6 @@ import com.artemis.World;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.perfectplay.org.graphics.SpriteLayer;
-import com.perfectplay.org.systems.BackgroundRenderSystem;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.systems.RegionSystem;
 import com.perfectplay.org.systems.ScriptSystem;
@@ -15,7 +13,7 @@ import com.perfectplay.org.utils.SpatialGrid;
 
 public class Level extends World {
 	
-	//sprite render systems
+	//World Systems to be used in the level, public for easy access
 	private RenderSystem renderSystem;
 	private SpatialGridSystem spatialGridSystem;
 	private PhysicsSystem physicsSystem;
@@ -23,9 +21,7 @@ public class Level extends World {
 	private ScriptSystem scriptSystem;
 
 	private int width,height;
-	
 	private SpatialGrid spatialGrid;
-	
 	private Camera camera;
 	
 	public Level(int width, int height, int bucketSize, SpriteBatch batch, Vector2 gravity, boolean doSleep){
@@ -42,10 +38,6 @@ public class Level extends World {
 		scriptSystem = setSystem(new ScriptSystem(), false);
 	}
 	
-	public void addSpriteLayer(String name, SpriteLayer layer){
-		renderSystem.addLayer(name, layer);
-	}
-	
 	@Override
 	public void initialize(){
 		super.initialize();
@@ -53,6 +45,11 @@ public class Level extends World {
 	public SpatialGrid getSpatialGrid(){
 		return spatialGrid;
 	}
+	
+	public static void saveLevel(Level level){
+		
+	}
+	
 	public static Level loadLevel(){
 		return null;
 	}
@@ -69,10 +66,6 @@ public class Level extends World {
 				(int)camera.viewportHeight);
 	}
 	
-	public static void saveLevel(Level level){
-		
-	}
-	
 	public void render(){
 		renderSystem.process();
 	}
@@ -86,4 +79,31 @@ public class Level extends World {
 		regionSystem.process();
 	}
 
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+	
+	public RenderSystem getRenderSystem(){
+		return renderSystem;
+	}
+	
+	public PhysicsSystem getPhysicsSystem(){
+		return physicsSystem;
+	}
+	
+	public RegionSystem getRegionSystem(){
+		return regionSystem;
+	}
+	
+	public ScriptSystem getScriptSystem(){
+		return scriptSystem;
+	}
+	
+	public SpatialGridSystem getSpatialSystem(){
+		return spatialGridSystem;
+	}
 }

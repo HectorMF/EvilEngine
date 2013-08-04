@@ -32,6 +32,7 @@ public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
 			EntityBodyMapper.getInstance().registerBody(entity, rigidBody);
 		}
 		rigidBody.setType(type);
+		rigidBody.setUserData(entity);
 	}
 	
 	public void addFixture(FixtureDef fixtureDef){

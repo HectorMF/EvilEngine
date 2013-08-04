@@ -101,14 +101,14 @@ public class Anastasius implements ApplicationListener {
 		Scriptable testScript = new Scriptable();
 		testScript.addScript(new TestScript());
 		DepthSortedSpriteLayer layer = new DepthSortedSpriteLayer();
-		level.addSpriteLayer("test", layer);
+		level.getRenderSystem().addLayer(layer);
 	    e = level.createEntity();
 		
 		RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f));
 		e.addComponent(body);
 		RigidBodySpatial sp = new RigidBodySpatial(body.getBody());
-		sp.setPosition(100, 200,10);
+		sp.setPosition(100, 200,2);
 		sp.setSize(100,100, 10);
 		e.addComponent(new SpatialComponent(sp));
 		e.addComponent(new Renderable(aSprite,layer));
@@ -136,7 +136,7 @@ public class Anastasius implements ApplicationListener {
 		FixtureDef def = RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f, Vector2.Zero, 0f,  .5f, 0f, .5f);
 		body.addFixture(def);
 		sp = new RigidBodySpatial(body.getBody());
-		sp.setPosition(100, 100,10);
+		sp.setPosition(100, 100,1);
 		sp.setSize(100,100, 100);
 		e.addComponent(body);
 		e.addComponent(new SpatialComponent(sp));

@@ -1,7 +1,6 @@
 package com.perfectplay.org.systems;
 
-import java.util.HashMap;
-
+import java.util.ArrayList;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -17,18 +16,22 @@ public class RenderSystem extends EntitySystem {
 	@Mapper ComponentMapper<SpatialComponent> spatialComponents;
 	@Mapper ComponentMapper<Renderable> renderables;
 	
-	private HashMap<String, SpriteLayer> layers;
+	private ArrayList<SpriteLayer> layers;
 	
 	private SpriteBatch batch;
 	@SuppressWarnings("unchecked")
 	public RenderSystem(SpriteBatch batch) {
 		super(Aspect.getAspectForAll(SpatialComponent.class, Renderable.class));
 		this.batch = batch;
-		this.layers = new HashMap<String, SpriteLayer>();
+		this.layers = new ArrayList<SpriteLayer>();
 	}
 	
-	public void addLayer(String name, SpriteLayer layer){
-		layers.put(name, layer);
+	public void addLayer(int pos, SpriteLayer layer){
+		layers.add(pos, layer);
+	}
+	
+	public void addLayer(SpriteLayer layer){
+		layers.add(layer);
 	}
 	
 	@Override
@@ -45,7 +48,7 @@ public class RenderSystem extends EntitySystem {
 	
 	@Override
     protected final void processEntities(ImmutableBag<Entity> entities) {
-		for(SpriteLayer layer: layers.values()){
+		for(SpriteLayer layer: layers){
 			layer.update(world.getDelta());
 			layer.render(batch);
 		}

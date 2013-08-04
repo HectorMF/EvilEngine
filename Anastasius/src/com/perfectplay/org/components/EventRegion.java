@@ -25,6 +25,7 @@ public class EventRegion extends Component {
 			regions = PhysicsSystem.createBody(bodDef);
 			EntityBodyMapper.getInstance().registerBody(entity, regions);
 		}
+		regions.setUserData(entity);
 	}
 	
 	public void addRegion(FixtureDef region, CollisionEvent event){

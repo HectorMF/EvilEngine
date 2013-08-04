@@ -13,11 +13,11 @@ public class NormalRenderSystem extends EntityProcessingSystem {
 	//@Mapper ComponentMapper<Transform> transforms;
 	@Mapper ComponentMapper<NormalRender> sprites;
 	
-	private SpriteBatch batch;
+	//private SpriteBatch batch;
 	@SuppressWarnings("unchecked")
 	public NormalRenderSystem(SpriteBatch batch) {
 		super(Aspect.getAspectForAll(SpatialComponent.class, NormalRender.class));
-		this.batch = batch;
+		//this.batch = batch;
 	}
 
 	@Override
