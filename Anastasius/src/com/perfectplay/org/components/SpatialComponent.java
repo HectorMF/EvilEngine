@@ -3,7 +3,7 @@ package com.perfectplay.org.components;
 import java.util.ArrayList;
 
 import com.perfectplay.org.scripting.ScriptableComponent;
-import com.perfectplay.org.scripting.SpatialDelegate;
+import com.perfectplay.org.scripting.delegates.SpatialDelegate;
 import com.perfectplay.org.utils.Bucket;
 import com.perfectplay.org.utils.Spatial;
 

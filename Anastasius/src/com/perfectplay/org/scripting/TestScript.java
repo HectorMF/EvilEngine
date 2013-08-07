@@ -2,6 +2,7 @@ package com.perfectplay.org.scripting;
 
 import com.artemis.Entity;
 import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.scripting.delegates.SpatialDelegate;
 
 public class TestScript extends Script implements SpatialDelegate{
 	private boolean isMoving = false;

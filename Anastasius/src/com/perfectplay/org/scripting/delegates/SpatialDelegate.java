@@ -1,7 +1,8 @@
-package com.perfectplay.org.scripting;
+package com.perfectplay.org.scripting.delegates;
 
 import com.artemis.Entity;
 import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.scripting.Delegate;
 
 public interface SpatialDelegate extends Delegate{
 	

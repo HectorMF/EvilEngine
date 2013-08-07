@@ -1,4 +1,4 @@
-package com.perfectplay.org.scripting;
+package com.perfectplay.org.scripting.delegates;
 
 public class GeneralDelegate {
 	//onUpdate(entity e, delta time)
