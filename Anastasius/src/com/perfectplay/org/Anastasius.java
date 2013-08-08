@@ -1,8 +1,5 @@
 package com.perfectplay.org;
 
-import java.util.ArrayList;
-
-
 import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -10,25 +7,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.perfectplay.org.components.EventRegion;
 import com.perfectplay.org.components.RigidBody;
-import com.perfectplay.org.components.Scriptable;
-import com.perfectplay.org.components.Renderable;
-import com.perfectplay.org.components.SpatialComponent;
-import com.perfectplay.org.events.CollisionEvent;
-import com.perfectplay.org.graphics.AnimatedSprite;
-import com.perfectplay.org.graphics.DepthSortedSpriteLayer;
-import com.perfectplay.org.graphics.Sprite;
-import com.perfectplay.org.scripting.TestScript;
+import com.perfectplay.org.graphics.Texture2D;
+import com.perfectplay.org.serialization.LevelSerializer;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.utils.RigidBodySpatial;
 
@@ -38,8 +23,8 @@ public class Anastasius implements ApplicationListener {
 	private SpriteBatch batch;
 	
 	//textures
-	Texture texture;
-	Texture texture2;
+	Texture2D texture;
+	Texture2D texture2;
 	//private RayHandler rayHandler;
 	private Box2DDebugRenderer render;
 	
@@ -67,12 +52,13 @@ public class Anastasius implements ApplicationListener {
 		batch = new SpriteBatch();
 		render = new Box2DDebugRenderer();
 		debug = new ShapeRenderer();
- 
-		level = new Level(4000,4000,100, batch, new Vector2(0,-2f),false);
+ /*
+		level = new Level(4000,4000,100, new Vector2(0,-2f),false);
+		level.getRenderSystem().setSpriteBatch(batch);
 		
+		texture = new Texture2D(Gdx.files.internal("data/forest.png"));
 		
-		texture = new Texture(Gdx.files.internal("data/forest.png"));
-		texture2 = new Texture(Gdx.files.internal("data/fire.png.bmp"));
+		texture2 = new Texture2D(Gdx.files.internal("data/fire.png.bmp"));
 		//no idea what this does
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
 		texture2.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
@@ -106,54 +92,72 @@ public class Anastasius implements ApplicationListener {
 		
 		RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f));
-		e.addComponent(body);
-		RigidBodySpatial sp = new RigidBodySpatial(body.getBody());
+		//e.addComponent(body);
+		BodylessSpatial sp = new BodylessSpatial();
 		sp.setPosition(100, 200,2);
 		sp.setSize(100,100, 10);
 		e.addComponent(new SpatialComponent(sp));
-		e.addComponent(new Renderable(aSprite,layer));
-		e.addComponent(testScript);
+		e.addComponent(new Renderable(aSprite,layer.getID()));
+		//e.addComponent(testScript);
 		e.addToWorld();
 		
 		e = level.createEntity();
 		b= new RigidBody(e, BodyType.DynamicBody);
 		b.addFixture(RigidBody.createBoxFixture(110f, 60f, Vector2.Zero, 0f,  .4f, .6f, .9f));
 		b.getBody().setFixedRotation(true);
-		e.addComponent(b);
+		//e.addComponent(b);
 		EventRegion region = new EventRegion(e);
 		region.addRegion(EventRegion.createCircleRegion(1f, new Vector2(0,0), (short)-1, (short)-1, (short)-1), new CollisionEvent());
-		e.addComponent(region);
-		sp = new RigidBodySpatial(b.getBody());
+		//e.addComponent(region);
+		sp  = new BodylessSpatial();
 		sp.setPosition(100, 700,10);
 		sp.setSize(100,100, 10);
 		e.addComponent(new SpatialComponent(sp));
-		e.addComponent(new Renderable(aSprite,layer));
-		e.addComponent(testScript);
+		e.addComponent(new Renderable(aSprite,layer.getID()));
+		//e.addComponent(testScript);
 		e.addToWorld();
 
 		e = level.createEntity();
 		body = new RigidBody(e,BodyType.StaticBody);
 		FixtureDef def = RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f, Vector2.Zero, 0f,  .5f, 0f, .5f);
 		body.addFixture(def);
-		sp = new RigidBodySpatial(body.getBody());
+		//sp = new RigidBodySpatial(body.getBody());
+		sp = new BodylessSpatial();
 		sp.setPosition(100, 100,1);
 		sp.setSize(100,100, 100);
-		e.addComponent(body);
+		//e.addComponent(body);
 		e.addComponent(new SpatialComponent(sp));
-		e.addComponent(new Renderable(new Sprite(texture), new Vector2(0,0),layer));
+		e.addComponent(new Renderable(new Sprite(texture), new Vector2(0,0),layer.getID()));
 		e.addToWorld();
+		//level.getRenderSystem().setSpriteBatch(batch);
+		Serializer s = new Serializer();
+		level.setCamera(camera);
+		level.setDelta(Gdx.graphics.getDeltaTime());
+		level.process();
+		s.WriteLevel(level, "test.bin");*/
+
+		//System.out.println(level.getEntityManager().getTotalAdded());
+		
+		
+		
+		
+		LevelSerializer s = new LevelSerializer();
+		level = s.ReadLevel("test.bin");
+		level.getRenderSystem().setSpriteBatch(batch);
+		level.initialize();
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
-		texture.dispose();
-		texture2.dispose();
+	//	texture.dispose();
+	//	texture2.dispose();
+		
 		//rayHandler.dispose();
 	}
 
 	@Override
-	public void render() {	
+	public void render() {
 		//log.log();
 		//int speed = 60;
 		

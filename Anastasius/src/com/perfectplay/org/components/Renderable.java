@@ -3,7 +3,6 @@ package com.perfectplay.org.components;
 import com.artemis.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.perfectplay.org.graphics.ISprite;
-import com.perfectplay.org.graphics.SpriteLayer;
 
 public class Renderable extends Component {
 	private static int UID = 1;
@@ -23,13 +22,13 @@ public class Renderable extends Component {
 	private float originX;
 	private float originY;
 	
-	private SpriteLayer layer;
+	private int layer;
 	
-	public Renderable(ISprite sprite, SpriteLayer layer) {
+	public Renderable(ISprite sprite, int layer) {
 		this(sprite, new Vector2(0,0), layer);
 	}
 	
-	public Renderable(ISprite sprite, Vector2 offset, SpriteLayer layer){
+	public Renderable(ISprite sprite, Vector2 offset, int layer){
 		this.sprite = sprite;
 		this.offset = offset;
 		this.layer = layer;
@@ -37,7 +36,7 @@ public class Renderable extends Component {
 		UID++;
 	}
 	
-	public SpriteLayer getSpriteLayer(){
+	public int getSpriteLayer(){
 		return layer;
 	}
 	

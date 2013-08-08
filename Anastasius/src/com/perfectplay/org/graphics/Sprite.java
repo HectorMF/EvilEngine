@@ -1,19 +1,26 @@
 
 	package com.perfectplay.org.graphics;
 	
-	import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+	import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+	import com.esotericsoftware.kryo.Kryo;
+	import com.esotericsoftware.kryo.io.Input;
+	import com.esotericsoftware.kryo.io.Output;
 
 	public class Sprite implements ISprite{
 		
 		private int srcWidth, srcHeight;
 		private int srcX, srcY;
-		private Texture texture;
+		private Texture2D texture;
 		
-		public Sprite(Texture texture) {
+		public Sprite(){
+			this(null, 0, 0, 0, 0);
+		}
+		
+		public Sprite(Texture2D texture) {
 			this(texture, 0, 0, texture.getWidth(), texture.getHeight());
 		}
-		public Sprite(Texture texture, int srcX, int srcY, int srcWidth, int srcHeight){
+		
+		public Sprite(Texture2D texture, int srcX, int srcY, int srcWidth, int srcHeight){
 			this.texture = texture;
 			this.srcX = srcX;
 			this.srcY = srcY;
@@ -63,5 +70,26 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 		@Override
 		public ISprite clone(){
 			return this;
+		}
+		
+		@Override
+		public void read(Kryo kryo, Input input) {
+			// TODO Auto-generated method stub
+			this.srcX = input.readInt();
+			this.srcY = input.readInt();
+			this.srcWidth = input.readInt();
+			this.srcHeight = input.readInt();
+			this.texture = kryo.readObject(input,Texture2D.class);
+		}
+		
+		@Override
+		public void write(Kryo kryo, Output output) {
+			// TODO Auto-generated method stub
+			output.writeInt(srcX);
+			output.writeInt(srcY);
+			output.writeInt(srcWidth);
+			output.writeInt(srcHeight);
+			kryo.writeObject(output, texture);
+			
 		}
 }

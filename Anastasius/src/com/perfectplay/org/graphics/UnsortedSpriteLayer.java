@@ -10,6 +10,12 @@ public class UnsortedSpriteLayer extends SpriteLayer{
 	ArrayList<RenderableNode> nodes;
 	
 	public UnsortedSpriteLayer(){
+		super();
+		nodes = new ArrayList<RenderableNode>();
+	}
+	
+	public UnsortedSpriteLayer(int id){
+		super(id);
 		nodes = new ArrayList<RenderableNode>();
 	}
 	

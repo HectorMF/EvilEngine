@@ -1,8 +1,12 @@
 package com.perfectplay.org.graphics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 public class AnimatedSprite implements ISprite{
 	private List<Sprite> frames;
@@ -12,6 +16,10 @@ public class AnimatedSprite implements ISprite{
 	private boolean looping;
 	private int currentFrame;
 
+	public AnimatedSprite(){
+		this(new ArrayList<Sprite>(), 0, false, false);
+	}
+	
 	public AnimatedSprite(List<Sprite> frames, int interval) {
 		this(frames, interval, true, true);
 	}
@@ -93,5 +101,28 @@ public class AnimatedSprite implements ISprite{
 	@Override
 	public ISprite clone(){
 		return new AnimatedSprite(frames,interval);
+	}
+
+	@Override
+	public void read(Kryo kryo, Input input) {
+		int size = input.readInt();
+		for(int i = 0; i < size; i++){
+			frames.add(kryo.readObject(input,Sprite.class));
+		}
+		interval = input.readInt();
+		playing = input.readBoolean();
+		looping = input.readBoolean();
+	}
+
+	@Override
+	public void write(Kryo kryo, Output output) {
+		output.writeInt(frames.size());
+		for(int i = 0; i < frames.size(); i++){
+			kryo.writeObject(output,frames.get(i));
+		}
+		output.writeInt(interval);
+		output.writeBoolean(playing);
+		output.writeBoolean(looping);
+		
 	}
 }

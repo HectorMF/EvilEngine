@@ -1,8 +1,9 @@
 package com.perfectplay.org.graphics;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.esotericsoftware.kryo.KryoSerializable;
 
-public interface ISprite {
+public interface ISprite extends KryoSerializable{
 	void update(float dt);
 	
 	void draw(SpriteBatch batch, float x, float y, float originX, float originY,

@@ -12,6 +12,12 @@ public class DepthSortedSpriteLayer extends SpriteLayer{
 	ArrayList<RenderableNode> nodes;
 	
 	public DepthSortedSpriteLayer(){
+		super();
+		nodes = new ArrayList<RenderableNode>();
+	}
+	
+	public DepthSortedSpriteLayer(int id){
+		super(id);
 		nodes = new ArrayList<RenderableNode>();
 	}
 	
@@ -46,5 +52,5 @@ public class DepthSortedSpriteLayer extends SpriteLayer{
 				nodes.remove(i);
 		}
 	}
-
+	
 }

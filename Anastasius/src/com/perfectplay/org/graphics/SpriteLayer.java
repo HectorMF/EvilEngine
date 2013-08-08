@@ -4,7 +4,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.SpatialComponent;
 
-public abstract class SpriteLayer {
+public abstract class SpriteLayer{
+	private static int UID = 0;
+	
+	private int id;
+	
+	public SpriteLayer(){
+		this.id = UID;
+		UID++;
+	}
+	
+	public SpriteLayer(int id){
+		this.id = id;
+	}
+	
 	private boolean enabled;
 	
 	public abstract void add(Renderable renderable, SpatialComponent spatialComponent);
@@ -27,6 +40,7 @@ public abstract class SpriteLayer {
 		this.enabled = false;
 	}
 	
-	
-	
+	public int getID(){
+		return id;
+	}
 }

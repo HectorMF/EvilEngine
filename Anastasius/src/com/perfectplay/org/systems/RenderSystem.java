@@ -31,19 +31,31 @@ public class RenderSystem extends EntitySystem {
 	}
 	
 	public void addLayer(SpriteLayer layer){
-		layers.add(layer);
+		layers.add(layer.getID(), layer);
+	}
+	
+	public SpriteLayer getLayer(int id){
+		return layers.get(id);
+	}
+	
+	public int getLayerCount(){
+		return layers.size();
+	}
+	
+	public void setSpriteBatch(SpriteBatch batch){
+		this.batch = batch;
 	}
 	
 	@Override
 	protected void inserted(Entity e) {
 		super.inserted(e);
-		renderables.get(e).getSpriteLayer().add(renderables.get(e), spatialComponents.get(e));
+		getLayer(renderables.get(e).getSpriteLayer()).add(renderables.get(e), spatialComponents.get(e));
 	}
 	
 	@Override
 	protected void removed(Entity e) {
 		super.removed(e);
-		renderables.get(e).getSpriteLayer().remove(renderables.get(e), spatialComponents.get(e));
+		getLayer(renderables.get(e).getSpriteLayer()).remove(renderables.get(e), spatialComponents.get(e));
 	}
 	
 	@Override
