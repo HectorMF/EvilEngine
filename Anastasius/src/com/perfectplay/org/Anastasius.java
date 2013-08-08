@@ -68,7 +68,7 @@ public class Anastasius implements ApplicationListener {
 		batch = new SpriteBatch();
 		render = new Box2DDebugRenderer();
 		debug = new ShapeRenderer();
- 
+		
 		level = new Level(4000,4000,100, new Vector2(0,-2f),false);
 		level.getRenderSystem().setSpriteBatch(batch);
 		
@@ -119,14 +119,15 @@ public class Anastasius implements ApplicationListener {
 		
 		e = level.createEntity();
 		b= new RigidBody(e, BodyType.DynamicBody);
+		b.addFixture( RigidBody.createCircleFixture(.5f, Vector2.Zero,0f,.5f,.5f));
 		b.addFixture(RigidBody.createBoxFixture(110f, 60f, Vector2.Zero, 0f,  .4f, .6f, .9f));
-		b.getBody().setFixedRotation(true);
+		//b.getBody().setFixedRotation(true);
 		e.addComponent(b);
 		EventRegion region = new EventRegion(e);
-		region.addRegion(EventRegion.createCircleRegion(1f, new Vector2(0,0), (short)-1, (short)-1, (short)-1), new CollisionEvent());
+		//region.addRegion(EventRegion.createCircleRegion(1f, new Vector2(0,0), (short)-1, (short)-1, (short)-1), new CollisionEvent());
 		//e.addComponent(region);
 		sp  = new BodylessSpatial();
-		sp.setPosition(100, 600,10);
+		sp.setPosition(120, 600,10);
 		sp.setSize(100,100, 10);
 		e.addComponent(new SpatialComponent(sp));
 		e.addComponent(new Renderable(aSprite,layer.getID()));
@@ -135,9 +136,9 @@ public class Anastasius implements ApplicationListener {
 
 		e = level.createEntity();
 		body = new RigidBody(e,BodyType.StaticBody);
-		FixtureDef def = RigidBody.createCircleFixture(1f, Vector2.Zero,0f,.5f,.5f);
+		
 		FixtureDef def2 = RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f,new Vector2(100f,19f), 0f,  .5f, 0f, .5f);
-		body.addFixture(def);
+		//body.addFixture(def);
 		body.addFixture(def2);
 		RigidBodySpatial st = new RigidBodySpatial(body.getBody());
 		//sp = new BodylessSpatial();
@@ -154,17 +155,18 @@ public class Anastasius implements ApplicationListener {
 		level.setDelta(Gdx.graphics.getDeltaTime());
 		level.process();
 		s.WriteLevel(level, "test.bin");
-
+		
 		//System.out.println(level.getEntityManager().getTotalAdded());
 		
 		
-		
-		
-		//LevelSerializer s = new LevelSerializer();
+		//level = null;
+		/*
+		LevelSerializer s = new LevelSerializer();
 		level = s.ReadLevel("test.bin");
-		level.getRenderSystem().setSpriteBatch(batch);
 		level.initialize();
+		level.getRenderSystem().setSpriteBatch(batch);
 		
+		*/
 		
 	}
 

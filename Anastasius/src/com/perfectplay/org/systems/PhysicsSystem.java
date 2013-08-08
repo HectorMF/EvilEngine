@@ -27,6 +27,8 @@ public class PhysicsSystem extends EntitySystem{
 		super(Aspect.getAspectForAll(SpatialComponent.class, RigidBody.class));
 		PhysicsSystem.world = world;
 		PhysicsSystem.world.setContactFilter(new ZContactFilter());
+		
+		System.out.println(world.getGravity());
 	}
 	
 	@Override

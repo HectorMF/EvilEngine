@@ -1,6 +1,7 @@
 package com.perfectplay.org.components;
 
 import com.artemis.Component;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.perfectplay.org.graphics.ISprite;
 
@@ -21,6 +22,9 @@ public class Renderable extends Component {
 	
 	private float originX;
 	private float originY;
+	
+	private Color color;
+	private float alpha;
 	
 	private int layer;
 	

@@ -9,6 +9,9 @@ import com.artemis.Component;
 import com.artemis.Entity;
 import com.artemis.utils.Bag;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
@@ -38,6 +41,9 @@ public class LevelSerializer extends Serializer<Level>{
 		kryo.register(Texture2D.class, new Texture2DSerializer());	
 		kryo.register(DepthSortedSpriteLayer.class, new DSSLSerializer());
 		kryo.register(UnsortedSpriteLayer.class, new USSLSerializer());
+		kryo.register(FixtureDef.class, new FixtureDefSerializer());
+		kryo.register(PolygonShape.class, new PolygonSerializer());
+		kryo.register(CircleShape.class, new CircleSerializer());
 	}
 	
 	public void WriteLevel(Level level, String path){

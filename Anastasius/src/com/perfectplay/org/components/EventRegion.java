@@ -1,5 +1,7 @@
 package com.perfectplay.org.components;
 
+import java.util.ArrayList;
+
 import com.artemis.Component;
 import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
@@ -16,7 +18,10 @@ import com.perfectplay.org.utils.EntityBodyMapper;
 
 public class EventRegion extends Component {
 	private Body regions;
+	private ArrayList<FixtureDef> fixtures;
+	
 	public EventRegion(Entity entity){
+		fixtures = new ArrayList<FixtureDef>();
 		BodyDef bodDef = new BodyDef();
 		bodDef.type = BodyType.KinematicBody;
 		if(EntityBodyMapper.getInstance().hasBody(entity)){
@@ -31,6 +36,7 @@ public class EventRegion extends Component {
 	public void addRegion(FixtureDef region, CollisionEvent event){
 		Fixture fixture = regions.createFixture(region);
 		fixture.setUserData(event);
+		//fixtures.add(fixture);
 	}
 	
 	public static FixtureDef createPolygonRegion(Vector2[] vertices, short category, short group, short mask){

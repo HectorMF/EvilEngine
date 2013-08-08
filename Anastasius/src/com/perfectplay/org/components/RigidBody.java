@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.perfectplay.org.scripting.ScriptableComponent;
 import com.perfectplay.org.scripting.delegates.PhysicsDelegate;
 import com.perfectplay.org.systems.PhysicsSystem;
@@ -40,6 +41,7 @@ public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
 	}
 	
 	public void addFixture(FixtureDef fixtureDef){
+		Shape s = fixtureDef.shape;
 		rigidBody.createFixture(fixtureDef);
 		fixtures.add(fixtureDef);
 	}

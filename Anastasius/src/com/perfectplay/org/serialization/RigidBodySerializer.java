@@ -12,8 +12,8 @@ public class RigidBodySerializer extends Serializer<RigidBody>{
 
 	@Override
 	public RigidBody read(Kryo kryo, Input input, Class<RigidBody> type) {
-		
-		RigidBody body = new RigidBody(LevelSerializer.currentEntity, kryo.readObject(input, BodyType.class));
+		BodyType bType = kryo.readObject(input, BodyType.class);
+		RigidBody body = new RigidBody(LevelSerializer.currentEntity, bType );
 		
 		int size = input.readInt();
 		for(int i = 0; i < size; i++){
@@ -26,7 +26,6 @@ public class RigidBodySerializer extends Serializer<RigidBody>{
 	@Override
 	public void write(Kryo kryo, Output output, RigidBody object) {
 		kryo.writeObject(output, object.getBody().getType());
-		
 		output.writeInt(object.getFixtures().size());
 		for(FixtureDef fixture : object.getFixtures()){
 			kryo.writeClassAndObject(output, fixture);
