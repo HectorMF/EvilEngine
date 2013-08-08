@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.SpatialComponent;
 import com.perfectplay.org.listeners.ZContactFilter;
+import com.perfectplay.org.utils.RigidBodySpatial;
+import com.perfectplay.org.utils.Spatial;
 
 public class PhysicsSystem extends EntitySystem{
 	@Mapper ComponentMapper<SpatialComponent> spatials;
@@ -30,6 +32,13 @@ public class PhysicsSystem extends EntitySystem{
 	@Override
 	protected void inserted(Entity e) {
 		super.inserted(e);
+		if(!RigidBodySpatial.class.isInstance(spatials.get(e).getSpatial())){
+			Spatial val = spatials.get(e).getSpatial();
+			RigidBodySpatial nSpatial = new RigidBodySpatial(physics.get(e).getBody());
+			
+			nSpatial.setSpatial(val);
+			spatials.get(e).setSpatial(nSpatial);
+		}
 		physics.get(e).getBody().setActive(true);
 	}
 	

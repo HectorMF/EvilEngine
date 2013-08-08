@@ -23,7 +23,7 @@ import com.perfectplay.org.graphics.Texture2D;
 import com.perfectplay.org.graphics.UnsortedSpriteLayer;
 
 public class LevelSerializer extends Serializer<Level>{
-
+	public static Entity currentEntity;
 	private Kryo kryo;
 	public LevelSerializer(){
 		super();
@@ -83,6 +83,7 @@ public class LevelSerializer extends Serializer<Level>{
 		long count = input.readLong();
 		for(int i = 0; i < count; i++){
 			Entity e = level.createEntity();
+			currentEntity = e;
 			int components = input.readInt();
 			for(int j = 0; j < components; j++){
 				Component c = (Component)kryo.readClassAndObject(input);

@@ -58,7 +58,7 @@ public class RigidBodySpatial implements Spatial{
 
 	@Override
 	public void setRotation(float rotation) {
-		body.setTransform(getX(), getY(), rotation);
+		body.setTransform(body.getPosition().x, body.getPosition().y, rotation);
 	}
 
 	@Override

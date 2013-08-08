@@ -1,7 +1,7 @@
 package com.perfectplay.org.serialization;
 
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
@@ -12,16 +12,24 @@ public class RigidBodySerializer extends Serializer<RigidBody>{
 
 	@Override
 	public RigidBody read(Kryo kryo, Input input, Class<RigidBody> type) {
-		return null;
+		
+		RigidBody body = new RigidBody(LevelSerializer.currentEntity, kryo.readObject(input, BodyType.class));
+		
+		int size = input.readInt();
+		for(int i = 0; i < size; i++){
+			FixtureDef def = (FixtureDef)kryo.readClassAndObject(input);
+			body.addFixture(def);
+		}
+		return body;
 	}
 
 	@Override
 	public void write(Kryo kryo, Output output, RigidBody object) {
-
-		Body body = object.getBody();
-		output.writeInt(body.getFixtureList().size());
-		for(Fixture fixture : body.getFixtureList()){
-			//fixture.
+		kryo.writeObject(output, object.getBody().getType());
+		
+		output.writeInt(object.getFixtures().size());
+		for(FixtureDef fixture : object.getFixtures()){
+			kryo.writeClassAndObject(output, fixture);
 		}
 	}
 

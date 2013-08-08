@@ -1,5 +1,7 @@
 package com.perfectplay.org.components;
 
+import java.util.ArrayList;
+
 import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -21,9 +23,11 @@ public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
     private float velocityZ;
 	private Vector2 forceZ; //(force,point) respectively
 	
-
+	private ArrayList<FixtureDef> fixtures;
+	
 	public RigidBody(Entity entity, BodyType type) {
 		super(RigidBody.class, PhysicsDelegate.class);
+		fixtures = new ArrayList<FixtureDef>();
 		if(EntityBodyMapper.getInstance().hasBody(entity)){
 			rigidBody = EntityBodyMapper.getInstance().getBody(entity);
 		}else{
@@ -37,6 +41,11 @@ public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
 	
 	public void addFixture(FixtureDef fixtureDef){
 		rigidBody.createFixture(fixtureDef);
+		fixtures.add(fixtureDef);
+	}
+	
+	public ArrayList<FixtureDef> getFixtures(){
+		return fixtures;
 	}
 	
 	public static FixtureDef createPolygonFixture(Vector2[] vertices, float density, float restitution, float friction){
