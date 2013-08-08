@@ -3,12 +3,13 @@ package com.perfectplay.org.graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
-public class AnimatedSprite implements ISprite{
+public class AnimatedSprite implements ISprite {
 	private List<Sprite> frames;
 	private int interval;
 	private int counter;
@@ -16,15 +17,16 @@ public class AnimatedSprite implements ISprite{
 	private boolean looping;
 	private int currentFrame;
 
-	public AnimatedSprite(){
+	public AnimatedSprite() {
 		this(new ArrayList<Sprite>(), 0, false, false);
 	}
-	
+
 	public AnimatedSprite(List<Sprite> frames, int interval) {
 		this(frames, interval, true, true);
 	}
 
-	public AnimatedSprite(List<Sprite> frames, int interval, boolean playing, boolean looping) {
+	public AnimatedSprite(List<Sprite> frames, int interval, boolean playing,
+			boolean looping) {
 		this.frames = frames;
 		this.interval = interval;
 		this.looping = looping;
@@ -64,12 +66,12 @@ public class AnimatedSprite implements ISprite{
 			}
 		}
 	}
-	
+
 	@Override
 	public void pause() {
 		playing = false;
 	}
-	
+
 	@Override
 	public void play() {
 		playing = true;
@@ -77,17 +79,19 @@ public class AnimatedSprite implements ISprite{
 
 	@Override
 	public void draw(SpriteBatch batch, float x, float y, float originX,
-					float originY, float width, float height, float scaleX,
-					float scaleY, float rotation, boolean flipX, boolean flipY) {
+			float originY, float width, float height, float scaleX,
+			float scaleY, float rotation, boolean flipX, boolean flipY,
+			Color color, float alpha) {
+
 		frames.get(currentFrame).draw(batch, x, y, originX, originY, width,
-				height, scaleX, scaleY, rotation, flipX, flipY);
+				height, scaleX, scaleY, rotation, flipX, flipY, color, alpha);
 	}
-	
+
 	@Override
 	public boolean isPlaying() {
 		return playing;
 	}
-	
+
 	@Override
 	public boolean isLooping() {
 		return looping;
@@ -97,17 +101,17 @@ public class AnimatedSprite implements ISprite{
 	public boolean isAnimated() {
 		return true;
 	}
-	
+
 	@Override
-	public ISprite clone(){
-		return new AnimatedSprite(frames,interval);
+	public ISprite clone() {
+		return new AnimatedSprite(frames, interval);
 	}
 
 	@Override
 	public void read(Kryo kryo, Input input) {
 		int size = input.readInt();
-		for(int i = 0; i < size; i++){
-			frames.add(kryo.readObject(input,Sprite.class));
+		for (int i = 0; i < size; i++) {
+			frames.add(kryo.readObject(input, Sprite.class));
 		}
 		interval = input.readInt();
 		playing = input.readBoolean();
@@ -117,12 +121,12 @@ public class AnimatedSprite implements ISprite{
 	@Override
 	public void write(Kryo kryo, Output output) {
 		output.writeInt(frames.size());
-		for(int i = 0; i < frames.size(); i++){
-			kryo.writeObject(output,frames.get(i));
+		for (int i = 0; i < frames.size(); i++) {
+			kryo.writeObject(output, frames.get(i));
 		}
 		output.writeInt(interval);
 		output.writeBoolean(playing);
 		output.writeBoolean(looping);
-		
+
 	}
 }

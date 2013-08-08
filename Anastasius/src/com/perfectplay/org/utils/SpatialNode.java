@@ -6,37 +6,37 @@ public class SpatialNode {
 	private Entity entity;
 	private Spatial spatial;
 	private boolean isActive;
-	
-	public SpatialNode(Entity entity, Spatial spatial){
+
+	public SpatialNode(Entity entity, Spatial spatial) {
 		this.entity = entity;
 		this.spatial = spatial;
 	}
-	
-	public Entity getEntity(){
+
+	public Entity getEntity() {
 		return entity;
 	}
-	
-	public Spatial getSpatial(){
+
+	public Spatial getSpatial() {
 		return spatial;
 	}
-	
-	public boolean isActive(){
+
+	public boolean isActive() {
 		return isActive;
 	}
-	
-	public void setActive(boolean active){
+
+	public void setActive(boolean active) {
 		this.isActive = active;
 	}
-	
-	public boolean isEnabled(){
+
+	public boolean isEnabled() {
 		return entity.isEnabled();
 	}
-	
-	public void disable(){
+
+	public void disable() {
 		entity.disable();
 	}
-	
-	public void enable(){
+
+	public void enable() {
 		entity.enable();
 	}
 }

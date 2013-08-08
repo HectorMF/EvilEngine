@@ -16,55 +16,58 @@ import com.perfectplay.org.listeners.ZContactFilter;
 import com.perfectplay.org.utils.RigidBodySpatial;
 import com.perfectplay.org.utils.Spatial;
 
-public class PhysicsSystem extends EntitySystem{
-	@Mapper ComponentMapper<SpatialComponent> spatials;
-	@Mapper ComponentMapper<RigidBody> physics;
-	
+public class PhysicsSystem extends EntitySystem {
+	@Mapper
+	ComponentMapper<SpatialComponent> spatials;
+	@Mapper
+	ComponentMapper<RigidBody> physics;
+
 	protected static World world;
-	
+
 	@SuppressWarnings("unchecked")
 	public PhysicsSystem(World world) {
 		super(Aspect.getAspectForAll(SpatialComponent.class, RigidBody.class));
 		PhysicsSystem.world = world;
 		PhysicsSystem.world.setContactFilter(new ZContactFilter());
-		
+
 		System.out.println(world.getGravity());
 	}
-	
+
 	@Override
 	protected void inserted(Entity e) {
 		super.inserted(e);
-		if(!RigidBodySpatial.class.isInstance(spatials.get(e).getSpatial())){
+		if (!RigidBodySpatial.class.isInstance(spatials.get(e).getSpatial())) {
 			Spatial val = spatials.get(e).getSpatial();
-			RigidBodySpatial nSpatial = new RigidBodySpatial(physics.get(e).getBody());
-			
+			RigidBodySpatial nSpatial = new RigidBodySpatial(physics.get(e)
+					.getBody());
+
 			nSpatial.setSpatial(val);
 			spatials.get(e).setSpatial(nSpatial);
 		}
 		physics.get(e).getBody().setActive(true);
 	}
-	
+
 	@Override
 	protected void removed(Entity e) {
 		super.removed(e);
 		physics.get(e).getBody().setActive(false);
 	}
-	
-	public static World getWorld(){
+
+	public static World getWorld() {
 		return world;
 	}
-	
+
 	@Override
-    protected final void processEntities(ImmutableBag<Entity> entities) {
-		world.step(Gdx.graphics.getDeltaTime(),6,2);
-    }
-    
-    @Override
-    protected boolean checkProcessing() {
-    	return true;
-    }
-    
-	public static Body createBody(BodyDef definition){
+	protected final void processEntities(ImmutableBag<Entity> entities) {
+		world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+	}
+
+	@Override
+	protected boolean checkProcessing() {
+		return true;
+	}
+
+	public static Body createBody(BodyDef definition) {
 		return world.createBody(definition);
 	}
 }

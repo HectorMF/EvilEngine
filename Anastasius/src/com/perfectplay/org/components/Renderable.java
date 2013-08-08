@@ -6,87 +6,108 @@ import com.badlogic.gdx.math.Vector2;
 import com.perfectplay.org.graphics.ISprite;
 
 public class Renderable extends Component {
-	private static int UID = 1;
-	
-	private int id;
-	
+
 	private ISprite sprite;
-	
+	// offset from x and y spatial coordinate
 	private Vector2 offset;
-	
+	// coordinate used as the center of rotation
+	private Vector2 origin;
+	// transforms across the x and y axis
 	private boolean horizontalFlip;
 	private boolean verticalFlip;
-	
-	private float scaleX = 1;
-	private float scaleY = 1;
-	
-	private float originX;
-	private float originY;
-	
 	private Color color;
 	private float alpha;
-	
+	// store the layer's id
 	private int layer;
-	
+
 	public Renderable(ISprite sprite, int layer) {
-		this(sprite, new Vector2(0,0), layer);
+		this(sprite, Vector2.Zero, Vector2.Zero, Color.WHITE, 1f, layer);
 	}
-	
-	public Renderable(ISprite sprite, Vector2 offset, int layer){
+
+	public Renderable(ISprite sprite, Vector2 offset, Vector2 origin,
+			Color color, float alpha, int layer) {
 		this.sprite = sprite;
 		this.offset = offset;
 		this.layer = layer;
-		this.id = UID;
-		UID++;
+		this.color = color;
+		this.alpha = alpha;
+		this.origin = origin;
+		this.horizontalFlip = false;
+		this.verticalFlip = false;
 	}
-	
-	public int getSpriteLayer(){
+
+	public int getSpriteLayer() {
 		return layer;
 	}
-	
+
+	public void setSpriteLayer(int layer) {
+		this.layer = layer;
+	}
+
 	public ISprite getSprite() {
 		return sprite;
 	}
-	
-	public Vector2 getOffset(){
+
+	public void setSprite(ISprite sprite) {
+		this.sprite = sprite;
+	}
+
+	public Vector2 getOffset() {
 		return offset;
 	}
-	
-	public boolean getHorizontalFlip(){
+
+	public void setOffset(Vector2 offset) {
+		this.offset = offset;
+	}
+
+	public Vector2 getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(Vector2 origin) {
+		this.origin = origin;
+	}
+
+	public boolean getHorizontalFlip() {
 		return horizontalFlip;
 	}
-	
-	public boolean getVerticalFlip(){
+
+	public void setHorizontalFlip(boolean flip) {
+		this.horizontalFlip = flip;
+	}
+
+	public boolean getVerticalFlip() {
 		return verticalFlip;
 	}
-	
-	public float getOriginX(){
-		return originX;
+
+	public void setVerticalFlip(boolean flip) {
+		this.verticalFlip = flip;
 	}
-	
-	public float getScaleX(){
-		return scaleX;
+
+	public Color getColor() {
+		return color;
 	}
-	
-	public float getScaleY(){
-		return scaleY;
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
-	public float getOriginY(){
-		return originY;
+
+	public float getAlpha() {
+		return alpha;
 	}
-	
-	public int getID(){
-		return id;
+
+	public void setAlpha(float alpha) {
+		this.alpha = alpha;
 	}
-	
+
 	public boolean equals(Object obj) {
 		if (obj == null)
-	    	return false;
+			return false;
 		if (obj == this)
 			return true;
 		if (!(obj instanceof Renderable))
-	    	return false;
-	    return getID() == ((Renderable) obj).getID();
+			return false;
+		return this == ((Renderable) obj);
 	}
-	
+
 }

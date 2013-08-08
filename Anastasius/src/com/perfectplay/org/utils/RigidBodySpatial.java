@@ -4,21 +4,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public class RigidBodySpatial implements Spatial{
+public class RigidBodySpatial implements Spatial {
 	private Body body;
 	private float z;
 	private float width;
 	private float height;
 	private float depth;
-	
-	public RigidBodySpatial(Body body){
+
+	public RigidBodySpatial(Body body) {
 		this.body = body;
 		this.z = 0;
 		this.width = 0;
 		this.height = 0;
 		this.depth = 0;
 	}
-	
+
 	@Override
 	public float getX() {
 		return Meter.toPixel(body.getTransform().getPosition().x);
@@ -41,24 +41,25 @@ public class RigidBodySpatial implements Spatial{
 
 	@Override
 	public Vector3 getPosition() {
-		return new Vector3(getX(),getY(),getZ());
+		return new Vector3(getX(), getY(), getZ());
 	}
 
 	@Override
 	public void setPosition(float x, float y, float z) {
 		this.z = z;
 		body.setTransform(Pixel.toMeter(x), Pixel.toMeter(y), getRotation());
-		
+
 	}
 
 	@Override
 	public float getRotation() {
-		return body.getAngle();
+		return (float) Math.toDegrees(body.getAngle());
 	}
 
 	@Override
 	public void setRotation(float rotation) {
-		body.setTransform(body.getPosition().x, body.getPosition().y, rotation);
+		body.setTransform(body.getPosition().x, body.getPosition().y,
+				(float) Math.toRadians(rotation));
 	}
 
 	@Override

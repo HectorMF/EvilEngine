@@ -42,8 +42,8 @@ public abstract class Light {
 	float[] f;
 	int m_index = 0;
 
-	public Light(RayHandler rayHandler, int rays, Color color, float directionDegree,
-			float distance) {
+	public Light(RayHandler rayHandler, int rays, Color color,
+			float directionDegree, float distance) {
 
 		rayHandler.lightList.add(this);
 		this.rayHandler = rayHandler;
@@ -88,9 +88,9 @@ public abstract class Light {
 	 */
 	public void setColor(float r, float g, float b, float a) {
 		color.r = r;
-    color.g = g;
-    color.b = b;
-    color.a = a;
+		color.g = g;
+		color.b = b;
+		color.a = a;
 		colorF = color.toFloatBits();
 		if (staticLight)
 			staticUpdate();

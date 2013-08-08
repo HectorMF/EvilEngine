@@ -10,36 +10,39 @@ import com.perfectplay.org.components.EventRegion;
 import com.perfectplay.org.components.SpatialComponent;
 import com.perfectplay.org.listeners.RegionContactListener;
 
-public class RegionSystem extends EntitySystem{
-	@Mapper ComponentMapper<SpatialComponent> spatialComponents;
-	@Mapper ComponentMapper<EventRegion> regions;
-	
+public class RegionSystem extends EntitySystem {
+	@Mapper
+	ComponentMapper<SpatialComponent> spatialComponents;
+	@Mapper
+	ComponentMapper<EventRegion> regions;
+
 	RegionContactListener contactListener;
+
 	@SuppressWarnings("unchecked")
 	public RegionSystem() {
 		super(Aspect.getAspectForAll(SpatialComponent.class, EventRegion.class));
 		contactListener = new RegionContactListener();
 		PhysicsSystem.getWorld().setContactListener(contactListener);
 	}
-	
+
 	@Override
 	protected void inserted(Entity e) {
 		super.inserted(e);
-		//activate the body
+		// activate the body
 		regions.get(e).getBody().setActive(true);
 	}
-	
+
 	@Override
 	protected void removed(Entity e) {
 		super.removed(e);
-		//deactivate the body
+		// deactivate the body
 		regions.get(e).getBody().setActive(false);
 	}
-	
-    @Override
-    protected boolean checkProcessing() {
-            return true;
-    }
+
+	@Override
+	protected boolean checkProcessing() {
+		return true;
+	}
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> arg0) {

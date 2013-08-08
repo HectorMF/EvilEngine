@@ -24,10 +24,7 @@ public class PointLight extends PositionalLight {
 	 * @param rayHandler
 	 * @param rays
 	 * @param color
-	 *            Note default values: 
-	 *            Color:WHITE
-	 *            Distance:15            
-	 *            Position:origo
+	 *            Note default values: Color:WHITE Distance:15 Position:origo
 	 */
 	public PointLight(RayHandler rayHandler, int rays) {
 		this(rayHandler, rays, Light.DefaultColor, 15f, 0f, 0f);

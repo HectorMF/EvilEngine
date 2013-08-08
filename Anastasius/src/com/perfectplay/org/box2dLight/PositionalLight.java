@@ -237,22 +237,26 @@ public abstract class PositionalLight extends Light {
 		endY = new float[rays];
 
 		if (rayHandler.isGL20) {
-			lightMesh = new Mesh(VertexDataType.VertexArray, false, vertexNum, 0,
-					new VertexAttribute(Usage.Position, 2, "vertex_positions"),
-					new VertexAttribute(Usage.ColorPacked, 4, "quad_colors"),
+			lightMesh = new Mesh(VertexDataType.VertexArray, false, vertexNum,
+					0, new VertexAttribute(Usage.Position, 2,
+							"vertex_positions"), new VertexAttribute(
+							Usage.ColorPacked, 4, "quad_colors"),
 					new VertexAttribute(Usage.Generic, 1, "s"));
-			softShadowMesh = new Mesh(VertexDataType.VertexArray, false, vertexNum * 2, 0,
-					new VertexAttribute(Usage.Position, 2, "vertex_positions"),
-					new VertexAttribute(Usage.ColorPacked, 4, "quad_colors"),
+			softShadowMesh = new Mesh(VertexDataType.VertexArray, false,
+					vertexNum * 2, 0, new VertexAttribute(Usage.Position, 2,
+							"vertex_positions"), new VertexAttribute(
+							Usage.ColorPacked, 4, "quad_colors"),
 					new VertexAttribute(Usage.Generic, 1, "s"));
 
 		} else {
-			lightMesh = new Mesh(VertexDataType.VertexArray, false, vertexNum, 0,
-					new VertexAttribute(Usage.Position, 2, "vertex_positions"),
-					new VertexAttribute(Usage.ColorPacked, 4, "quad_colors"));
-			softShadowMesh = new Mesh(VertexDataType.VertexArray, false, vertexNum * 2, 0,
-					new VertexAttribute(Usage.Position, 2, "vertex_positions"),
-					new VertexAttribute(Usage.ColorPacked, 4, "quad_colors"));
+			lightMesh = new Mesh(VertexDataType.VertexArray, false, vertexNum,
+					0, new VertexAttribute(Usage.Position, 2,
+							"vertex_positions"), new VertexAttribute(
+							Usage.ColorPacked, 4, "quad_colors"));
+			softShadowMesh = new Mesh(VertexDataType.VertexArray, false,
+					vertexNum * 2, 0, new VertexAttribute(Usage.Position, 2,
+							"vertex_positions"), new VertexAttribute(
+							Usage.ColorPacked, 4, "quad_colors"));
 		}
 		setMesh();
 	}
@@ -276,10 +280,8 @@ public abstract class PositionalLight extends Light {
 		for (int i = 0; i <= rayNum; x2 = x1, y2 = y1, ++i) {
 			x1 = mx[i];
 			y1 = my[i];
-			if (((y1 < y) && (y2 >= y))
-					|| (y1 >= y) && (y2 < y)) {
-				if ((y - y1) / (y2 - y1)
-						* (x2 - x1) < (x - x1))
+			if (((y1 < y) && (y2 >= y)) || (y1 >= y) && (y2 < y)) {
+				if ((y - y1) / (y2 - y1) * (x2 - x1) < (x - x1))
 					oddNodes = !oddNodes;
 			}
 		}

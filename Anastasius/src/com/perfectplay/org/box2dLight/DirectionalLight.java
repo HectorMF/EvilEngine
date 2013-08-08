@@ -43,13 +43,15 @@ public class DirectionalLight extends Light {
 		}
 		setDirection(direction);
 
-		lightMesh = new Mesh(VertexDataType.VertexArray, staticLight, vertexNum, 0, new VertexAttribute(
-				Usage.Position, 2, "vertex_positions"), new VertexAttribute(
-				Usage.ColorPacked, 4, "quad_colors"), new VertexAttribute(
-				Usage.Generic, 1, "s"));
-		softShadowMesh = new Mesh(VertexDataType.VertexArray,staticLight, vertexNum, 0,
-				new VertexAttribute(Usage.Position, 2, "vertex_positions"),
-				new VertexAttribute(Usage.ColorPacked, 4, "quad_colors"),
+		lightMesh = new Mesh(VertexDataType.VertexArray, staticLight,
+				vertexNum, 0, new VertexAttribute(Usage.Position, 2,
+						"vertex_positions"), new VertexAttribute(
+						Usage.ColorPacked, 4, "quad_colors"),
+				new VertexAttribute(Usage.Generic, 1, "s"));
+		softShadowMesh = new Mesh(VertexDataType.VertexArray, staticLight,
+				vertexNum, 0, new VertexAttribute(Usage.Position, 2,
+						"vertex_positions"), new VertexAttribute(
+						Usage.ColorPacked, 4, "quad_colors"),
 				new VertexAttribute(Usage.Generic, 1, "s"));
 		update();
 	}
@@ -203,20 +205,16 @@ public class DirectionalLight extends Light {
 		for (int i = 0; i <= rayNum; x2 = x1, y2 = y1, ++i) {
 			x1 = mx[i];
 			y1 = my[i];
-			if (((y1 < y) && (y2 >= y))
-					|| (y1 >= y) && (y2 < y)) {
-				if ((y - y1) / (y2 - y1)
-						* (x2 - x1) < (x - x1))
+			if (((y1 < y) && (y2 >= y)) || (y1 >= y) && (y2 < y)) {
+				if ((y - y1) / (y2 - y1) * (x2 - x1) < (x - x1))
 					oddNodes = !oddNodes;
 			}
 		}
 		for (int i = 0; i < rayNum; x2 = x1, y2 = y1, ++i) {
 			x1 = start[i].x;
 			y1 = start[i].y;
-			if (((y1 < y) && (y2 >= y))
-					|| (y1 >= y) && (y2 < y)) {
-				if ((y - y1) / (y2 - y1)
-						* (x2 - x1) < (x - x1))
+			if (((y1 < y) && (y2 >= y)) || (y1 >= y) && (y2 < y)) {
+				if ((y - y1) / (y2 - y1) * (x2 - x1) < (x - x1))
 					oddNodes = !oddNodes;
 			}
 		}

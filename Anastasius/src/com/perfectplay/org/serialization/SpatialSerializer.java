@@ -8,13 +8,14 @@ import com.perfectplay.org.components.SpatialComponent;
 import com.perfectplay.org.utils.BodylessSpatial;
 import com.perfectplay.org.utils.Spatial;
 
-public class SpatialSerializer extends Serializer<SpatialComponent>{
+public class SpatialSerializer extends Serializer<SpatialComponent> {
 
 	@Override
 	public SpatialComponent read(Kryo kryo, Input input,
 			Class<SpatialComponent> type) {
 		Spatial spatial = new BodylessSpatial();
-		spatial.setPosition(input.readFloat(), input.readFloat(), input.readFloat());
+		spatial.setPosition(input.readFloat(), input.readFloat(),
+				input.readFloat());
 		spatial.setRotation(input.readFloat());
 		spatial.setSize(input.readFloat(), input.readFloat(), input.readFloat());
 		return new SpatialComponent(spatial);
@@ -22,7 +23,7 @@ public class SpatialSerializer extends Serializer<SpatialComponent>{
 
 	@Override
 	public void write(Kryo kryo, Output output, SpatialComponent object) {
-		//get objects inner spatial
+		// get objects inner spatial
 		Spatial spatial = object.getSpatial();
 		output.writeFloat(spatial.getX());
 		output.writeFloat(spatial.getY());
@@ -31,7 +32,7 @@ public class SpatialSerializer extends Serializer<SpatialComponent>{
 		output.writeFloat(spatial.getWidth());
 		output.writeFloat(spatial.getHeight());
 		output.writeFloat(spatial.getDepth());
-		
+
 	}
 
 }

@@ -1,5 +1,5 @@
 package com.perfectplay.org.scripting;
 
-public interface Delegate{
-	
+public interface Delegate {
+
 }

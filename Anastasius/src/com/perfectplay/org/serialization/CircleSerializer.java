@@ -7,13 +7,13 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
-public class CircleSerializer extends Serializer<CircleShape>{
-	
+public class CircleSerializer extends Serializer<CircleShape> {
+
 	@Override
 	public CircleShape read(Kryo kryo, Input input, Class<CircleShape> type) {
 		CircleShape shape = new CircleShape();
 		shape.setRadius(input.readFloat());
-		shape.setPosition(new Vector2(input.readFloat(),input.readFloat()));
+		shape.setPosition(new Vector2(input.readFloat(), input.readFloat()));
 		return shape;
 	}
 
@@ -23,6 +23,5 @@ public class CircleSerializer extends Serializer<CircleShape>{
 		output.writeFloat(object.getPosition().x);
 		output.writeFloat(object.getPosition().y);
 	}
-
 
 }

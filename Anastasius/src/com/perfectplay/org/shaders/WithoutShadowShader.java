@@ -1,9 +1,7 @@
 package com.perfectplay.org.shaders;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-
 
 public final class WithoutShadowShader {
 	static final public ShaderProgram createShadowShader() {
@@ -16,19 +14,17 @@ public final class WithoutShadowShader {
 				+ "   v_texCoords = a_texCoord;\n" //
 				+ "   gl_Position = a_position;\n" //
 				+ "}\n";
-		
+
 		final String fragmentShader = "#ifdef GL_ES\n" //
-			+ "precision lowp float;\n" //
-			+ "#define MED mediump\n"
-			+ "#else\n"
-			+ "#define MED \n"
-			+ "#endif\n" //
+				+ "precision lowp float;\n" //
+				+ "#define MED mediump\n" + "#else\n"
+				+ "#define MED \n"
+				+ "#endif\n" //
 				+ "varying MED vec2 v_texCoords;\n" //
 				+ "uniform sampler2D u_texture;\n" //
 				+ "void main()\n"//
 				+ "{\n" //
-				+ "gl_FragColor = texture2D(u_texture, v_texCoords);\n"				
-				+ "}\n";
+				+ "gl_FragColor = texture2D(u_texture, v_texCoords);\n" + "}\n";
 		ShaderProgram.pedantic = false;
 		ShaderProgram woShadowShader = new ShaderProgram(vertexShader,
 				fragmentShader);

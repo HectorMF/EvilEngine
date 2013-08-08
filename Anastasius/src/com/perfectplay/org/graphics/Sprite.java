@@ -1,95 +1,97 @@
+package com.perfectplay.org.graphics;
 
-	package com.perfectplay.org.graphics;
-	
-	import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-	import com.esotericsoftware.kryo.Kryo;
-	import com.esotericsoftware.kryo.io.Input;
-	import com.esotericsoftware.kryo.io.Output;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
-	public class Sprite implements ISprite{
-		
-		private int srcWidth, srcHeight;
-		private int srcX, srcY;
-		private Texture2D texture;
-		
-		public Sprite(){
-			this(null, 0, 0, 0, 0);
-		}
-		
-		public Sprite(Texture2D texture) {
-			this(texture, 0, 0, texture.getWidth(), texture.getHeight());
-		}
-		
-		public Sprite(Texture2D texture, int srcX, int srcY, int srcWidth, int srcHeight){
-			this.texture = texture;
-			this.srcX = srcX;
-			this.srcY = srcY;
-			this.srcWidth = srcWidth;
-			this.srcHeight = srcHeight;
-		}
+public class Sprite implements ISprite {
 
-		public void draw(SpriteBatch batch, float x, float y, float originX, float originY, float width, float height, float scaleX, float scaleY, float rotation, boolean flipX, boolean flipY) {
-			batch.draw(texture, x, y, originX, originY, width, height, scaleX, scaleY, rotation, srcX, srcY, srcWidth, srcHeight, flipX, flipY);
-		}
-/*
-		public void draw (SpriteBatch spriteBatch, float alphaModulation) {
-			Color color = getColor();
+	private int srcWidth, srcHeight;
+	private int srcX, srcY;
+	private Texture2D texture;
 
-			float oldAlpha = color.a;
-			color.a *= alphaModulation;
-			//setColor(color);
-			//draw(spriteBatch);
-			color.a = oldAlpha;
-		//	setColor(color);
-		}*/
-		
-		@Override
-		public void update(float dt) {}
-		
-		@Override
-		public void pause() {}
-		
-		@Override
-		public void play() {}
-		
-		@Override
-		public boolean isLooping() {
-			return false;
-		}
-		
-		@Override
-		public boolean isAnimated() {
-			return false;
-		}
-		
-		@Override
-		public boolean isPlaying() {
-			return false;
-		}
-		
-		@Override
-		public ISprite clone(){
-			return this;
-		}
-		
-		@Override
-		public void read(Kryo kryo, Input input) {
-			// TODO Auto-generated method stub
-			this.srcX = input.readInt();
-			this.srcY = input.readInt();
-			this.srcWidth = input.readInt();
-			this.srcHeight = input.readInt();
-			this.texture = kryo.readObject(input,Texture2D.class);
-		}
-		
-		@Override
-		public void write(Kryo kryo, Output output) {
-			// TODO Auto-generated method stub
-			output.writeInt(srcX);
-			output.writeInt(srcY);
-			output.writeInt(srcWidth);
-			output.writeInt(srcHeight);
-			kryo.writeObject(output, texture);
-			
-		}
+	public Sprite() {
+		this(null, 0, 0, 0, 0);
+	}
+
+	public Sprite(Texture2D texture) {
+		this(texture, 0, 0, texture.getWidth(), texture.getHeight());
+	}
+
+	public Sprite(Texture2D texture, int srcX, int srcY, int srcWidth,
+			int srcHeight) {
+		this.texture = texture;
+		this.srcX = srcX;
+		this.srcY = srcY;
+		this.srcWidth = srcWidth;
+		this.srcHeight = srcHeight;
+	}
+
+	public void draw(SpriteBatch batch, float x, float y, float originX,
+			float originY, float width, float height, float scaleX,
+			float scaleY, float rotation, boolean flipX, boolean flipY,
+			Color color, float alpha) {
+
+		Color previousColor = batch.getColor();
+		color.a = alpha;
+		batch.setColor(color);
+		batch.draw(texture, x, y, originX, originY, width, height, scaleX,
+				scaleY, rotation, srcX, srcY, srcWidth, srcHeight, flipX, flipY);
+		batch.setColor(previousColor);
+	}
+
+	@Override
+	public void update(float dt) {
+	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void play() {
+	}
+
+	@Override
+	public boolean isLooping() {
+		return false;
+	}
+
+	@Override
+	public boolean isAnimated() {
+		return false;
+	}
+
+	@Override
+	public boolean isPlaying() {
+		return false;
+	}
+
+	@Override
+	public ISprite clone() {
+		return this;
+	}
+
+	@Override
+	public void read(Kryo kryo, Input input) {
+		// TODO Auto-generated method stub
+		this.srcX = input.readInt();
+		this.srcY = input.readInt();
+		this.srcWidth = input.readInt();
+		this.srcHeight = input.readInt();
+		this.texture = kryo.readObject(input, Texture2D.class);
+	}
+
+	@Override
+	public void write(Kryo kryo, Output output) {
+		// TODO Auto-generated method stub
+		output.writeInt(srcX);
+		output.writeInt(srcY);
+		output.writeInt(srcWidth);
+		output.writeInt(srcHeight);
+		kryo.writeObject(output, texture);
+
+	}
 }

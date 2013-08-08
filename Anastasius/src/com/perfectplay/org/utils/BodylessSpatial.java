@@ -3,13 +3,13 @@ package com.perfectplay.org.utils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-public class BodylessSpatial implements Spatial{
+public class BodylessSpatial implements Spatial {
 	private float x, y, z;
 	private float width, height, depth;
 	private float rotation;
-	
+
 	@Override
-	public float getX(){
+	public float getX() {
 		return x;
 	}
 
@@ -25,12 +25,12 @@ public class BodylessSpatial implements Spatial{
 
 	@Override
 	public Vector2 getScreenPosition() {
-		return new Vector2(x,y-z);
+		return new Vector2(x, y - z);
 	}
 
 	@Override
 	public Vector3 getPosition() {
-		return new Vector3(x,y,z);
+		return new Vector3(x, y, z);
 	}
 
 	@Override

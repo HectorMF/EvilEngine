@@ -19,27 +19,28 @@ import com.perfectplay.org.utils.EntityBodyMapper;
 public class EventRegion extends Component {
 	private Body regions;
 	private ArrayList<FixtureDef> fixtures;
-	
-	public EventRegion(Entity entity){
+
+	public EventRegion(Entity entity) {
 		fixtures = new ArrayList<FixtureDef>();
 		BodyDef bodDef = new BodyDef();
 		bodDef.type = BodyType.KinematicBody;
-		if(EntityBodyMapper.getInstance().hasBody(entity)){
+		if (EntityBodyMapper.getInstance().hasBody(entity)) {
 			regions = EntityBodyMapper.getInstance().getBody(entity);
-		}else{
+		} else {
 			regions = PhysicsSystem.createBody(bodDef);
 			EntityBodyMapper.getInstance().registerBody(entity, regions);
 		}
 		regions.setUserData(entity);
 	}
-	
-	public void addRegion(FixtureDef region, CollisionEvent event){
+
+	public void addRegion(FixtureDef region, CollisionEvent event) {
 		Fixture fixture = regions.createFixture(region);
 		fixture.setUserData(event);
-		//fixtures.add(fixture);
+		// fixtures.add(fixture);
 	}
-	
-	public static FixtureDef createPolygonRegion(Vector2[] vertices, short category, short group, short mask){
+
+	public static FixtureDef createPolygonRegion(Vector2[] vertices,
+			short category, short group, short mask) {
 		PolygonShape shape = new PolygonShape();
 		shape.set(vertices);
 		FixtureDef fixtureDef = new FixtureDef();
@@ -50,8 +51,9 @@ public class EventRegion extends Component {
 		fixtureDef.filter.maskBits = mask;
 		return fixtureDef;
 	}
-	
-	public static FixtureDef createCircleRegion(float radius, Vector2 position, short category, short group, short mask){
+
+	public static FixtureDef createCircleRegion(float radius, Vector2 position,
+			short category, short group, short mask) {
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radius);
 		shape.setPosition(position);
@@ -63,8 +65,10 @@ public class EventRegion extends Component {
 		fixtureDef.filter.maskBits = mask;
 		return fixtureDef;
 	}
-	
-	public static FixtureDef createBoxRegion(float width, float height, Vector2 position, float angle, short category, short group, short mask){
+
+	public static FixtureDef createBoxRegion(float width, float height,
+			Vector2 position, float angle, short category, short group,
+			short mask) {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width, height, position, angle);
 		FixtureDef fixtureDef = new FixtureDef();
@@ -75,8 +79,8 @@ public class EventRegion extends Component {
 		fixtureDef.filter.maskBits = mask;
 		return fixtureDef;
 	}
-	
-	public Body getBody(){
+
+	public Body getBody() {
 		return regions;
 	}
 }

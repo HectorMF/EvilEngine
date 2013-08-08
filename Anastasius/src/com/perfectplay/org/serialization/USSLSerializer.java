@@ -6,10 +6,11 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.perfectplay.org.graphics.UnsortedSpriteLayer;
 
-public class USSLSerializer  extends Serializer<UnsortedSpriteLayer>{
+public class USSLSerializer extends Serializer<UnsortedSpriteLayer> {
 
 	@Override
-	public UnsortedSpriteLayer read(Kryo kryo, Input input, Class<UnsortedSpriteLayer> type) {
+	public UnsortedSpriteLayer read(Kryo kryo, Input input,
+			Class<UnsortedSpriteLayer> type) {
 		return new UnsortedSpriteLayer(input.readInt());
 	}
 

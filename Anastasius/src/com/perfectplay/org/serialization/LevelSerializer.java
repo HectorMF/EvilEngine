@@ -25,42 +25,43 @@ import com.perfectplay.org.graphics.SpriteLayer;
 import com.perfectplay.org.graphics.Texture2D;
 import com.perfectplay.org.graphics.UnsortedSpriteLayer;
 
-public class LevelSerializer extends Serializer<Level>{
+public class LevelSerializer extends Serializer<Level> {
 	public static Entity currentEntity;
 	private Kryo kryo;
-	public LevelSerializer(){
+
+	public LevelSerializer() {
 		super();
 		kryo = new Kryo();
 		kryo.register(Level.class, this);
-		//components and there respective serializers
+		// components and there respective serializers
 		kryo.register(Renderable.class, new RenderableSerializer());
 		kryo.register(RigidBody.class, new RigidBodySerializer());
 		kryo.register(SpatialComponent.class, new SpatialSerializer());
-		
-		//utility serialization
-		kryo.register(Texture2D.class, new Texture2DSerializer());	
+
+		// utility serialization
+		kryo.register(Texture2D.class, new Texture2DSerializer());
 		kryo.register(DepthSortedSpriteLayer.class, new DSSLSerializer());
 		kryo.register(UnsortedSpriteLayer.class, new USSLSerializer());
 		kryo.register(FixtureDef.class, new FixtureDefSerializer());
 		kryo.register(PolygonShape.class, new PolygonSerializer());
 		kryo.register(CircleShape.class, new CircleSerializer());
 	}
-	
-	public void WriteLevel(Level level, String path){
+
+	public void WriteLevel(Level level, String path) {
 		try {
 			Output output = new Output(new FileOutputStream(path));
 			kryo.writeClassAndObject(output, level);
 			output.close();
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public Level ReadLevel(String path){
+
+	public Level ReadLevel(String path) {
 		try {
 			Input input = new Input(new FileInputStream(path));
-			Level level = (Level)kryo.readClassAndObject(input);
+			Level level = (Level) kryo.readClassAndObject(input);
 			input.close();
 			return level;
 		} catch (FileNotFoundException e) {
@@ -68,7 +69,7 @@ public class LevelSerializer extends Serializer<Level>{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Level read(Kryo kryo, Input input, Class<Level> type) {
 		float delta = input.readFloat();
@@ -78,22 +79,24 @@ public class LevelSerializer extends Serializer<Level>{
 		int bSize = input.readInt();
 		float gravX = input.readFloat();
 		float gravY = input.readFloat();
-		Level level = new Level(width, height, bSize, new Vector2(gravX,gravY),doSleep);
+		Level level = new Level(width, height, bSize,
+				new Vector2(gravX, gravY), doSleep);
 		level.setDelta(delta);
-		
+
 		int layers = input.readInt();
-		for(int k = 0; k <  layers; k++){
-			level.getRenderSystem().addLayer((SpriteLayer)kryo.readClassAndObject(input));
+		for (int k = 0; k < layers; k++) {
+			level.getRenderSystem().addLayer(
+					(SpriteLayer) kryo.readClassAndObject(input));
 		}
-		
+
 		long count = input.readLong();
-		for(int i = 0; i < count; i++){
+		for (int i = 0; i < count; i++) {
 			Entity e = level.createEntity();
 			currentEntity = e;
 			int components = input.readInt();
-			for(int j = 0; j < components; j++){
-				Component c = (Component)kryo.readClassAndObject(input);
-				if(c != null)
+			for (int j = 0; j < components; j++) {
+				Component c = (Component) kryo.readClassAndObject(input);
+				if (c != null)
 					e.addComponent(c);
 			}
 			e.addToWorld();
@@ -103,7 +106,7 @@ public class LevelSerializer extends Serializer<Level>{
 
 	@Override
 	public void write(Kryo kryo, Output output, Level object) {
-		
+
 		output.writeFloat(object.getDelta());
 		output.writeInt(object.getWidth());
 		output.writeInt(object.getHeight());
@@ -111,35 +114,35 @@ public class LevelSerializer extends Serializer<Level>{
 		output.writeInt(object.getBucketSize());
 		output.writeFloat(object.getGravity().x);
 		output.writeFloat(object.getGravity().y);
-		
+
 		int layers = object.getRenderSystem().getLayerCount();
 		output.writeInt(layers);
-		for(int k = 0; k < layers; k++){
-			kryo.writeClassAndObject(output, object.getRenderSystem().getLayer(k));
+		for (int k = 0; k < layers; k++) {
+			kryo.writeClassAndObject(output,
+					object.getRenderSystem().getLayer(k));
 		}
 		long count = object.getEntityManager().getTotalCreated();
 		ArrayList<Integer> activeEntities = new ArrayList<Integer>();
 
-		for(int i = 0; i < count; i++){
-			if(object.getEntityManager().isActive(i)){
+		for (int i = 0; i < count; i++) {
+			if (object.getEntityManager().isActive(i)) {
 				activeEntities.add(i);
 			}
 		}
-		//output the number of entities
-		//System.out.println(object.getEntityManager().getTotalAdded());
+		// output the number of entities
+		// System.out.println(object.getEntityManager().getTotalAdded());
 		output.writeLong(activeEntities.size());
-		for(int i = 0; i < activeEntities.size(); i++){
+		for (int i = 0; i < activeEntities.size(); i++) {
 			Bag<Component> bag = new Bag<Component>();
 			object.getEntity(i).getComponents(bag);
-			//output the number of components this entity has
+			// output the number of components this entity has
 			output.writeInt(bag.size());
-			for(int j = 0; j < bag.size(); j++){
-				//output the compononents
+			for (int j = 0; j < bag.size(); j++) {
+				// output the compononents
 				kryo.writeClassAndObject(output, bag.get(j));
 			}
 		}
-		
-		
+
 	}
-	
+
 }

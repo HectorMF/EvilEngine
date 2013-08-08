@@ -6,10 +6,11 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.perfectplay.org.graphics.DepthSortedSpriteLayer;
 
-public class DSSLSerializer extends Serializer<DepthSortedSpriteLayer>{
+public class DSSLSerializer extends Serializer<DepthSortedSpriteLayer> {
 
 	@Override
-	public DepthSortedSpriteLayer read(Kryo kryo, Input input, Class<DepthSortedSpriteLayer> type) {
+	public DepthSortedSpriteLayer read(Kryo kryo, Input input,
+			Class<DepthSortedSpriteLayer> type) {
 		return new DepthSortedSpriteLayer(input.readInt());
 	}
 

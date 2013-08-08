@@ -15,19 +15,17 @@ public final class ShadowShader {
 				+ "   gl_Position = a_position;\n" //
 				+ "}\n";
 		final String fragmentShader = "#ifdef GL_ES\n" //
-			+ "precision lowp float;\n" //
-			+ "#define MED mediump\n"
-			+ "#else\n"
-			+ "#define MED \n"
-			+ "#endif\n" //
+				+ "precision lowp float;\n" //
+				+ "#define MED mediump\n" + "#else\n"
+				+ "#define MED \n"
+				+ "#endif\n" //
 				+ "varying MED vec2 v_texCoords;\n" //
 				+ "uniform sampler2D u_texture;\n" //
-				+ "uniform vec4 ambient;\n"				
-				+ "void main()\n"//
+				+ "uniform vec4 ambient;\n" + "void main()\n"//
 				+ "{\n" //
 				+ "vec4 c = texture2D(u_texture, v_texCoords);\n"//
 				+ "gl_FragColor.rgb = c.rgb * c.a + ambient.rgb;\n"//
-				+ "gl_FragColor.a = ambient.a - c.a;\n"//				
+				+ "gl_FragColor.a = ambient.a - c.a;\n"//
 				+ "}\n";
 		ShaderProgram.pedantic = false;
 		ShaderProgram shadowShader = new ShaderProgram(vertexShader,

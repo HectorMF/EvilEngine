@@ -5,7 +5,6 @@ package com.perfectplay.org.box2dLight;
  *
  */
 
-
 import com.badlogic.gdx.Gdx;
 
 import com.badlogic.gdx.graphics.Color;
@@ -84,8 +83,7 @@ public class RayHandler implements Disposable {
 	 * @param camera
 	 */
 	public RayHandler(World world) {
-		this(world, Gdx.graphics.getWidth() / 4, Gdx.graphics
-				.getHeight() / 4);
+		this(world, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 4);
 	}
 
 	/**
@@ -463,9 +461,9 @@ public class RayHandler implements Disposable {
 	 */
 	public final void setAmbientLight(float r, float g, float b, float a) {
 		this.ambientLight.r = r;
-    this.ambientLight.g = g;
-    this.ambientLight.b = b;
-    this.ambientLight.a = a;   
+		this.ambientLight.g = g;
+		this.ambientLight.b = b;
+		this.ambientLight.a = a;
 	}
 
 	/**

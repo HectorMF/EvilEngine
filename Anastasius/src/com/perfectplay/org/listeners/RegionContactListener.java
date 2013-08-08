@@ -9,56 +9,59 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.perfectplay.org.components.SpatialComponent;
 import com.perfectplay.org.events.CollisionEvent;
 
-public class RegionContactListener implements ContactListener{
+public class RegionContactListener implements ContactListener {
 	private ZContactFilter dynamicFilter;
-	public RegionContactListener(){
+
+	public RegionContactListener() {
 		dynamicFilter = new ZContactFilter();
 	}
-	
+
 	@Override
 	public void beginContact(Contact contact) {
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
-		
-		if(!fixtureA.isSensor() & !fixtureB.isSensor())
+
+		if (!fixtureA.isSensor() & !fixtureB.isSensor())
 			return;
-		
-		Entity entityA = (Entity)fixtureA.getBody().getUserData();
-		Entity entityB = (Entity)fixtureB.getBody().getUserData();
-		
-		if(entityA  == entityB)
+
+		Entity entityA = (Entity) fixtureA.getBody().getUserData();
+		Entity entityB = (Entity) fixtureB.getBody().getUserData();
+
+		if (entityA == entityB)
 			return;
-			CollisionEvent collisionEvent = null;
-			
-			if(fixtureA.isSensor()){
-				collisionEvent = (CollisionEvent) fixtureA.getUserData();
-			}else{
-				collisionEvent = (CollisionEvent) fixtureB.getUserData();
-			}
-			
-			if(collisionEvent != null){
-				collisionEvent.beginCollision((Entity)fixtureA.getBody().getUserData(), (Entity)fixtureB.getBody().getUserData());
-			}
+		CollisionEvent collisionEvent = null;
+
+		if (fixtureA.isSensor()) {
+			collisionEvent = (CollisionEvent) fixtureA.getUserData();
+		} else {
+			collisionEvent = (CollisionEvent) fixtureB.getUserData();
+		}
+
+		if (collisionEvent != null) {
+			collisionEvent.beginCollision((Entity) fixtureA.getBody()
+					.getUserData(), (Entity) fixtureB.getBody().getUserData());
+		}
 	}
 
 	@Override
 	public void endContact(Contact contact) {
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
-		
-		if(!fixtureA.isSensor() & !fixtureB.isSensor())
+
+		if (!fixtureA.isSensor() & !fixtureB.isSensor())
 			return;
-		
+
 		CollisionEvent collisionEvent = null;
-		
-		if(fixtureA.isSensor()){
+
+		if (fixtureA.isSensor()) {
 			collisionEvent = (CollisionEvent) fixtureA.getUserData();
-		}else{
+		} else {
 			collisionEvent = (CollisionEvent) fixtureB.getUserData();
 		}
-		
-		if(collisionEvent != null){
-			collisionEvent.endCollision((Entity)fixtureA.getBody().getUserData(), (Entity)fixtureB.getBody().getUserData());
+
+		if (collisionEvent != null) {
+			collisionEvent.endCollision((Entity) fixtureA.getBody()
+					.getUserData(), (Entity) fixtureB.getBody().getUserData());
 		}
 	}
 
@@ -66,26 +69,29 @@ public class RegionContactListener implements ContactListener{
 	public void preSolve(Contact contact, Manifold oldManifold) {
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
-		Entity entityA = (Entity)fixtureA.getBody().getUserData();
-		Entity entityB = (Entity)fixtureB.getBody().getUserData();
-		boolean contactOccured = dynamicFilter.shouldCollide(contact.getFixtureA(), contact.getFixtureB());
+		Entity entityA = (Entity) fixtureA.getBody().getUserData();
+		Entity entityB = (Entity) fixtureB.getBody().getUserData();
+		boolean contactOccured = dynamicFilter.shouldCollide(
+				contact.getFixtureA(), contact.getFixtureB());
 		contact.setEnabled(contactOccured);
-		if(contactOccured){
-			//float velocity = entityA.getComponent(RigidBody.class).getZVelocity();
-			//float velocity2 = entityB.getComponent(RigidBody.class).getZVelocity();
-			
-			//fixtureA.get
+		if (contactOccured) {
+			// float velocity =
+			// entityA.getComponent(RigidBody.class).getZVelocity();
+			// float velocity2 =
+			// entityB.getComponent(RigidBody.class).getZVelocity();
+
+			// fixtureA.get
 		}
-		if(entityA.getComponent(SpatialComponent.class).isDirty() || entityB.getComponent(SpatialComponent.class).isDirty()){
+		if (entityA.getComponent(SpatialComponent.class).isDirty()
+				|| entityB.getComponent(SpatialComponent.class).isDirty()) {
 
 		}
-		
+
 	}
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
-		
+
 	}
-	
 
 }

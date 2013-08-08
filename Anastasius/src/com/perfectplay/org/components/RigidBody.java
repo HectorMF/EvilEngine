@@ -11,27 +11,26 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.perfectplay.org.scripting.ScriptableComponent;
 import com.perfectplay.org.scripting.delegates.PhysicsDelegate;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.utils.EntityBodyMapper;
 import com.perfectplay.org.utils.Pixel;
 
-public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
+public class RigidBody extends ScriptableComponent<PhysicsDelegate> {
 	private Body rigidBody;
-	
-    private float velocityZ;
-	private Vector2 forceZ; //(force,point) respectively
-	
+
+	private float velocityZ;
+	private Vector2 forceZ; // (force,point) respectively
+
 	private ArrayList<FixtureDef> fixtures;
-	
+
 	public RigidBody(Entity entity, BodyType type) {
 		super(RigidBody.class, PhysicsDelegate.class);
 		fixtures = new ArrayList<FixtureDef>();
-		if(EntityBodyMapper.getInstance().hasBody(entity)){
+		if (EntityBodyMapper.getInstance().hasBody(entity)) {
 			rigidBody = EntityBodyMapper.getInstance().getBody(entity);
-		}else{
+		} else {
 			BodyDef bodDef = new BodyDef();
 			rigidBody = PhysicsSystem.createBody(bodDef);
 			EntityBodyMapper.getInstance().registerBody(entity, rigidBody);
@@ -39,18 +38,18 @@ public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
 		rigidBody.setType(type);
 		rigidBody.setUserData(entity);
 	}
-	
-	public void addFixture(FixtureDef fixtureDef){
-		Shape s = fixtureDef.shape;
+
+	public void addFixture(FixtureDef fixtureDef) {
 		rigidBody.createFixture(fixtureDef);
 		fixtures.add(fixtureDef);
 	}
-	
-	public ArrayList<FixtureDef> getFixtures(){
+
+	public ArrayList<FixtureDef> getFixtures() {
 		return fixtures;
 	}
-	
-	public static FixtureDef createPolygonFixture(Vector2[] vertices, float density, float restitution, float friction){
+
+	public static FixtureDef createPolygonFixture(Vector2[] vertices,
+			float density, float restitution, float friction) {
 		PolygonShape shape = new PolygonShape();
 		shape.set(vertices);
 		FixtureDef fixtureDef = new FixtureDef();
@@ -60,8 +59,9 @@ public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
 		fixtureDef.friction = friction;
 		return fixtureDef;
 	}
-	
-	public static FixtureDef createCircleFixture(float radius, Vector2 position, float density, float restitution, float friction){
+
+	public static FixtureDef createCircleFixture(float radius,
+			Vector2 position, float density, float restitution, float friction) {
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radius);
 		shape.setPosition(position);
@@ -72,10 +72,13 @@ public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
 		fixtureDef.friction = friction;
 		return fixtureDef;
 	}
-	
-	public static FixtureDef createBoxFixture(float width, float height, Vector2 position, float angle, float density, float restitution, float friction){
+
+	public static FixtureDef createBoxFixture(float width, float height,
+			Vector2 position, float angle, float density, float restitution,
+			float friction) {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(Pixel.toMeter(width/2), Pixel.toMeter(height/2),  Pixel.toMeter(position), (float)Math.toRadians(angle));
+		shape.setAsBox(Pixel.toMeter(width / 2), Pixel.toMeter(height / 2),
+				Pixel.toMeter(position), (float) Math.toRadians(angle));
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.density = density;
@@ -84,38 +87,36 @@ public class RigidBody extends ScriptableComponent<PhysicsDelegate>{
 		return fixtureDef;
 	}
 
-	public Vector3 getVelocity(){
+	public Vector3 getVelocity() {
 		Vector2 bodyVelocity = rigidBody.getLinearVelocity();
 		return new Vector3(bodyVelocity.x, bodyVelocity.y, velocityZ);
 	}
-	
-	public float getZVelocity(){
+
+	public float getZVelocity() {
 		return velocityZ;
 	}
-	
-	public void setLinearVelocity(Vector3 velocity){
+
+	public void setLinearVelocity(Vector3 velocity) {
 		rigidBody.setLinearVelocity(velocity.x, velocity.y);
 		velocityZ = velocity.z;
 	}
-	
-	public void setLinearDamping(float damping){
+
+	public void setLinearDamping(float damping) {
 		rigidBody.setLinearDamping(damping);
 	}
+
 	/*
-	public void applyForces(Vector3 force, Vector3 point){
-		physicsBody.applyForce(force.x, force.y, point.x, point.y);
-		forceZ = new Vector2(force.z, point.z); //Needs to be changed to either be a list of forces
-		//or automatically merge the new force with the current force.
-	}
-	
-	*/
-	public Vector2 getForceZ(){
+	 * public void applyForces(Vector3 force, Vector3 point){
+	 * physicsBody.applyForce(force.x, force.y, point.x, point.y); forceZ = new
+	 * Vector2(force.z, point.z); //Needs to be changed to either be a list of
+	 * forces //or automatically merge the new force with the current force. }
+	 */
+	public Vector2 getForceZ() {
 		return forceZ;
 	}
-	
+
 	public Body getBody() {
 		return rigidBody;
 	}
-	
-	
+
 }
