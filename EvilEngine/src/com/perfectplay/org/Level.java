@@ -116,4 +116,8 @@ public class Level extends World {
 	public SpatialGridSystem getSpatialSystem() {
 		return spatialGridSystem;
 	}
+	
+	public void dispose(){
+		this.dispose();
+	}
 }

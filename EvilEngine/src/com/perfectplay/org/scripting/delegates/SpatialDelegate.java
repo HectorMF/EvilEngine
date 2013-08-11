@@ -16,8 +16,7 @@ public interface SpatialDelegate extends Delegate {
 	 * Called when the entity rotates. Passes in the spatial as well as the
 	 * entity object.
 	 */
-	public abstract void onRotate(Entity entity,
-			SpatialComponent spatialComponent);
+	public abstract void onRotate(Entity entity, SpatialComponent spatialComponent);
 
 	/*
 	 * Called when the entity doesn't move. Passes in the spatial as well as the
