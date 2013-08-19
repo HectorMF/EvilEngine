@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.SpatialComponent;
 import com.perfectplay.org.graphics.SpriteLayer;
+import com.perfectplay.org.utils.ParallaxCamera;
 
 public class RenderSystem extends EntitySystem {
 	@Mapper
@@ -21,7 +22,9 @@ public class RenderSystem extends EntitySystem {
 	private ArrayList<SpriteLayer> layers;
 
 	private SpriteBatch batch;
-
+	
+	private ParallaxCamera camera;
+	
 	@SuppressWarnings("unchecked")
 	public RenderSystem(SpriteBatch batch) {
 		super(Aspect.getAspectForAll(SpatialComponent.class, Renderable.class));
@@ -30,11 +33,14 @@ public class RenderSystem extends EntitySystem {
 	}
 
 	public void addLayer(int pos, SpriteLayer layer) {
+		layers.get(pos).setID(pos+1);
 		layers.add(pos, layer);
+		layer.setID(pos);
 	}
 
 	public void addLayer(SpriteLayer layer) {
-		layers.add(layer.getID(), layer);
+		layers.add(layer);
+		layer.setID(layers.size()-1);
 	}
 
 	public SpriteLayer getLayer(int id) {
@@ -45,6 +51,10 @@ public class RenderSystem extends EntitySystem {
 		return layers.size();
 	}
 
+	public void setCamera(ParallaxCamera camera) {
+		this.camera = camera;
+	}
+	
 	public void setSpriteBatch(SpriteBatch batch) {
 		this.batch = batch;
 	}
@@ -67,7 +77,10 @@ public class RenderSystem extends EntitySystem {
 	protected final void processEntities(ImmutableBag<Entity> entities) {
 		for (SpriteLayer layer : layers) {
 			layer.update(world.getDelta());
+			batch.setProjectionMatrix(camera.calculateParallaxMatrix(layer.getParallaxSpeedX(), layer.getParallaxSpeedY()));
+			batch.begin();
 			layer.render(batch);
+			batch.end();
 		}
 	}
 

@@ -11,12 +11,14 @@ public class DSSLSerializer extends Serializer<DepthSortedSpriteLayer> {
 	@Override
 	public DepthSortedSpriteLayer read(Kryo kryo, Input input,
 			Class<DepthSortedSpriteLayer> type) {
-		return new DepthSortedSpriteLayer(input.readInt());
+		return new DepthSortedSpriteLayer(input.readInt(), input.readFloat(), input.readFloat());
 	}
 
 	@Override
 	public void write(Kryo kryo, Output output, DepthSortedSpriteLayer object) {
 		output.writeInt(object.getID());
+		output.writeFloat(object.getParallaxSpeedX());
+		output.writeFloat(object.getParallaxSpeedY());
 	}
 
 }

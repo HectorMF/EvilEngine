@@ -16,8 +16,8 @@ public class DepthSortedSpriteLayer extends SpriteLayer {
 		nodes = new ArrayList<RenderableNode>();
 	}
 
-	public DepthSortedSpriteLayer(int id) {
-		super(id);
+	public DepthSortedSpriteLayer(int id, float parallaxSpeedX, float parallaxSpeedY) {
+		super(id, parallaxSpeedX, parallaxSpeedY);
 		nodes = new ArrayList<RenderableNode>();
 	}
 
@@ -25,6 +25,7 @@ public class DepthSortedSpriteLayer extends SpriteLayer {
 	public void render(SpriteBatch batch) {
 		Renderable r;
 		Spatial s;
+		System.out.println(this.getID()+ ": " +nodes.size());
 		for (RenderableNode rn : nodes) {
 			r = rn.getRenderable();
 			s = rn.getSpatialComponent().getSpatial();

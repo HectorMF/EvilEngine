@@ -14,8 +14,8 @@ public class UnsortedSpriteLayer extends SpriteLayer {
 		nodes = new ArrayList<RenderableNode>();
 	}
 
-	public UnsortedSpriteLayer(int id) {
-		super(id);
+	public UnsortedSpriteLayer(int id, float parallaxSpeedX, float parallaxSpeedY) {
+		super(id, parallaxSpeedX, parallaxSpeedY);
 		nodes = new ArrayList<RenderableNode>();
 	}
 

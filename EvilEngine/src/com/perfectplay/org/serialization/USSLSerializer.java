@@ -11,12 +11,14 @@ public class USSLSerializer extends Serializer<UnsortedSpriteLayer> {
 	@Override
 	public UnsortedSpriteLayer read(Kryo kryo, Input input,
 			Class<UnsortedSpriteLayer> type) {
-		return new UnsortedSpriteLayer(input.readInt());
+		return new UnsortedSpriteLayer(input.readInt(), input.readFloat(), input.readFloat());
 	}
 
 	@Override
 	public void write(Kryo kryo, Output output, UnsortedSpriteLayer object) {
 		output.writeInt(object.getID());
+		output.writeFloat(object.getParallaxSpeedX());
+		output.writeFloat(object.getParallaxSpeedY());
 	}
 
 }

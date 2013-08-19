@@ -5,20 +5,29 @@ import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.SpatialComponent;
 
 public abstract class SpriteLayer {
-	private static int UID = 0;
-
+	private float parallaxSpeedX;
+	
+	private float parallaxSpeedY;
+	
+	private boolean enabled;
+	
 	private int id;
 
 	public SpriteLayer() {
-		this.id = UID;
-		UID++;
+		this.id = 0;
+		parallaxSpeedX = 1f;
+		parallaxSpeedY = 1f;
 	}
 
-	public SpriteLayer(int id) {
+	public SpriteLayer(int id, float parallaxSpeedX, float parallaxSpeedY) {
+		this.id = id;
+		this.parallaxSpeedX = parallaxSpeedX;
+		this.parallaxSpeedY = parallaxSpeedY;
+	}
+
+	public void setID(int id){
 		this.id = id;
 	}
-
-	private boolean enabled;
 
 	public abstract void add(Renderable renderable,
 			SpatialComponent spatialComponent);
@@ -44,5 +53,21 @@ public abstract class SpriteLayer {
 
 	public int getID() {
 		return id;
+	}
+	
+	public float getParallaxSpeedX(){
+		return parallaxSpeedX;
+	}
+	
+	public float getParallaxSpeedY(){
+		return parallaxSpeedY;
+	}
+
+	public void setParallaxSpeedX(float speedX){
+		this.parallaxSpeedX = speedX;
+	}
+	
+	public void setParallaxSpeedY(float speedY){
+		this.parallaxSpeedY = speedY;
 	}
 }
