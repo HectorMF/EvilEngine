@@ -25,8 +25,7 @@ public class AnimatedSprite implements ISprite {
 		this(frames, interval, true, true);
 	}
 
-	public AnimatedSprite(List<Sprite> frames, int interval, boolean playing,
-			boolean looping) {
+	public AnimatedSprite(List<Sprite> frames, int interval, boolean playing, boolean looping) {
 		this.frames = frames;
 		this.interval = interval;
 		this.looping = looping;

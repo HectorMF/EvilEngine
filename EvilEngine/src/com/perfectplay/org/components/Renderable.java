@@ -17,31 +17,30 @@ public class Renderable extends Component {
 	private boolean verticalFlip;
 	private Color color;
 	private float alpha;
-	// store the layer's id
-	private int layer;
 
-	public Renderable(ISprite sprite, int layer) {
-		this(sprite, Vector2.Zero, Vector2.Zero, Color.WHITE, 1f, layer);
+	private int layerID = -1;
+	
+	public Renderable(ISprite sprite) {
+		this(sprite, Vector2.Zero, Vector2.Zero, Color.WHITE, 1f);
 	}
 
 	public Renderable(ISprite sprite, Vector2 offset, Vector2 origin,
-			Color color, float alpha, int layer) {
+			Color color, float alpha) {
 		this.sprite = sprite;
 		this.offset = offset;
-		this.layer = layer;
 		this.color = color;
 		this.alpha = alpha;
 		this.origin = origin;
 		this.horizontalFlip = false;
 		this.verticalFlip = false;
 	}
-
-	public int getSpriteLayer() {
-		return layer;
+	
+	public void setLayer(int id){
+		this.layerID = id;
 	}
-
-	public void setSpriteLayer(int layer) {
-		this.layer = layer;
+	
+	public int getLayer(){
+		return layerID;
 	}
 
 	public ISprite getSprite() {

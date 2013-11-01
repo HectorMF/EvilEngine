@@ -1,0 +1,40 @@
+package com.perfectplay.org.graphics;
+
+import com.artemis.Entity;
+import com.perfectplay.org.components.Renderable;
+import com.perfectplay.org.components.SpatialComponent;
+
+public class LayerNode implements Comparable<LayerNode> {
+	private Renderable renderable;
+	private SpatialComponent spatial;
+	private Entity entity;
+	
+	public LayerNode(Entity entity) { 
+		this.renderable = entity.getComponent(Renderable.class);
+		this.spatial = entity.getComponent(SpatialComponent.class);
+		this.entity = entity;
+	}
+
+	public Renderable getRenderableComponent() {
+		return renderable;
+	}
+
+	public SpatialComponent getSpatialComponent() {
+		return spatial;
+	}
+	
+	public Entity getEntity(){
+		return entity;
+	}
+
+	@Override
+	public int compareTo(LayerNode arg0) {
+		float val = spatial.getSpatial().getZ()
+				- arg0.getSpatialComponent().getSpatial().getZ();
+		if (val < 0)
+			return -1;
+		if (val > 0)
+			return 1;
+		return 0;
+	}
+}

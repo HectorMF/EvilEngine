@@ -1,0 +1,84 @@
+package com.perfectplay.org.systems;
+
+import java.util.ArrayList;
+import com.artemis.Aspect;
+import com.artemis.ComponentMapper;
+import com.artemis.Entity;
+import com.artemis.EntitySystem;
+import com.artemis.annotations.Mapper;
+import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.perfectplay.org.components.Renderable;
+import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.graphics.SpriteLayer;
+import com.perfectplay.org.utils.ParallaxCamera;
+
+public class RenderSystem extends EntitySystem {
+	@Mapper
+	ComponentMapper<Renderable> renderables;
+
+	private ArrayList<SpriteLayer> layers;
+
+	private SpriteBatch batch;
+	
+	private ParallaxCamera camera;
+	
+	@SuppressWarnings("unchecked")
+	public RenderSystem(SpriteBatch batch) {
+		super(Aspect.getAspectForAll(SpatialComponent.class, Renderable.class));
+		this.batch = batch;
+		this.layers = new ArrayList<SpriteLayer>();
+	}
+
+	public void addLayer(int index, SpriteLayer layer) {
+		layers.add(index, layer);
+	}
+
+	public void addLayer(SpriteLayer layer) {
+		layers.add(layer);
+	}
+	
+	public SpriteLayer getLayer(int index){
+		return layers.get(index);
+	}
+
+	public int getLayerCount() {
+		return layers.size();
+	}
+
+	public void setCamera(ParallaxCamera camera) {
+		this.camera = camera;
+	}
+	
+	public void setSpriteBatch(SpriteBatch batch) {
+		this.batch = batch;
+	}
+
+	@Override
+	protected void inserted(Entity e) {
+		super.inserted(e);
+		renderables.get(e).getSpriteLayer().add(e);
+	}
+
+	@Override
+	protected void removed(Entity e) {
+		super.removed(e);
+		renderables.get(e).getSpriteLayer().remove(e);
+	}
+
+	@Override
+	protected final void processEntities(ImmutableBag<Entity> entities) {
+		for (SpriteLayer layer : layers) {
+			layer.update(world.getDelta() * 1000);
+			batch.setProjectionMatrix(camera.calculateParallaxMatrix(layer.getParallaxSpeedX(), layer.getParallaxSpeedY()));
+			batch.begin();
+			layer.render(batch);
+			batch.end();
+		}
+	}
+
+	@Override
+	protected boolean checkProcessing() {
+		return true;
+	}
+}

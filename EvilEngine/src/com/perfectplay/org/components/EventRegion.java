@@ -1,6 +1,6 @@
 package com.perfectplay.org.components;
 
-import java.util.ArrayList;
+
 
 import com.artemis.Component;
 import com.artemis.Entity;
@@ -18,10 +18,10 @@ import com.perfectplay.org.utils.EntityBodyMapper;
 
 public class EventRegion extends Component {
 	private Body regions;
-	private ArrayList<FixtureDef> fixtures;
+	//private ArrayList<FixtureDef> fixtures;
 
 	public EventRegion(Entity entity) {
-		fixtures = new ArrayList<FixtureDef>();
+		//fixtures = new ArrayList<FixtureDef>();
 		BodyDef bodDef = new BodyDef();
 		bodDef.type = BodyType.KinematicBody;
 		if (EntityBodyMapper.getInstance().hasBody(entity)) {

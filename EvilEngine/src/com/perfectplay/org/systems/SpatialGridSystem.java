@@ -6,8 +6,8 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.graphics.Camera;
 import com.perfectplay.org.components.SpatialComponent;
-import com.perfectplay.org.utils.ParallaxCamera;
 import com.perfectplay.org.utils.SpatialGrid;
 
 public class SpatialGridSystem extends EntitySystem {
@@ -16,7 +16,7 @@ public class SpatialGridSystem extends EntitySystem {
 
 	private SpatialGrid spatialGrid;
 	
-	private ParallaxCamera camera;
+	private Camera camera;
 	
 	@SuppressWarnings("unchecked")
 	public SpatialGridSystem(SpatialGrid spatialGrid) {
@@ -45,7 +45,7 @@ public class SpatialGridSystem extends EntitySystem {
 		// spatialGrid.removeEntity(e);
 	}
 	
-	public void setCamera(ParallaxCamera camera) {
+	public void setCamera(Camera camera) {
 		this.camera = camera;
 	}
 	

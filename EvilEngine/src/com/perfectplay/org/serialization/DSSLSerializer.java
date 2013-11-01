@@ -4,14 +4,16 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.perfectplay.org.graphics.DepthSortedSpriteLayer;
+import com.perfectplay.org.level.DepthSortedSpriteLayer;
 
 public class DSSLSerializer extends Serializer<DepthSortedSpriteLayer> {
 
 	@Override
-	public DepthSortedSpriteLayer read(Kryo kryo, Input input,
-			Class<DepthSortedSpriteLayer> type) {
-		return new DepthSortedSpriteLayer(input.readInt(), input.readFloat(), input.readFloat());
+	public DepthSortedSpriteLayer read(Kryo kryo, Input input, Class<DepthSortedSpriteLayer> type) {
+		int id = input.readInt();
+		DepthSortedSpriteLayer layer = new DepthSortedSpriteLayer(input.readFloat(), input.readFloat());
+		layer.setID(id);
+		return layer;
 	}
 
 	@Override

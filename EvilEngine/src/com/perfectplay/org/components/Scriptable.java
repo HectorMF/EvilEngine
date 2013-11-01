@@ -15,7 +15,11 @@ public class Scriptable extends Component {
 	public void addScript(Script script) {
 		scripts.add(script);
 	}
-
+	
+	public void removeScript(Script script) {
+		scripts.remove(script);
+	}
+	
 	public ArrayList<Script> getScripts() {
 		return scripts;
 	}

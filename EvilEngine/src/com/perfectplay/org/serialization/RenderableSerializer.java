@@ -15,7 +15,8 @@ public class RenderableSerializer extends Serializer<Renderable> {
 	public Renderable read(Kryo kryo, Input input, Class<Renderable> type) {
 		int layer = input.readInt();
 		ISprite sprite = (ISprite) kryo.readClassAndObject(input);
-		Renderable render = new Renderable(sprite, layer);
+		Renderable render = new Renderable(sprite);
+		render.setLayer(layer);
 
 		render.setOffset(new Vector2(input.readFloat(), input.readFloat()));
 
@@ -34,7 +35,7 @@ public class RenderableSerializer extends Serializer<Renderable> {
 
 	@Override
 	public void write(Kryo kryo, Output output, Renderable object) {
-		output.writeInt(object.getSpriteLayer());
+		output.writeInt(object.getLayer());
 		kryo.writeClassAndObject(output, object.getSprite());
 		output.writeFloat(object.getOffset().x);
 		output.writeFloat(object.getOffset().y);

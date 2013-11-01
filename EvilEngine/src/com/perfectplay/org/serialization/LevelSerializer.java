@@ -16,14 +16,14 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.perfectplay.org.Level;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.SpatialComponent;
-import com.perfectplay.org.graphics.DepthSortedSpriteLayer;
-import com.perfectplay.org.graphics.SpriteLayer;
 import com.perfectplay.org.graphics.Texture2D;
-import com.perfectplay.org.graphics.UnsortedSpriteLayer;
+import com.perfectplay.org.level.DepthSortedSpriteLayer;
+import com.perfectplay.org.level.Level;
+import com.perfectplay.org.level.SpriteLayer;
+import com.perfectplay.org.level.UnsortedSpriteLayer;
 
 public class LevelSerializer extends Serializer<Level> {
 	public static Entity currentEntity;
