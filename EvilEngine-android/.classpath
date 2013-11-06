@@ -10,7 +10,5 @@
 	<classpathentry kind="lib" path="/EvilEngine/libs/gdx.jar" sourcepath="/EvilEngine/libs/gdx-sources.jar"/>
 	<classpathentry kind="lib" path="/EvilEngine/libs/tween-engine-api-sources.jar"/>
 	<classpathentry kind="lib" path="/EvilEngine/libs/tween-engine-api.jar" sourcepath="/EvilEngine/libs/tween-engine-api-sources.jar"/>
-	<classpathentry kind="lib" path="/EvilEngine/libs/artemis-sources.jar"/>
-	<classpathentry kind="lib" path="/EvilEngine/libs/artemis.jar" sourcepath="/EvilEngine/libs/artemis-sources.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

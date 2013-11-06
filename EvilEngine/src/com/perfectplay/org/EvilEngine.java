@@ -19,7 +19,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.perfectplay.org.components.EventRegion;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.RigidBody;
-import com.perfectplay.org.components.Scriptable;
+import com.perfectplay.org.components.Scripting;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;
@@ -100,8 +100,8 @@ public class EvilEngine implements ApplicationListener {
 		  Sprite(texture2,1200,0,100,100)); frames.add(new
 		  Sprite(texture2,1300,0,100,100));
 		  
-		  AnimatedSprite aSprite = new AnimatedSprite(frames,90); Scriptable
-		  testScript = new Scriptable(); 
+		  AnimatedSprite aSprite = new AnimatedSprite(frames,90); Scripting
+		  testScript = new Scripting(); 
 		  DepthSortedSpriteLayer layer2 = new
 				  DepthSortedSpriteLayer();
 		  DepthSortedSpriteLayer layer = new
@@ -116,8 +116,7 @@ public class EvilEngine implements ApplicationListener {
 		  e.addComponent(new Transform(sp)); 
 		  e.addComponent(new Renderable(aSprite,layer)); 
 		  e.addComponent(testScript);
-		  e.getComponent(Scriptable.class);
-		  testScript.addScript(ScriptManager.createScript(e, TestScript.class));
+		  e.getComponent(Scripting.class).addScript(TestScript.class);
 		  
 		  e.addToWorld();
 		  

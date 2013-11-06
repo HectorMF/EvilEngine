@@ -6,18 +6,18 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
-import com.perfectplay.org.components.Scriptable;
+import com.perfectplay.org.components.Scripting;
 import com.perfectplay.org.scripting.Component;
 import com.perfectplay.org.scripting.Delegate;
 import com.perfectplay.org.scripting.Script;
 
 public class ScriptSystem extends EntitySystem {
 	@Mapper
-	ComponentMapper<Scriptable> scripts;
+	ComponentMapper<Scripting> scripts;
 
 	@SuppressWarnings("unchecked")
 	public ScriptSystem() {
-		super(Aspect.getAspectForAll(Scriptable.class));
+		super(Aspect.getAspectForAll(Scripting.class));
 	}
 
 	@Override
@@ -27,6 +27,14 @@ public class ScriptSystem extends EntitySystem {
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> arg0) {
+		for(int i = 0; i < arg0.size(); i++){
+			process(arg0.get(i));
+		}
+	}
+	
+	private void process(Entity entity){
+		Scripting sc = scripts.get(entity);
+		sc.getScripts();
 	}
 
 	@Override
