@@ -9,5 +9,4 @@ public interface GeneralDelegate extends Delegate {
 	void onAdd(Entity entity);
 	void onDisable(Entity entity);
 	void onEnable(Entity entity);
-
 }

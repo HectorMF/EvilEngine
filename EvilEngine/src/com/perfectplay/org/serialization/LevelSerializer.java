@@ -18,7 +18,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.RigidBody;
-import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.graphics.Texture2D;
 import com.perfectplay.org.level.DepthSortedSpriteLayer;
 import com.perfectplay.org.level.Level;
@@ -36,7 +36,7 @@ public class LevelSerializer extends Serializer<Level> {
 		// components and there respective serializers
 		kryo.register(Renderable.class, new RenderableSerializer());
 		kryo.register(RigidBody.class, new RigidBodySerializer());
-		kryo.register(SpatialComponent.class, new SpatialSerializer());
+		kryo.register(Transform.class, new SpatialSerializer());
 
 		// utility serialization
 		kryo.register(Texture2D.class, new Texture2DSerializer());

@@ -11,22 +11,22 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.perfectplay.org.scripting.ScriptableComponent;
-import com.perfectplay.org.scripting.delegates.PhysicsDelegate;
+import com.perfectplay.org.scripting.Component;
+import com.perfectplay.org.scripting.delegates.CollisionDelegate;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.utils.EntityBodyMapper;
 import com.perfectplay.org.utils.Pixel;
 
-public class RigidBody extends ScriptableComponent<PhysicsDelegate> {
+public class RigidBody extends Component<CollisionDelegate> {
 	private Body rigidBody;
 
 	private float velocityZ;
-	private Vector2 forceZ; // (force,point) respectively
-
+	private Vector2 forceZ;
+	
 	private ArrayList<FixtureDef> fixtures;
 
 	public RigidBody(Entity entity, BodyType type) {
-		super(RigidBody.class, PhysicsDelegate.class);
+		super(RigidBody.class, CollisionDelegate.class);
 		fixtures = new ArrayList<FixtureDef>();
 		if (EntityBodyMapper.getInstance().hasBody(entity)) {
 			rigidBody = EntityBodyMapper.getInstance().getBody(entity);

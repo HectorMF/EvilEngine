@@ -76,7 +76,6 @@ public class Sprite implements ISprite {
 
 	@Override
 	public void read(Kryo kryo, Input input) {
-		// TODO Auto-generated method stub
 		this.srcX = input.readInt();
 		this.srcY = input.readInt();
 		this.srcWidth = input.readInt();
@@ -86,7 +85,6 @@ public class Sprite implements ISprite {
 
 	@Override
 	public void write(Kryo kryo, Output output) {
-		// TODO Auto-generated method stub
 		output.writeInt(srcX);
 		output.writeInt(srcY);
 		output.writeInt(srcWidth);

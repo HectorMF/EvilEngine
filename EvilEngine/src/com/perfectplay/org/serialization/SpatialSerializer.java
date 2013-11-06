@@ -4,25 +4,25 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.utils.BodylessSpatial;
 import com.perfectplay.org.utils.Spatial;
 
-public class SpatialSerializer extends Serializer<SpatialComponent> {
+public class SpatialSerializer extends Serializer<Transform> {
 
 	@Override
-	public SpatialComponent read(Kryo kryo, Input input,
-			Class<SpatialComponent> type) {
+	public Transform read(Kryo kryo, Input input,
+			Class<Transform> type) {
 		Spatial spatial = new BodylessSpatial();
 		spatial.setPosition(input.readFloat(), input.readFloat(),
 				input.readFloat());
 		spatial.setRotation(input.readFloat());
-		spatial.setSize(input.readFloat(), input.readFloat(), input.readFloat());
-		return new SpatialComponent(spatial);
+		spatial.setDimension(input.readFloat(), input.readFloat(), input.readFloat());
+		return new Transform(spatial);
 	}
 
 	@Override
-	public void write(Kryo kryo, Output output, SpatialComponent object) {
+	public void write(Kryo kryo, Output output, Transform object) {
 		// get objects inner spatial
 		Spatial spatial = object.getSpatial();
 		output.writeFloat(spatial.getX());

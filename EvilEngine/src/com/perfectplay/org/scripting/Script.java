@@ -1,15 +1,20 @@
 package com.perfectplay.org.scripting;
 
+import com.artemis.Entity;
+import com.artemis.World;
+
 public abstract class Script {
-	private static int uID = 0;
-	protected final int id;
-
-	public Script() {
-		id = uID;
-		uID++;
+	protected Entity entity;
+	protected World world;
+	
+	protected Script() {}
+	
+	protected void setEntity(Entity entity){
+		this.entity = entity;
+		this.world = entity.getWorld();
+		initialize();
 	}
+	
+	public abstract void initialize();
 
-	public int getID() {
-		return id;
-	}
 }

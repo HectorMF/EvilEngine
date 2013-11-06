@@ -4,6 +4,7 @@ import com.artemis.Component;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.perfectplay.org.graphics.ISprite;
+import com.perfectplay.org.level.SpriteLayer;
 
 public class Renderable extends Component {
 
@@ -21,11 +22,18 @@ public class Renderable extends Component {
 	private int layerID = -1;
 	
 	public Renderable(ISprite sprite) {
-		this(sprite, Vector2.Zero, Vector2.Zero, Color.WHITE, 1f);
+		this(sprite, Vector2.Zero, Vector2.Zero, Color.WHITE, 1f, null);
+	}
+	public Renderable(ISprite sprite, SpriteLayer layer) {
+		this(sprite, Vector2.Zero, Vector2.Zero, Color.WHITE, 1f, layer);
+	}
+	
+	public Renderable(ISprite sprite, Vector2 offset, Vector2 origin, Color color, float alpha){
+		this(sprite, offset, origin, color, alpha, null);
 	}
 
 	public Renderable(ISprite sprite, Vector2 offset, Vector2 origin,
-			Color color, float alpha) {
+			Color color, float alpha, SpriteLayer layer) {
 		this.sprite = sprite;
 		this.offset = offset;
 		this.color = color;
@@ -33,6 +41,8 @@ public class Renderable extends Component {
 		this.origin = origin;
 		this.horizontalFlip = false;
 		this.verticalFlip = false;
+		if(layer != null)
+		this.layerID = layer.getID();
 	}
 	
 	public void setLayer(int id){

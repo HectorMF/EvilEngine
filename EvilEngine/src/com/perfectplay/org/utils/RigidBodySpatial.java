@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public class RigidBodySpatial implements Spatial {
+public class RigidBodySpatial extends Spatial {
 	private Body body;
 	private float z;
 	private float width;
@@ -32,11 +32,6 @@ public class RigidBodySpatial implements Spatial {
 	@Override
 	public float getZ() {
 		return z;
-	}
-
-	@Override
-	public Vector2 getScreenPosition() {
-		return new Vector2(getX(), getY() - getZ());
 	}
 
 	@Override
@@ -78,7 +73,7 @@ public class RigidBodySpatial implements Spatial {
 	}
 
 	@Override
-	public void setSize(float width, float height, float depth) {
+	public void setDimension(float width, float height, float depth) {
 		this.width = width;
 		this.height = height;
 		this.depth = depth;
@@ -88,7 +83,41 @@ public class RigidBodySpatial implements Spatial {
 	public void setSpatial(Spatial spatial) {
 		setPosition(spatial.getX(), spatial.getY(), spatial.getZ());
 		setRotation(spatial.getRotation());
-		setSize(spatial.getWidth(), spatial.getHeight(), spatial.getDepth());
+		setDimension(spatial.getWidth(), spatial.getHeight(), spatial.getDepth());
 	}
 
+	@Override
+	public void setX(float x) {
+		body.getTransform().setPosition(new Vector2(Pixel.toMeter(x),body.getTransform().getPosition().y));
+	}
+
+	@Override
+	public void setY(float y) {
+		body.getTransform().setPosition(new Vector2(body.getTransform().getPosition().x,Pixel.toMeter(y)));
+	}
+
+	@Override
+	public void setZ(float z) {
+		this.z = z;
+	}
+
+	@Override
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	@Override
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	@Override
+	public void setDepth(float depth) {
+		this.depth = depth;
+	}
+
+	@Override
+	public Vector3 getDimension() {
+		return new Vector3(width,height,depth);
+	}
 }

@@ -7,9 +7,9 @@ import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
 import com.perfectplay.org.components.Scriptable;
+import com.perfectplay.org.scripting.Component;
 import com.perfectplay.org.scripting.Delegate;
 import com.perfectplay.org.scripting.Script;
-import com.perfectplay.org.scripting.ScriptableComponent;
 
 public class ScriptSystem extends EntitySystem {
 	@Mapper
@@ -35,11 +35,10 @@ public class ScriptSystem extends EntitySystem {
 		// System.out.println(e.getId());
 
 		for (Script s : scripts.get(e).getScripts()) {
-			for (Class<? extends Delegate> type : ScriptableComponent
-					.getDelegateMapping().keySet()) {
+			for (Class<? extends Delegate> type : Component.getDelegateMapping().keySet()) {
 				if (type.isInstance(s)) {
-					ScriptableComponent<? extends Delegate> sc = e
-							.getComponent(ScriptableComponent
+					Component<? extends Delegate> sc = e
+							.getComponent(Component
 									.getDelegateMapping().get(type));
 					if (sc != null) {
 						sc.addDelegate(e, s);

@@ -11,14 +11,14 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.perfectplay.org.components.RigidBody;
-import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.listeners.ZContactFilter;
 import com.perfectplay.org.utils.RigidBodySpatial;
 import com.perfectplay.org.utils.Spatial;
 
 public class PhysicsSystem extends EntitySystem {
 	@Mapper
-	ComponentMapper<SpatialComponent> spatials;
+	ComponentMapper<Transform> spatials;
 	@Mapper
 	ComponentMapper<RigidBody> physics;
 
@@ -26,7 +26,7 @@ public class PhysicsSystem extends EntitySystem {
 
 	@SuppressWarnings("unchecked")
 	public PhysicsSystem(World world) {
-		super(Aspect.getAspectForAll(SpatialComponent.class, RigidBody.class));
+		super(Aspect.getAspectForAll(Transform.class, RigidBody.class));
 		PhysicsSystem.world = world;
 		PhysicsSystem.world.setContactFilter(new ZContactFilter());
 

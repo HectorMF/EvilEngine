@@ -9,7 +9,7 @@ import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.perfectplay.org.components.Renderable;
-import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.level.SpriteLayer;
 import com.perfectplay.org.utils.ParallaxCamera;
 
@@ -25,7 +25,7 @@ public class RenderSystem extends EntitySystem {
 	
 	@SuppressWarnings("unchecked")
 	public RenderSystem(SpriteBatch batch) {
-		super(Aspect.getAspectForAll(SpatialComponent.class, Renderable.class));
+		super(Aspect.getAspectForAll(Transform.class, Renderable.class));
 		this.batch = batch;
 		this.layers = new ArrayList<SpriteLayer>();
 	}

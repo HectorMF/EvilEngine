@@ -1,9 +1,13 @@
 package com.perfectplay.org.level;
 
+import java.util.ArrayList;
+
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class SpriteLayer {
+	protected ArrayList<LayerNode> nodes; 
+	
 	private float parallaxSpeedX;
 	private float parallaxSpeedY;
 	
@@ -16,15 +20,25 @@ public abstract class SpriteLayer {
 	}
 
 	public SpriteLayer(float parallaxSpeedX, float parallaxSpeedY) {
+		nodes = new ArrayList<LayerNode>();
 		this.parallaxSpeedX = parallaxSpeedX;
 		this.parallaxSpeedY = parallaxSpeedY;
 		uID = ID; 
 		ID++;
 	}
 	
-	public abstract void add(Entity e);
+	public void add(Entity entity){
+		nodes.add(new LayerNode(entity));
+	}
 
-	public abstract void remove(Entity e);
+	public void remove(Entity entity){
+		for (int i = 0; i < nodes.size(); i++) {
+			if (nodes.get(i).getEntity() == entity){
+				nodes.remove(i);
+				return;
+			}
+		}
+	}
 
 	public abstract void render(SpriteBatch batch);
 

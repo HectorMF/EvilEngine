@@ -7,12 +7,12 @@ import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
 import com.perfectplay.org.components.EventRegion;
-import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.listeners.RegionContactListener;
 
 public class RegionSystem extends EntitySystem {
 	@Mapper
-	ComponentMapper<SpatialComponent> spatialComponents;
+	ComponentMapper<Transform> spatialComponents;
 	@Mapper
 	ComponentMapper<EventRegion> regions;
 
@@ -20,7 +20,7 @@ public class RegionSystem extends EntitySystem {
 
 	@SuppressWarnings("unchecked")
 	public RegionSystem() {
-		super(Aspect.getAspectForAll(SpatialComponent.class, EventRegion.class));
+		super(Aspect.getAspectForAll(Transform.class, EventRegion.class));
 		contactListener = new RegionContactListener();
 		PhysicsSystem.getWorld().setContactListener(contactListener);
 	}

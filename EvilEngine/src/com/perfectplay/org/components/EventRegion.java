@@ -1,8 +1,5 @@
 package com.perfectplay.org.components;
 
-
-
-import com.artemis.Component;
 import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -12,15 +9,17 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.perfectplay.org.events.CollisionEvent;
+import com.perfectplay.org.scripting.Component;
+import com.perfectplay.org.scripting.delegates.RegionDelegate;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.utils.EntityBodyMapper;
 
-public class EventRegion extends Component {
+public class EventRegion extends Component<RegionDelegate> {
 	private Body regions;
 	//private ArrayList<FixtureDef> fixtures;
 
 	public EventRegion(Entity entity) {
+		super(EventRegion.class,RegionDelegate.class);
 		//fixtures = new ArrayList<FixtureDef>();
 		BodyDef bodDef = new BodyDef();
 		bodDef.type = BodyType.KinematicBody;
@@ -33,7 +32,7 @@ public class EventRegion extends Component {
 		regions.setUserData(entity);
 	}
 
-	public void addRegion(FixtureDef region, CollisionEvent event) {
+	public void addRegion(FixtureDef region, RegionDelegate event) {
 		Fixture fixture = regions.createFixture(region);
 		fixture.setUserData(event);
 		// fixtures.add(fixture);

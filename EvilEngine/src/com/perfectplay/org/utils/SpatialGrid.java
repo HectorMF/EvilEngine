@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.components.Transform;
 
 public class SpatialGrid {
 
@@ -42,15 +42,15 @@ public class SpatialGrid {
 				buckets[row][col].clear();
 	}
 
-	public void insertEntity(Entity entity, SpatialComponent spatialComponent) {
+	public void insertEntity(Entity entity, Transform spatialComponent) {
 		Spatial spatial = spatialComponent.getSpatial();
 		SpatialNode node = new SpatialNode(entity, spatial);
 
 		ArrayList<Bucket> bList = new ArrayList<Bucket>();
 
 		// calculate the area which holds the entity
-		float screenX = spatial.getScreenPosition().x;
-		float screenY = spatial.getScreenPosition().y;
+		float screenX = spatial.getPosition().x;
+		float screenY = spatial.getPosition().y;
 
 		int row = (int) (screenY / bucketSize);
 		int column = (int) (screenX / bucketSize);
@@ -78,12 +78,12 @@ public class SpatialGrid {
 		}
 	}
 
-	public void removeEntity(Entity entity, SpatialComponent spatialComponent) {
+	public void removeEntity(Entity entity, Transform spatialComponent) {
 		for (Bucket bucket : spatialComponent.getBuckets())
 			bucket.removeNodesContainingEntity(entity);
 	}
 
-	public void updateEntity(Entity entity, SpatialComponent spatialComponent) {
+	public void updateEntity(Entity entity, Transform spatialComponent) {
 
 		removeEntity(entity, spatialComponent);
 		insertEntity(entity, spatialComponent);

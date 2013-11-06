@@ -2,16 +2,16 @@ package com.perfectplay.org.level;
 
 import com.artemis.Entity;
 import com.perfectplay.org.components.Renderable;
-import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.components.Transform;
 
 public class LayerNode implements Comparable<LayerNode> {
 	private Renderable renderable;
-	private SpatialComponent spatial;
+	private Transform spatial;
 	private Entity entity;
 	
 	public LayerNode(Entity entity) { 
 		this.renderable = entity.getComponent(Renderable.class);
-		this.spatial = entity.getComponent(SpatialComponent.class);
+		this.spatial = entity.getComponent(Transform.class);
 		this.entity = entity;
 	}
 
@@ -19,7 +19,7 @@ public class LayerNode implements Comparable<LayerNode> {
 		return renderable;
 	}
 
-	public SpatialComponent getSpatialComponent() {
+	public Transform getSpatialComponent() {
 		return spatial;
 	}
 	

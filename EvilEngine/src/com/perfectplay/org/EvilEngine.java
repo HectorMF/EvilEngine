@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -21,14 +20,14 @@ import com.perfectplay.org.components.EventRegion;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.Scriptable;
-import com.perfectplay.org.components.SpatialComponent;
-import com.perfectplay.org.events.CollisionEvent;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;
 import com.perfectplay.org.graphics.Texture2D;
 import com.perfectplay.org.level.DepthSortedSpriteLayer;
 import com.perfectplay.org.level.Level;
-import com.perfectplay.org.scripting.TestScript;
+import com.perfectplay.org.scripting.ScriptManager;
+import com.perfectplay.org.scripts.TestScript;
 import com.perfectplay.org.serialization.LevelSerializer;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.utils.BodylessSpatial;
@@ -69,9 +68,9 @@ public class EvilEngine implements ApplicationListener {
 		batch = new SpriteBatch();
 		render = new Box2DDebugRenderer();
 		debug = new ShapeRenderer();
-	/*	
-				  level = new Level(4000,4000,100, new Vector2(0,-2f),false);
-		  level.getRenderSystem().setSpriteBatch(batch);
+	
+		level = new Level(4000,4000,100, new Vector2(0,-2f),false);
+		  level.setSpriteBatch(batch);
 		  level.setCamera(camera);
 		  texture = new Texture2D(Gdx.files.internal("data/forest.png"));
 		  
@@ -102,17 +101,24 @@ public class EvilEngine implements ApplicationListener {
 		  Sprite(texture2,1300,0,100,100));
 		  
 		  AnimatedSprite aSprite = new AnimatedSprite(frames,90); Scriptable
-		  testScript = new Scriptable(); testScript.addScript(new
-		  TestScript()); DepthSortedSpriteLayer layer = new
+		  testScript = new Scriptable(); 
+		  DepthSortedSpriteLayer layer2 = new
+				  DepthSortedSpriteLayer();
+		  DepthSortedSpriteLayer layer = new
 		  DepthSortedSpriteLayer(); level.getRenderSystem().addLayer(layer); e
 		  = level.createEntity();
 		  
 		  RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		  body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero,
 		  0f, .5f, .5f, .5f)); e.addComponent(body); BodylessSpatial sp = new
-		  BodylessSpatial(); sp.setPosition(100, 200,2); sp.setSize(100,100,
-		  10); e.addComponent(new SpatialComponent(sp)); e.addComponent(new
-		  Renderable(aSprite,layer.getID())); //e.addComponent(testScript);
+		  BodylessSpatial(); sp.setPosition(100, 200,2); 
+		  sp.setDimension(100,100,10); 
+		  e.addComponent(new Transform(sp)); 
+		  e.addComponent(new Renderable(aSprite,layer)); 
+		  e.addComponent(testScript);
+		  e.getComponent(Scriptable.class);
+		  testScript.addScript(ScriptManager.createScript(e, TestScript.class));
+		  
 		  e.addToWorld();
 		  
 		  e = level.createEntity(); b= new RigidBody(e, BodyType.DynamicBody);
@@ -122,14 +128,16 @@ public class EvilEngine implements ApplicationListener {
 		  .4f, .6f, .9f)); b.getBody().setFixedRotation(true);
 		  e.addComponent(b); EventRegion region = new EventRegion(e);
 		  
-		  region.addRegion(EventRegion.createCircleRegion(1f, new
-		  Vector2(0,0), (short)-1, (short)-1, (short)-1), new
-		  CollisionEvent()); //e.addComponent(region); 
+		 // region.addRegion(EventRegion.createCircleRegion(1f, new
+		 // Vector2(0,0), (short)-1, (short)-1, (short)-1), new
+		  //CollisionEvent()); //e.addComponent(region); 
 		  sp = new
-		  BodylessSpatial(); sp.setPosition(100, 200,10); sp.setSize(100,100,
-		  10); e.addComponent(new SpatialComponent(sp)); e.addComponent(new
-		  Renderable(aSprite.clone(),layer.getID()));
-		  //e.addComponent(testScript); 
+		  BodylessSpatial(); sp.setPosition(100, 200,10); 
+		  sp.setDimension(100,100,
+		  10); e.addComponent(new Transform(sp)); 
+		  e.addComponent(new Renderable(aSprite.clone(),layer));
+		  e.addComponent(testScript); 
+		  
 		  e.addToWorld();
 		  
 		  e = level.createEntity(); body = new
@@ -142,14 +150,16 @@ public class EvilEngine implements ApplicationListener {
 		  RigidBodySpatial(body.getBody()); //sp = new BodylessSpatial();
 		  //st.setSpatial(sp); 
 		  st.setPosition(100, 100,1); 
-		  st.setSize(100,100,
-		 100); e.addComponent(body); e.addComponent(new SpatialComponent(st));
-		  e.addComponent(new Renderable(new Sprite(texture),layer.getID()));
+		  st.setDimension(100,100,100); 
+		  e.addComponent(body); 
+		  e.addComponent(new Transform(st));
+		  e.addComponent(new Renderable(new Sprite(texture),layer));
 		  e.addToWorld(); //level.getRenderSystem().setSpriteBatch(batch);
 		  LevelSerializer s = new LevelSerializer(); 
 		  level.setDelta(Gdx.graphics.getDeltaTime()); level.process();
-		  s.WriteLevel(level, "test.bin");*/
+		  s.WriteLevel(level, "test.bin");
 		 
+		 /*
 			texture2 = new Texture2D(Gdx.files.internal("data/fire.png.bmp"));
 		  ArrayList<Sprite> frames = new
 				  ArrayList<Sprite>(); frames.add(new Sprite(texture2,0,0,100,100));
@@ -167,11 +177,11 @@ public class EvilEngine implements ApplicationListener {
 				  Sprite(texture2,1200,0,100,100)); frames.add(new
 				  Sprite(texture2,1300,0,100,100));
 				  
-				  AnimatedSprite aSprite = new AnimatedSprite(frames,90);
+		AnimatedSprite aSprite = new AnimatedSprite(frames,90);
+		*/
 
-
-		LevelSerializer s = new LevelSerializer();
-		level = s.ReadLevel("test.bin");
+		//LevelSerializer ss = new LevelSerializer();
+		//level = ss.ReadLevel("test.bin");
 
 		level.initialize();
 		level.setSpriteBatch(batch);
@@ -191,7 +201,6 @@ public class EvilEngine implements ApplicationListener {
 	public void render() {
 		// log.log();
 		// int speed = 60;
-
 		if (Gdx.input.isKeyPressed(Keys.DPAD_UP))
 			camera.position.y += 3;
 
@@ -222,13 +231,14 @@ public class EvilEngine implements ApplicationListener {
 		level.setDelta(Gdx.graphics.getDeltaTime());
 		level.process();
 		level.render();
+		//level.getEntity(2).getComponent(SpatialComponent.class).getSpatial().setPosition(10,300,10);//.setX(10);
 
 		// level.getSpatialGrid().debugRender(debug);
 		// render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(100f));
 		//camera.
 		render.render(PhysicsSystem.getWorld(), camera.projection.cpy().scl(20f));
 		level.getSpatialSystem().getSpatialGrid().debugRender(debug);
-
+		
 	}
 
 	@Override

@@ -6,8 +6,10 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.perfectplay.org.components.SpatialComponent;
-import com.perfectplay.org.events.CollisionEvent;
+import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.scripting.Delegate;
+import com.perfectplay.org.scripting.delegates.CollisionDelegate;
+import com.perfectplay.org.scripting.delegates.RegionDelegate;
 
 public class RegionContactListener implements ContactListener {
 	private ZContactFilter dynamicFilter;
@@ -20,26 +22,29 @@ public class RegionContactListener implements ContactListener {
 	public void beginContact(Contact contact) {
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
-
-		if (!fixtureA.isSensor() & !fixtureB.isSensor())
-			return;
-
+		
 		Entity entityA = (Entity) fixtureA.getBody().getUserData();
 		Entity entityB = (Entity) fixtureB.getBody().getUserData();
 
 		if (entityA == entityB)
 			return;
-		CollisionEvent collisionEvent = null;
-
-		if (fixtureA.isSensor()) {
-			collisionEvent = (CollisionEvent) fixtureA.getUserData();
-		} else {
-			collisionEvent = (CollisionEvent) fixtureB.getUserData();
+		
+		Delegate script = null;
+		
+		script = (Delegate) fixtureA.getUserData();
+		if (script != null) {
+			if(script instanceof RegionDelegate)
+				((RegionDelegate) script).onRegionEnter();
+			if(script instanceof CollisionDelegate)
+				((CollisionDelegate) script).onBeginCollision();
 		}
-
-		if (collisionEvent != null) {
-			collisionEvent.beginCollision((Entity) fixtureA.getBody()
-					.getUserData(), (Entity) fixtureB.getBody().getUserData());
+		
+		script = (Delegate) fixtureB.getUserData();
+		if (script != null) {
+			if(script instanceof RegionDelegate)
+				((RegionDelegate) script).onRegionEnter();
+			if(script instanceof CollisionDelegate)
+				((CollisionDelegate) script).onBeginCollision();
 		}
 	}
 
@@ -47,22 +52,10 @@ public class RegionContactListener implements ContactListener {
 	public void endContact(Contact contact) {
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
-
+		System.out.println("contact");
 		if (!fixtureA.isSensor() & !fixtureB.isSensor())
 			return;
 
-		CollisionEvent collisionEvent = null;
-
-		if (fixtureA.isSensor()) {
-			collisionEvent = (CollisionEvent) fixtureA.getUserData();
-		} else {
-			collisionEvent = (CollisionEvent) fixtureB.getUserData();
-		}
-
-		if (collisionEvent != null) {
-			collisionEvent.endCollision((Entity) fixtureA.getBody()
-					.getUserData(), (Entity) fixtureB.getBody().getUserData());
-		}
 	}
 
 	@Override
@@ -82,8 +75,8 @@ public class RegionContactListener implements ContactListener {
 
 			// fixtureA.get
 		}
-		if (entityA.getComponent(SpatialComponent.class).isDirty()
-				|| entityB.getComponent(SpatialComponent.class).isDirty()) {
+		if (entityA.getComponent(Transform.class).isDirty()
+				|| entityB.getComponent(Transform.class).isDirty()) {
 
 		}
 

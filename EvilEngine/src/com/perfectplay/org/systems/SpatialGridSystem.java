@@ -7,12 +7,12 @@ import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.Camera;
-import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.utils.SpatialGrid;
 
 public class SpatialGridSystem extends EntitySystem {
 	@Mapper
-	ComponentMapper<SpatialComponent> spatialComponents;
+	ComponentMapper<Transform> spatialComponents;
 
 	private SpatialGrid spatialGrid;
 	
@@ -20,7 +20,7 @@ public class SpatialGridSystem extends EntitySystem {
 	
 	@SuppressWarnings("unchecked")
 	public SpatialGridSystem(SpatialGrid spatialGrid) {
-		super(Aspect.getAspectForAll(SpatialComponent.class));
+		super(Aspect.getAspectForAll(Transform.class));
 		this.spatialGrid = spatialGrid;
 	}
 
@@ -61,18 +61,16 @@ public class SpatialGridSystem extends EntitySystem {
 	}
 	
 	protected void process(Entity e) {
-		SpatialComponent SpatialComponent = spatialComponents.get(e);
+		Transform SpatialComponent = spatialComponents.get(e);
 		if (SpatialComponent.isDirty()) {
 			if (SpatialComponent.hasDelegates()) {
-				SpatialComponent.getDelegateForEntity(e).onMove(e,
-						SpatialComponent);
+				SpatialComponent.getDelegateForEntity(e).onMove();
 			}
 			spatialGrid.updateEntity(e, SpatialComponent);
 			spatialComponents.get(e).setDirty(false);
 		} else {
 			if (SpatialComponent.hasDelegates()) {
-				SpatialComponent.getDelegateForEntity(e).onStay(e,
-						SpatialComponent);
+				SpatialComponent.getDelegateForEntity(e).onStay();
 			}
 		}
 	}

@@ -4,7 +4,7 @@ import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.ContactFilter;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.perfectplay.org.components.SpatialComponent;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.utils.Spatial;
 
 public class ZContactFilter implements ContactFilter {
@@ -17,9 +17,9 @@ public class ZContactFilter implements ContactFilter {
 		if (entityA == entityB)
 			return false;
 
-		Spatial spatialA = entityA.getComponent(SpatialComponent.class)
+		Spatial spatialA = entityA.getComponent(Transform.class)
 				.getSpatial();
-		Spatial spatialB = entityB.getComponent(SpatialComponent.class)
+		Spatial spatialB = entityB.getComponent(Transform.class)
 				.getSpatial();
 
 		if (spatialA == null || spatialB == null)
