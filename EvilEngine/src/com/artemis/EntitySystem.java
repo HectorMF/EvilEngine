@@ -151,7 +151,7 @@ public abstract class EntitySystem implements EntityObserver {
 	
 	
 	@Override
-	public final void added(Entity e) {
+	public void added(Entity e) {
 		check(e);
 	}
 	
@@ -161,21 +161,21 @@ public abstract class EntitySystem implements EntityObserver {
 	}
 	
 	@Override
-	public final void deleted(Entity e) {
+	public void deleted(Entity e) {
 		if(e.getSystemBits().get(systemIndex)) {
 			removeFromSystem(e);
 		}
 	}
 	
 	@Override
-	public final void disabled(Entity e) {
+	public void disabled(Entity e) {
 		if(e.getSystemBits().get(systemIndex)) {
 			removeFromSystem(e);
 		}
 	}
 	
 	@Override
-	public final void enabled(Entity e) {
+	public void enabled(Entity e) {
 		check(e);
 	}
 	

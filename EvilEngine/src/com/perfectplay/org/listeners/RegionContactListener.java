@@ -1,13 +1,16 @@
 package com.perfectplay.org.listeners;
 
+import com.artemis.ComponentType;
 import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.perfectplay.org.components.Scripting;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.scripting.Delegate;
+import com.perfectplay.org.scripting.Script;
 import com.perfectplay.org.scripting.delegates.CollisionDelegate;
 import com.perfectplay.org.scripting.delegates.RegionDelegate;
 
@@ -30,29 +33,39 @@ public class RegionContactListener implements ContactListener {
 			return;
 		
 		Delegate script = null;
-		
-		script = (Delegate) fixtureA.getUserData();
-		if (script != null) {
-			if(script instanceof RegionDelegate)
+		if(fixtureA.isSensor()){
+			script = (Delegate) fixtureA.getUserData();
+			if (script != null)
 				((RegionDelegate) script).onRegionEnter();
-			if(script instanceof CollisionDelegate)
-				((CollisionDelegate) script).onBeginCollision();
+		}else{
+			Scripting sc = (Scripting) entityA.getComponent(ComponentType.getTypeFor(Scripting.class));
+			if(sc != null){
+				for(Script s : sc.getDelegates(CollisionDelegate.class)){
+					((CollisionDelegate)s).onBeginCollision();
+				}
+			}
 		}
 		
-		script = (Delegate) fixtureB.getUserData();
-		if (script != null) {
-			if(script instanceof RegionDelegate)
+		
+		if(fixtureB.isSensor()){
+			script = (Delegate) fixtureA.getUserData();
+			if (script != null)
 				((RegionDelegate) script).onRegionEnter();
-			if(script instanceof CollisionDelegate)
-				((CollisionDelegate) script).onBeginCollision();
+		}else{
+			Scripting sc = (Scripting) entityB.getComponent(ComponentType.getTypeFor(Scripting.class));
+			if(sc != null){
+				for(Script s : sc.getDelegates(CollisionDelegate.class)){
+					((CollisionDelegate)s).onBeginCollision();
+				}
+			}
 		}
+		
 	}
 
 	@Override
 	public void endContact(Contact contact) {
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
-		System.out.println("contact");
 		if (!fixtureA.isSensor() & !fixtureB.isSensor())
 			return;
 

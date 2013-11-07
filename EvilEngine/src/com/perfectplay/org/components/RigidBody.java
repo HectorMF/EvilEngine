@@ -2,6 +2,7 @@ package com.perfectplay.org.components;
 
 import java.util.ArrayList;
 
+import com.artemis.Component;
 import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -11,13 +12,11 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.perfectplay.org.scripting.Component;
-import com.perfectplay.org.scripting.delegates.CollisionDelegate;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.utils.EntityBodyMapper;
 import com.perfectplay.org.utils.Pixel;
 
-public class RigidBody extends Component<CollisionDelegate> {
+public class RigidBody extends Component {
 	private Body rigidBody;
 
 	private float velocityZ;
@@ -26,7 +25,7 @@ public class RigidBody extends Component<CollisionDelegate> {
 	private ArrayList<FixtureDef> fixtures;
 
 	public RigidBody(Entity entity, BodyType type) {
-		super(RigidBody.class, CollisionDelegate.class);
+		super();
 		fixtures = new ArrayList<FixtureDef>();
 		if (EntityBodyMapper.getInstance().hasBody(entity)) {
 			rigidBody = EntityBodyMapper.getInstance().getBody(entity);

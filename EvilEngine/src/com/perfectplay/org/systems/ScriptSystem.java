@@ -1,23 +1,25 @@
 package com.perfectplay.org.systems;
 
+import java.util.ArrayList;
+
 import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
-import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
 import com.perfectplay.org.components.Scripting;
-import com.perfectplay.org.scripting.Component;
-import com.perfectplay.org.scripting.Delegate;
 import com.perfectplay.org.scripting.Script;
+import com.perfectplay.org.scripting.ScriptManager;
+import com.perfectplay.org.scripting.delegates.GeneralDelegate;
 
 public class ScriptSystem extends EntitySystem {
-	@Mapper
-	ComponentMapper<Scripting> scripts;
-
+	private ArrayList<Script> delegates;
+	private ArrayList<Entity> entities;
+	
 	@SuppressWarnings("unchecked")
 	public ScriptSystem() {
 		super(Aspect.getAspectForAll(Scripting.class));
+		delegates = new ArrayList<Script>();
+		entities = new ArrayList<Entity>();
 	}
 
 	@Override
@@ -27,45 +29,57 @@ public class ScriptSystem extends EntitySystem {
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> arg0) {
-		for(int i = 0; i < arg0.size(); i++){
-			process(arg0.get(i));
+		for (int i = 0; i < delegates.size(); i++){
+			ScriptManager.setScriptEntity(entities.get(i), delegates.get(i));
+			((GeneralDelegate) delegates.get(i)).onUpdate();
 		}
 	}
 	
-	private void process(Entity entity){
-		Scripting sc = scripts.get(entity);
-		sc.getScripts();
+	@Override
+	public void enabled(Entity e){
+		super.enabled(e);
+		
+		for(int i = 0; i < entities.size(); i++){
+			if(entities.get(i) == e){
+				ScriptManager.setScriptEntity(entities.get(i), delegates.get(i));
+				((GeneralDelegate) delegates.get(i)).onEnable();
+			}
+		}
 	}
-
+	
+	@Override
+	public void disabled(Entity e){
+		for(int i = 0; i < entities.size(); i++){
+			if(entities.get(i) == e){
+				ScriptManager.setScriptEntity(entities.get(i), delegates.get(i));
+				((GeneralDelegate) delegates.get(i)).onDisable();
+			}
+		}
+		super.disabled(e);
+	}
+	
 	@Override
 	protected void inserted(Entity e) {
 		super.inserted(e);
-		// System.out.println(e.getId());
-
-		for (Script s : scripts.get(e).getScripts()) {
-			for (Class<? extends Delegate> type : Component.getDelegateMapping().keySet()) {
-				if (type.isInstance(s)) {
-					Component<? extends Delegate> sc = e
-							.getComponent(Component
-									.getDelegateMapping().get(type));
-					if (sc != null) {
-						sc.addDelegate(e, s);
-					}
+		Scripting scripting = e.getComponent(Scripting.class);
+		if(scripting != null){
+			for (Script s : scripting.getScripts()) {
+				if(s instanceof GeneralDelegate){
+					delegates.add(s);
+					entities.add(e);
 				}
 			}
 		}
-		/*
-		 * Hashtable<Class<? extends ScriptableComponent>, Delegate<? extends
-		 * ScriptableComponent>> table = scripts.get(e).getTable();
-		 * ScriptableComponent component; for(Class<? extends
-		 * ScriptableComponent> type : table.keySet()){ component =
-		 * e.getComponent(type); if(component != null)
-		 * component.setDelegate(table.get(type)); }
-		 */
 	}
 
 	@Override
 	protected void removed(Entity e) {
 		super.removed(e);
+		for(int i = 0; i < entities.size(); i++){
+			if(entities.get(i) == e){
+				delegates.remove(i);
+				entities.remove(i);
+			}
+		}
 	}
 }

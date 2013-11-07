@@ -1,9 +1,11 @@
 package com.perfectplay.org.components;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
 import com.artemis.Component;
+import com.perfectplay.org.scripting.Delegate;
 import com.perfectplay.org.scripting.Script;
 
 public class Scripting extends Component {
@@ -35,6 +37,16 @@ public class Scripting extends Component {
 	
 	public Script getScript(Class<? extends Script> classScript){
 		return scripts.get(classScript);
+	}
+	
+	public Collection<Script> getDelegates(Class<? extends Delegate> classDelegate){
+		Collection<Script> temp = new ArrayList<Script>();
+		for(Script s : scripts.values()){
+			if(classDelegate.isInstance(s)){
+				temp.add(s);
+			}
+		}
+		return temp;
 	}
 	
 	public Collection<Script> getScripts(){

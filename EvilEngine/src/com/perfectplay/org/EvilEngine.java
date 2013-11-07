@@ -28,6 +28,7 @@ import com.perfectplay.org.level.DepthSortedSpriteLayer;
 import com.perfectplay.org.level.Level;
 import com.perfectplay.org.scripting.ScriptManager;
 import com.perfectplay.org.scripts.TestScript;
+import com.perfectplay.org.scripts.TestScript2;
 import com.perfectplay.org.serialization.LevelSerializer;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.utils.BodylessSpatial;
@@ -117,7 +118,7 @@ public class EvilEngine implements ApplicationListener {
 		  e.addComponent(new Renderable(aSprite,layer)); 
 		  e.addComponent(testScript);
 		  e.getComponent(Scripting.class).addScript(TestScript.class);
-		  
+		  e.getComponent(Scripting.class).addScript(TestScript2.class);
 		  e.addToWorld();
 		  
 		  e = level.createEntity(); b= new RigidBody(e, BodyType.DynamicBody);

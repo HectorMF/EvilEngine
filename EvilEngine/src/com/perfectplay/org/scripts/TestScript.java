@@ -1,10 +1,13 @@
 package com.perfectplay.org.scripts;
 
+import com.artemis.World;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.scripting.Script;
+import com.perfectplay.org.scripting.delegates.CollisionDelegate;
+import com.perfectplay.org.scripting.delegates.GeneralDelegate;
 import com.perfectplay.org.scripting.delegates.TransformDelegate;
 
-public class TestScript extends Script implements TransformDelegate {
+public class TestScript extends Script implements TransformDelegate, GeneralDelegate, CollisionDelegate{
 
 	private boolean isMoving = false;
 
@@ -42,6 +45,36 @@ public class TestScript extends Script implements TransformDelegate {
 
 	@Override
 	public void initialize() {
+		
+	}
+
+	@Override
+	public void onUpdate() {
+		//System.out.println(entity.getId() + "UPDATED");
+	
+	}
+
+	@Override
+	public void onDisable() {
+		// TODO Auto-generated method stub
+		System.out.println(entity.getId() + " Has been DISABLED");
+	}
+
+	@Override
+	public void onEnable() {
+		System.out.println(entity.getId() + " Has been ENABLED");
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBeginCollision() {
+		System.out.println("collide");
+	}
+
+	@Override
+	public void onEndCollision() {
+		// TODO Auto-generated method stub
 		
 	}
 
