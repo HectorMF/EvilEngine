@@ -250,6 +250,7 @@ public class RayHandler implements Disposable {
 		} else {
 			Gdx.gl10.glMatrixMode(GL10.GL_PROJECTION);
 			Gdx.gl10.glLoadMatrixf(combined.val, 0);
+			
 
 			if (shadows) {
 				alphaChannelClear();

@@ -22,6 +22,7 @@ public class RigidBody extends Component {
 	private float velocityZ;
 	private Vector2 forceZ;
 	
+	
 	private ArrayList<FixtureDef> fixtures;
 
 	public RigidBody(Entity entity, BodyType type) {

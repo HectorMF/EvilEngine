@@ -3,6 +3,7 @@ package com.perfectplay.org.level;
 import com.artemis.World;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.perfectplay.org.scripting.ScriptManager;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.systems.RegionSystem;
 import com.perfectplay.org.systems.ScriptSystem;
@@ -42,6 +43,7 @@ public class Level extends World {
 		SpatialGrid grid = new SpatialGrid(width, height, bucketSize);
 		spatialGridSystem = setSystem(new SpatialGridSystem(grid), true);
 		scriptSystem = setSystem(new ScriptSystem(), false);
+		this.setManager(new ScriptManager());
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -22,10 +23,12 @@ import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.Scripting;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.graphics.AnimatedSprite;
+import com.perfectplay.org.graphics.ISprite;
 import com.perfectplay.org.graphics.Sprite;
 import com.perfectplay.org.graphics.Texture2D;
 import com.perfectplay.org.level.DepthSortedSpriteLayer;
 import com.perfectplay.org.level.Level;
+import com.perfectplay.org.level.SpriteLayer;
 import com.perfectplay.org.scripting.ScriptManager;
 import com.perfectplay.org.scripts.TestScript;
 import com.perfectplay.org.scripts.TestScript2;
@@ -117,6 +120,7 @@ public class EvilEngine implements ApplicationListener {
 		  e.addComponent(new Transform(sp)); 
 		  e.addComponent(new Renderable(aSprite,layer)); 
 		  e.addComponent(testScript);
+		  e.addComponent(testScript);
 		  e.getComponent(Scripting.class).addScript(TestScript.class);
 		  e.getComponent(Scripting.class).addScript(TestScript2.class);
 		  e.addToWorld();
@@ -153,7 +157,7 @@ public class EvilEngine implements ApplicationListener {
 		  st.setDimension(100,100,100); 
 		  e.addComponent(body); 
 		  e.addComponent(new Transform(st));
-		  e.addComponent(new Renderable(new Sprite(texture),layer));
+		  e.addComponent(new Renderable(new Sprite(texture),new Vector2(0,0),Vector2.Zero, Color.RED, .5f,layer));
 		  e.addToWorld(); //level.getRenderSystem().setSpriteBatch(batch);
 		  LevelSerializer s = new LevelSerializer(); 
 		  level.setDelta(Gdx.graphics.getDeltaTime()); level.process();
@@ -236,7 +240,7 @@ public class EvilEngine implements ApplicationListener {
 		// level.getSpatialGrid().debugRender(debug);
 		// render.render(PhysicsSystem.getWorld(),camera.combined.cpy().scl(100f));
 		//camera.
-		render.render(PhysicsSystem.getWorld(), camera.projection.cpy().scl(20f));
+		render.render(PhysicsSystem.getWorld(), camera.combined.cpy().scl(100f));
 		level.getSpatialSystem().getSpatialGrid().debugRender(debug);
 		
 	}

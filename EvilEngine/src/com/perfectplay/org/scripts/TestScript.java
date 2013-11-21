@@ -1,13 +1,13 @@
 package com.perfectplay.org.scripts;
 
-import com.artemis.World;
+import com.perfectplay.org.components.Scripting;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.scripting.Script;
 import com.perfectplay.org.scripting.delegates.CollisionDelegate;
-import com.perfectplay.org.scripting.delegates.GeneralDelegate;
+import com.perfectplay.org.scripting.delegates.WorldDelegate;
 import com.perfectplay.org.scripting.delegates.TransformDelegate;
 
-public class TestScript extends Script implements TransformDelegate, GeneralDelegate, CollisionDelegate{
+public class TestScript extends Script implements TransformDelegate, WorldDelegate, CollisionDelegate{
 
 	private boolean isMoving = false;
 
@@ -37,10 +37,6 @@ public class TestScript extends Script implements TransformDelegate, GeneralDele
 					+ " just stopped moved.");
 
 		}
-
-		// TODO Auto-generated method stub
-		//System.out.println("Entity: " + entity.getId() +" hasn't moved.");
-
 	}
 
 	@Override
@@ -50,14 +46,14 @@ public class TestScript extends Script implements TransformDelegate, GeneralDele
 
 	@Override
 	public void onUpdate() {
-		//System.out.println(entity.getId() + "UPDATED");
+		components.remove(Scripting.class);
 	
 	}
 
 	@Override
 	public void onDisable() {
 		// TODO Auto-generated method stub
-		System.out.println(entity.getId() + " Has been DISABLED");
+		System.out.println(components.size() + ": " + entity.getId() + " Has been DISABLED");
 	}
 
 	@Override
@@ -75,6 +71,18 @@ public class TestScript extends Script implements TransformDelegate, GeneralDele
 	@Override
 	public void onEndCollision() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRemove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAdd() {
+		System.out.println("ADDED");
 		
 	}
 
