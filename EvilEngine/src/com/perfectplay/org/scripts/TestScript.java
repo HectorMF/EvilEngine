@@ -46,8 +46,7 @@ public class TestScript extends Script implements TransformDelegate, WorldDelega
 
 	@Override
 	public void onUpdate() {
-		components.remove(Scripting.class);
-	
+	//	System.out.println("update");
 	}
 
 	@Override

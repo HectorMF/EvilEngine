@@ -120,7 +120,7 @@ public class EvilEngine implements ApplicationListener {
 		  e.addComponent(new Transform(sp)); 
 		  e.addComponent(new Renderable(aSprite,layer)); 
 		  e.addComponent(testScript);
-		  e.addComponent(testScript);
+		 // e.addComponent(testScript);
 		  e.getComponent(Scripting.class).addScript(TestScript.class);
 		  e.getComponent(Scripting.class).addScript(TestScript2.class);
 		  e.addToWorld();
@@ -141,7 +141,7 @@ public class EvilEngine implements ApplicationListener {
 		  10); e.addComponent(new Transform(sp)); 
 		  e.addComponent(new Renderable(aSprite.clone(),layer));
 		  e.addComponent(testScript); 
-		  
+		  e.getComponent(Scripting.class).addScript(TestScript.class);
 		  e.addToWorld();
 		  
 		  e = level.createEntity(); body = new

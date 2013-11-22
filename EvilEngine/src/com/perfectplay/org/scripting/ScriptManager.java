@@ -46,15 +46,15 @@ public class ScriptManager extends Manager{
 		Scripting component = (Scripting) e.getComponent(scriptType);
 		if(component != null){
 			componentsByEntity.put(e.getId(), new ComponentBag(e,e.getComponents(new Bag<Component>())));
+			List<Script> delegates = new ArrayList<Script>();
 			for (Script script : component.getScripts()) {
-				List<Script> delegates = new ArrayList<Script>();
 				if(script instanceof WorldDelegate){
 					delegates.add(script);
 				    setScriptEntity(e,script);
 					((WorldDelegate) script).onAdd();
 				}
-				worldDelegatesByEntity.put(e.getId(), delegates);
 			}
+			worldDelegatesByEntity.put(e.getId(), delegates);
 		}
 	}
 	
@@ -63,13 +63,15 @@ public class ScriptManager extends Manager{
 		Scripting component = (Scripting) e.getComponent(scriptType);
 		if(component != null){
 			componentsByEntity.put(e.getId(), new ComponentBag(e,e.getComponents(new Bag<Component>())));
+			List<Script> delegates = new ArrayList<Script>();
 			for (Script script : component.getScripts()) {
-				List<Script> delegates = new ArrayList<Script>();
 				if(script instanceof WorldDelegate){
 					delegates.add(script);
+				    setScriptEntity(e,script);
+					((WorldDelegate) script).onAdd();
 				}
-				worldDelegatesByEntity.put(e.getId(), delegates);
 			}
+			worldDelegatesByEntity.put(e.getId(), delegates);
 		}else{
 			if(componentsByEntity.containsKey(e.getId())){
 				componentsByEntity.remove(e.getId());
