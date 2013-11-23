@@ -1,7 +1,6 @@
 package com.perfectplay.org.scripting;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,8 +16,6 @@ import com.perfectplay.org.utils.ComponentBag;
 public class ScriptManager extends Manager{
 	private static HashMap<Integer, ComponentBag> componentsByEntity; 
 	
-	private static HashMap<Integer, List<Script>> worldDelegatesByEntity;
-
 	private static ComponentType scriptType = ComponentType.getTypeFor(Scripting.class);
 	
 	public static void setScriptEntity(Entity entity, Script script){
@@ -29,13 +26,8 @@ public class ScriptManager extends Manager{
 		}
 	}
 	
-	public static List<Script> getWorldDelegates(Entity e){
-		return worldDelegatesByEntity.get(e.getId());
-	}
-
 	public ScriptManager(){
 		componentsByEntity = new HashMap<Integer,ComponentBag>();
-		worldDelegatesByEntity = new HashMap<Integer, List<Script>>();
 	}
 	
 	@Override
@@ -45,16 +37,14 @@ public class ScriptManager extends Manager{
 	public void added(Entity e) {
 		Scripting component = (Scripting) e.getComponent(scriptType);
 		if(component != null){
+			//This entity has a scripting component. Add it's components to the bag
 			componentsByEntity.put(e.getId(), new ComponentBag(e,e.getComponents(new Bag<Component>())));
-			List<Script> delegates = new ArrayList<Script>();
-			for (Script script : component.getScripts()) {
-				if(script instanceof WorldDelegate){
-					delegates.add(script);
-				    setScriptEntity(e,script);
-					((WorldDelegate) script).onAdd();
-				}
+			//for all world delegates, call onAdd();
+			List<WorldDelegate> delegates = component.getDelegates(WorldDelegate.class);
+			for(int j = 0; j < delegates.size(); j++){
+				ScriptManager.setScriptEntity(e, (Script)delegates.get(j));
+				delegates.get(j).onAdd();
 			}
-			worldDelegatesByEntity.put(e.getId(), delegates);
 		}
 	}
 	
@@ -62,20 +52,12 @@ public class ScriptManager extends Manager{
 	public void changed(Entity e) {
 		Scripting component = (Scripting) e.getComponent(scriptType);
 		if(component != null){
+			//update the mapped entity component pair
 			componentsByEntity.put(e.getId(), new ComponentBag(e,e.getComponents(new Bag<Component>())));
-			List<Script> delegates = new ArrayList<Script>();
-			for (Script script : component.getScripts()) {
-				if(script instanceof WorldDelegate){
-					delegates.add(script);
-				    setScriptEntity(e,script);
-					((WorldDelegate) script).onAdd();
-				}
-			}
-			worldDelegatesByEntity.put(e.getId(), delegates);
 		}else{
+			//the scripting component has been removed, remove the hashmap pairing
 			if(componentsByEntity.containsKey(e.getId())){
 				componentsByEntity.remove(e.getId());
-				worldDelegatesByEntity.remove(e.getId());
 			}
 		}
 	}
@@ -83,23 +65,30 @@ public class ScriptManager extends Manager{
 	@Override
 	public void deleted(Entity e) {
 		if(componentsByEntity.containsKey(e.getId())){
-			for(Script script : worldDelegatesByEntity.get(e.getId()) )
-			{
-				setScriptEntity(e,script);
-				((WorldDelegate) script).onRemove();
+			//for all world delegates, call onRemove();
+			Scripting component = (Scripting) e.getComponent(scriptType);
+			if(component != null){
+				List<WorldDelegate> delegates = component.getDelegates(WorldDelegate.class);
+				for(int j = 0; j < delegates.size(); j++){
+					ScriptManager.setScriptEntity(e, (Script)delegates.get(j));
+					delegates.get(j).onRemove();
+				}
 			}
 			componentsByEntity.remove(e.getId());
-			worldDelegatesByEntity.remove(e.getId());
 		}
 	}
 	
 	@Override
 	public void disabled(Entity e) {
 		if(componentsByEntity.containsKey(e.getId())){
-			for(Script script : worldDelegatesByEntity.get(e.getId()) )
-			{
-				setScriptEntity(e,script);	
-				((WorldDelegate) script).onDisable();
+			//for all world delegates, call onDisable();
+			Scripting component = (Scripting) e.getComponent(scriptType);
+			if(component != null){
+				List<WorldDelegate> delegates = component.getDelegates(WorldDelegate.class);
+				for(int j = 0; j < delegates.size(); j++){
+					ScriptManager.setScriptEntity(e, (Script)delegates.get(j));
+					delegates.get(j).onDisable();
+				}
 			}
 		}
 	}
@@ -107,10 +96,14 @@ public class ScriptManager extends Manager{
 	@Override
 	public void enabled(Entity e) {
 		if(componentsByEntity.containsKey(e.getId())){
-			for(Script script : worldDelegatesByEntity.get(e.getId()) )
-			{
-				setScriptEntity(e,script);
-				((WorldDelegate) script).onEnable();
+			//for all world delegates, call onEnable();
+			Scripting component = (Scripting) e.getComponent(scriptType);
+			if(component != null){
+				List<WorldDelegate> delegates = component.getDelegates(WorldDelegate.class);
+				for(int j = 0; j < delegates.size(); j++){
+					ScriptManager.setScriptEntity(e, (Script)delegates.get(j));
+					delegates.get(j).onEnable();
+				}
 			}
 		}
 	}

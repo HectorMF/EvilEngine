@@ -18,5 +18,7 @@ public abstract class Script {
 	}
 	
 	public abstract void initialize();
+	
+	public abstract void onUpdate();
 
 }

@@ -10,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.perfectplay.org.components.Scripting;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.scripting.Delegate;
-import com.perfectplay.org.scripting.Script;
 import com.perfectplay.org.scripting.delegates.CollisionDelegate;
 import com.perfectplay.org.scripting.delegates.RegionDelegate;
 
@@ -40,8 +39,8 @@ public class RegionContactListener implements ContactListener {
 		}else{
 			Scripting sc = (Scripting) entityA.getComponent(ComponentType.getTypeFor(Scripting.class));
 			if(sc != null){
-				for(Script s : sc.getDelegates(CollisionDelegate.class)){
-					((CollisionDelegate)s).onBeginCollision();
+				for(CollisionDelegate s : sc.getDelegates(CollisionDelegate.class)){
+					s.onBeginCollision();
 				}
 			}
 		}
@@ -54,8 +53,8 @@ public class RegionContactListener implements ContactListener {
 		}else{
 			Scripting sc = (Scripting) entityB.getComponent(ComponentType.getTypeFor(Scripting.class));
 			if(sc != null){
-				for(Script s : sc.getDelegates(CollisionDelegate.class)){
-					((CollisionDelegate)s).onBeginCollision();
+				for(CollisionDelegate s : sc.getDelegates(CollisionDelegate.class)){
+					s.onBeginCollision();
 				}
 			}
 		}
