@@ -29,8 +29,8 @@ public class LayerNode implements Comparable<LayerNode> {
 
 	@Override
 	public int compareTo(LayerNode arg0) {
-		float val = spatial.getSpatial().getZ()
-				- arg0.getSpatialComponent().getSpatial().getZ();
+		float val = spatial.getZ()
+				- arg0.getSpatialComponent().getZ();
 		if (val < 0)
 			return -1;
 		if (val > 0)

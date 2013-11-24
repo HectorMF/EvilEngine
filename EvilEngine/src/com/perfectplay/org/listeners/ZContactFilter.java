@@ -17,10 +17,8 @@ public class ZContactFilter implements ContactFilter {
 		if (entityA == entityB)
 			return false;
 
-		Spatial spatialA = entityA.getComponent(Transform.class)
-				.getSpatial();
-		Spatial spatialB = entityB.getComponent(Transform.class)
-				.getSpatial();
+		Spatial spatialA = entityA.getComponent(Transform.class);
+		Spatial spatialB = entityB.getComponent(Transform.class);
 
 		if (spatialA == null || spatialB == null)
 			return false;

@@ -124,7 +124,25 @@ public class EvilEngine implements ApplicationListener {
 		 // e.getComponent(Scripting.class).addScript(TestScript.class);
 		//  e.getComponent(Scripting.class).addScript(TestScript.class);
 		  e.getComponent(Scripting.class).addScript(TestScript2.class);
+		  
 		  e.addToWorld();
+		  e = level.createEntity();
+		  Transform t = new Transform();
+		  t.setPosition(0,0,10);
+		  t.setDimension(40,40,40);
+		  e.addComponent(t);
+		  body = new RigidBody(e, BodyType.StaticBody);
+		  body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero,
+		  0f, .5f, .5f, .5f));
+		  e.addComponent(body);
+		  e.addComponent(new Renderable(aSprite.clone(),layer)); 
+		  e.addComponent(new Scripting());
+		  e.getComponent(Scripting.class).addScript(TestScript.class);
+		  e.addToWorld();
+		  
+		  
+		  
+		  
 		  
 		  e = level.createEntity(); b= new RigidBody(e, BodyType.DynamicBody);
 		  b.addFixture( RigidBody.createCircleFixture(.5f,
@@ -141,7 +159,7 @@ public class EvilEngine implements ApplicationListener {
 		  sp.setDimension(100,100,
 		  10); e.addComponent(new Transform(sp)); 
 		  e.addComponent(new Renderable(aSprite.clone(),layer));
-		  e.addComponent(testScript); 
+		  //e.addComponent(testScript); 
 		 // e.getComponent(Scripting.class).addScript(TestScript.class);
 		  e.addToWorld();
 		  

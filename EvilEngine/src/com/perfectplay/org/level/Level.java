@@ -9,6 +9,7 @@ import com.perfectplay.org.systems.RegionSystem;
 import com.perfectplay.org.systems.ScriptSystem;
 import com.perfectplay.org.systems.SpatialGridSystem;
 import com.perfectplay.org.systems.RenderSystem;
+import com.perfectplay.org.tween.TweenRegister;
 import com.perfectplay.org.utils.ParallaxCamera;
 import com.perfectplay.org.utils.SpatialGrid;
 
@@ -63,11 +64,12 @@ public class Level extends World {
 	@Override
 	public void process() {
 		super.process();
+		TweenRegister.update(this.getDelta());
 		spatialGridSystem.process();
 		physicsSystem.process();
 		regionSystem.process();
 	}
-
+	
 	public int getWidth() {
 		return width;
 	}

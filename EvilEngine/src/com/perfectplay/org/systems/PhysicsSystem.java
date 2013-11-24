@@ -18,7 +18,7 @@ import com.perfectplay.org.utils.Spatial;
 
 public class PhysicsSystem extends EntitySystem {
 	@Mapper
-	ComponentMapper<Transform> spatials;
+	ComponentMapper<Transform> transforms;
 	@Mapper
 	ComponentMapper<RigidBody> physics;
 
@@ -29,20 +29,18 @@ public class PhysicsSystem extends EntitySystem {
 		super(Aspect.getAspectForAll(Transform.class, RigidBody.class));
 		PhysicsSystem.world = world;
 		PhysicsSystem.world.setContactFilter(new ZContactFilter());
-
-		System.out.println(world.getGravity());
 	}
 
 	@Override
 	protected void inserted(Entity e) {
 		super.inserted(e);
-		if (!RigidBodySpatial.class.isInstance(spatials.get(e).getSpatial())) {
-			Spatial val = spatials.get(e).getSpatial();
-			RigidBodySpatial nSpatial = new RigidBodySpatial(physics.get(e)
-					.getBody());
-
-			nSpatial.setSpatial(val);
-			spatials.get(e).setSpatial(nSpatial);
+		Spatial spatial = transforms.get(e).getSpatial();
+		//check to see if the transform has a rigid body spatial
+		if(!(spatial instanceof RigidBodySpatial)){
+			//No RigidBody-backed spatial.
+			RigidBodySpatial newSpatial = new RigidBodySpatial(physics.get(e).getBody());
+			newSpatial.setSpatial(spatial);
+			transforms.get(e).setSpatial(newSpatial);
 		}
 		physics.get(e).getBody().setActive(true);
 	}

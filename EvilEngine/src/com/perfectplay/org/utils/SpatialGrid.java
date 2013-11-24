@@ -42,20 +42,19 @@ public class SpatialGrid {
 				buckets[row][col].clear();
 	}
 
-	public void insertEntity(Entity entity, Transform spatialComponent) {
-		Spatial spatial = spatialComponent.getSpatial();
-		SpatialNode node = new SpatialNode(entity, spatial);
+	public void insertEntity(Entity entity, Transform transform) {
+		SpatialNode node = new SpatialNode(entity, transform);
 
 		ArrayList<Bucket> bList = new ArrayList<Bucket>();
 
 		// calculate the area which holds the entity
-		float screenX = spatial.getPosition().x;
-		float screenY = spatial.getPosition().y;
+		float screenX = transform.getX();
+		float screenY = transform.getY();
 
 		int row = (int) (screenY / bucketSize);
 		int column = (int) (screenX / bucketSize);
-		int row2 = (int) ((screenY - 1 + spatial.getHeight()) / bucketSize);
-		int column2 = (int) ((screenX - 1 + spatial.getWidth()) / bucketSize);
+		int row2 = (int) ((screenY - 1 + transform.getHeight()) / bucketSize);
+		int column2 = (int) ((screenX - 1 + transform.getWidth()) / bucketSize);
 
 		// add the buckets to the list of buckets which hold the entity
 		for (int y = row; y <= row2; ++y)
@@ -65,7 +64,7 @@ public class SpatialGrid {
 						bList.add(buckets[y][x]);
 					}
 
-		spatialComponent.setBuckets(bList);
+		transform.setBuckets(bList);
 		boolean isEnabled = false;
 		for (Bucket b : bList) {
 			b.insertNode(node);
@@ -78,15 +77,15 @@ public class SpatialGrid {
 		}
 	}
 
-	public void removeEntity(Entity entity, Transform spatialComponent) {
-		for (Bucket bucket : spatialComponent.getBuckets())
+	public void removeEntity(Entity entity, Transform transform) {
+		for (Bucket bucket : transform.getBuckets())
 			bucket.removeNodesContainingEntity(entity);
 	}
 
-	public void updateEntity(Entity entity, Transform spatialComponent) {
+	public void updateEntity(Entity entity, Transform transform) {
 
-		removeEntity(entity, spatialComponent);
-		insertEntity(entity, spatialComponent);
+		removeEntity(entity, transform);
+		insertEntity(entity, transform);
 	}
 
 	/*
@@ -173,8 +172,7 @@ public class SpatialGrid {
 
 	}
 
-	public ArrayList<Bucket> getBucketsInsideRectangle(int x, int y, int width,
-			int height) {
+	public ArrayList<Bucket> getBucketsInsideRectangle(int x, int y, int width, int height) {
 		int row = (int) (y / bucketSize);
 		int row2 = (int) ((y - 1 + height) / bucketSize);
 		int column = (int) (x / bucketSize);

@@ -2,7 +2,7 @@ package com.perfectplay.org.utils;
 
 import com.badlogic.gdx.math.Vector3;
 
-public class BodylessSpatial extends Spatial{
+public class BodylessSpatial implements Spatial{
 	private float x, y, z;
 	private float width, height, depth;
 	private float rotation;
@@ -107,5 +107,4 @@ public class BodylessSpatial extends Spatial{
 	public Vector3 getDimension() {
 		return new Vector3(width,height,depth);
 	}
-
 }

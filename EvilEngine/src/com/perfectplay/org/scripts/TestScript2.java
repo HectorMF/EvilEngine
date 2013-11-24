@@ -1,12 +1,12 @@
 package com.perfectplay.org.scripts;
 
+import com.badlogic.gdx.math.Vector3;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.scripting.Script;
-import com.perfectplay.org.scripting.delegates.CollisionDelegate;
-import com.perfectplay.org.scripting.delegates.TransformDelegate;
 import com.perfectplay.org.scripting.delegates.WorldDelegate;
 
 public class TestScript2 extends Script implements WorldDelegate{
-
+	Vector3 position = null;
 	@Override
 	public void initialize() {
 		
@@ -38,7 +38,14 @@ public class TestScript2 extends Script implements WorldDelegate{
 
 	@Override
 	public void onUpdate() {
-		// TODO Auto-generated method stub
+		Vector3 temp = components.get(Transform.class).getPosition();
+		System.out.println(temp);
+		/*if(position == null) position = temp;
+		if(temp != position){
+			System.out.println("MOVED FROM: " + position + " TO: " + temp);
+			
+		}
+		position = temp;*/
 		
 	}
 

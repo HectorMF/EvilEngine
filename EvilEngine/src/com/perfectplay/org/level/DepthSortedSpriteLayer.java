@@ -23,7 +23,7 @@ public class DepthSortedSpriteLayer extends SpriteLayer {
 
 		for (LayerNode rn : nodes) {
 			r = rn.getRenderableComponent();
-			s = rn.getSpatialComponent().getSpatial();
+			s = rn.getSpatialComponent();
 			
 			r.getSprite().draw(batch, s.getPosition().x,
 					s.getPosition().y, r.getOrigin().x, r.getOrigin().y,

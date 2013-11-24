@@ -79,7 +79,6 @@ public class Bucket {
 	}
 
 	public void removeNodesContainingEntity(Entity entity) {
-
 		for (int i = nodeList.size() - 1; i >= 0; i--)
 			if (entity.getId() == nodeList.get(i).getEntity().getId()) {
 				nodeList.remove(i);

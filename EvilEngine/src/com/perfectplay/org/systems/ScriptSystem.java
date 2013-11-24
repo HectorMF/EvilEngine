@@ -1,7 +1,5 @@
 package com.perfectplay.org.systems;
 
-import java.util.List;
-
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;

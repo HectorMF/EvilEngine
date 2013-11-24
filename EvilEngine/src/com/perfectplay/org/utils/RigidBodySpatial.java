@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public class RigidBodySpatial extends Spatial {
+public class RigidBodySpatial implements Spatial {
 	private Body body;
 	private float z;
 	private float width;
@@ -43,7 +43,6 @@ public class RigidBodySpatial extends Spatial {
 	public void setPosition(float x, float y, float z) {
 		this.z = z;
 		body.setTransform(Pixel.toMeter(x), Pixel.toMeter(y), getRotation());
-
 	}
 
 	@Override

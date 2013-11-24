@@ -24,7 +24,7 @@ public class SpatialSerializer extends Serializer<Transform> {
 	@Override
 	public void write(Kryo kryo, Output output, Transform object) {
 		// get objects inner spatial
-		Spatial spatial = object.getSpatial();
+		Spatial spatial = object;
 		output.writeFloat(spatial.getX());
 		output.writeFloat(spatial.getY());
 		output.writeFloat(spatial.getZ());
