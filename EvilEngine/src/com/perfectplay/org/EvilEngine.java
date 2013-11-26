@@ -17,19 +17,15 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.perfectplay.org.components.EventRegion;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.Scripting;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.graphics.AnimatedSprite;
-import com.perfectplay.org.graphics.ISprite;
 import com.perfectplay.org.graphics.Sprite;
 import com.perfectplay.org.graphics.Texture2D;
 import com.perfectplay.org.level.DepthSortedSpriteLayer;
 import com.perfectplay.org.level.Level;
-import com.perfectplay.org.level.SpriteLayer;
-import com.perfectplay.org.scripting.ScriptManager;
 import com.perfectplay.org.scripts.TestScript;
 import com.perfectplay.org.scripts.TestScript2;
 import com.perfectplay.org.serialization.LevelSerializer;
@@ -106,16 +102,19 @@ public class EvilEngine implements ApplicationListener {
 		  
 		  AnimatedSprite aSprite = new AnimatedSprite(frames,90); Scripting
 		  testScript = new Scripting(); 
-		  DepthSortedSpriteLayer layer2 = new
-				  DepthSortedSpriteLayer();
+		//  DepthSortedSpriteLayer layer2 = new
+		//		  DepthSortedSpriteLayer();
 		  DepthSortedSpriteLayer layer = new
 		  DepthSortedSpriteLayer(); level.getRenderSystem().addLayer(layer); e
 		  = level.createEntity();
 		  
 		  RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		  body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero,
-		  0f, .5f, .5f, .5f)); e.addComponent(body); BodylessSpatial sp = new
-		  BodylessSpatial(); sp.setPosition(100, 200,2); 
+		  0f, .5f, .5f, .5f)); 
+		  e.addComponent(body); 
+		  BodylessSpatial sp = new
+		  BodylessSpatial(); 
+		  sp.setPosition(100, 200,2); 
 		  sp.setDimension(100,100,10); 
 		  e.addComponent(new Transform(sp)); 
 		  e.addComponent(new Renderable(aSprite,layer)); 
@@ -135,7 +134,10 @@ public class EvilEngine implements ApplicationListener {
 		  body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero,
 		  0f, .5f, .5f, .5f));
 		  e.addComponent(body);
-		  e.addComponent(new Renderable(aSprite.clone(),layer)); 
+		  Renderable tr = new Renderable(aSprite.clone(),layer);
+		  tr.setWidth(50);
+		  tr.setHeight(50);
+		  e.addComponent(tr); 
 		  e.addComponent(new Scripting());
 		  e.getComponent(Scripting.class).addScript(TestScript.class);
 		  e.addToWorld();
@@ -148,8 +150,9 @@ public class EvilEngine implements ApplicationListener {
 		  b.addFixture( RigidBody.createCircleFixture(.5f,
 		  Vector2.Zero,0f,.5f,.5f));
 		  b.addFixture(RigidBody.createBoxFixture(110f, 60f, Vector2.Zero, 0f,
-		  .4f, .6f, .9f)); b.getBody().setFixedRotation(true);
-		  e.addComponent(b); EventRegion region = new EventRegion(e);
+		  .4f, .6f, .9f)); 
+		  b.getBody().setFixedRotation(true);
+		  e.addComponent(b);// EventRegion region = new EventRegion(e);
 		  
 		 // region.addRegion(EventRegion.createCircleRegion(1f, new
 		 // Vector2(0,0), (short)-1, (short)-1, (short)-1), new
@@ -167,8 +170,7 @@ public class EvilEngine implements ApplicationListener {
 		  RigidBody(e,BodyType.StaticBody);
 		  
 		  FixtureDef def2 =
-		  RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f,new
-		  Vector2(100f,19f), 0f, .5f, 0f, .5f); //body.addFixture(def);
+		  RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f,Vector2.Zero, 0f, .5f, 0f, .5f); //body.addFixture(def);
 		  body.addFixture(def2); RigidBodySpatial st = new
 		  RigidBodySpatial(body.getBody()); //sp = new BodylessSpatial();
 		  //st.setSpatial(sp); 
@@ -176,7 +178,10 @@ public class EvilEngine implements ApplicationListener {
 		  st.setDimension(100,100,100); 
 		  e.addComponent(body); 
 		  e.addComponent(new Transform(st));
-		  e.addComponent(new Renderable(new Sprite(texture),new Vector2(0,0),Vector2.Zero, Color.RED, .5f,layer));
+		  Renderable r = new Renderable(new Sprite(texture),new Vector2(0,0),Vector2.Zero, Color.RED, 1f,layer);
+		  r.setWidth(Gdx.graphics.getWidth()/2);
+		  r.setHeight(16);
+		  e.addComponent(r);
 		  e.addToWorld(); //level.getRenderSystem().setSpriteBatch(batch);
 		  LevelSerializer s = new LevelSerializer(); 
 		  level.setDelta(Gdx.graphics.getDeltaTime()); level.process();

@@ -76,6 +76,14 @@ public class AnimatedSprite implements ISprite {
 		playing = true;
 	}
 
+
+	@Override
+	public void draw(SpriteBatch batch, float x, float y, float scaleX,
+			float scaleY, float rotation, boolean flipX, boolean flipY,
+			Color color, float alpha) {
+		frames.get(currentFrame).draw(batch, x, y, scaleX, scaleY, rotation, flipX, flipY, color, alpha);
+	}
+	
 	@Override
 	public void draw(SpriteBatch batch, float x, float y, float originX,
 			float originY, float width, float height, float scaleX,

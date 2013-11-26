@@ -21,11 +21,16 @@ public class UnsortedSpriteLayer extends SpriteLayer {
 		for (LayerNode rn : nodes) {
 			r = rn.getRenderableComponent();
 			s = rn.getSpatialComponent();
-			r.getSprite().draw(batch, s.getPosition().x,
-					s.getPosition().y, r.getOrigin().x, r.getOrigin().y,
-					s.getWidth(), s.getHeight(), 1f, 1f, s.getRotation(),
-					r.getHorizontalFlip(), r.getVerticalFlip(), r.getColor(),
-					r.getAlpha());
+			if(r.getWidth() > 0 && r.getHeight() > 0){
+				r.getSprite().draw(batch, s.getPosition().x, s.getPosition().y, r.getWidth()/2,r.getHeight()/2, r.getWidth(), r.getHeight(), r.getScaleX(), r.getScaleY(), s.getRotation(),
+						r.getHorizontalFlip(), r.getVerticalFlip(), r.getColor(),
+						r.getAlpha());
+			}else{
+				r.getSprite().draw(batch, s.getPosition().x,
+						s.getPosition().y, r.getScaleX(), r.getScaleY(), s.getRotation(),
+						r.getHorizontalFlip(), r.getVerticalFlip(), r.getColor(),
+						r.getAlpha());
+			}
 		}
 	}
 

@@ -1,6 +1,5 @@
 package com.perfectplay.org.utils;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -42,7 +41,7 @@ public class RigidBodySpatial implements Spatial {
 	@Override
 	public void setPosition(float x, float y, float z) {
 		this.z = z;
-		body.setTransform(Pixel.toMeter(x), Pixel.toMeter(y), getRotation());
+		body.setTransform(Pixel.toMeter(x), Pixel.toMeter(y), (float)Math.toRadians(getRotation()));
 	}
 
 	@Override
@@ -87,12 +86,12 @@ public class RigidBodySpatial implements Spatial {
 
 	@Override
 	public void setX(float x) {
-		body.getTransform().setPosition(new Vector2(Pixel.toMeter(x),body.getTransform().getPosition().y));
+		setPosition(x,getY(),getZ());
 	}
 
 	@Override
 	public void setY(float y) {
-		body.getTransform().setPosition(new Vector2(body.getTransform().getPosition().x,Pixel.toMeter(y)));
+		setPosition(getX(),y,getZ());
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.perfectplay.org.components.Transform;
 
+import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 
@@ -40,5 +41,9 @@ public class TweenRegister{
 	
 	public static void start(Tween tween){
 		tween.start(manager);
+	}
+	
+	public static void start(Timeline timeline){
+		timeline.start(manager);
 	}
 }

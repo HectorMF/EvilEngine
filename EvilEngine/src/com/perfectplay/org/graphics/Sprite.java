@@ -29,6 +29,20 @@ public class Sprite implements ISprite {
 		this.srcHeight = srcHeight;
 	}
 
+	@Override
+	public void draw(SpriteBatch batch, float x, float y, float scaleX,
+			float scaleY, float rotation, boolean flipX, boolean flipY,
+			Color color, float alpha) {
+		Color previousColor = batch.getColor();
+		color.a = alpha;
+		batch.setColor(color);
+		batch.draw(texture, x - srcWidth/2, y - srcHeight/2, srcWidth/2, srcWidth/2, srcWidth, srcHeight, scaleX, scaleY, 
+				rotation, srcX, srcY, srcWidth, srcHeight, flipX, flipY);
+		batch.setColor(previousColor);
+		
+	}
+	
+	@Override
 	public void draw(SpriteBatch batch, float x, float y, float originX,
 			float originY, float width, float height, float scaleX,
 			float scaleY, float rotation, boolean flipX, boolean flipY,
@@ -37,7 +51,7 @@ public class Sprite implements ISprite {
 		Color previousColor = batch.getColor();
 		color.a = alpha;
 		batch.setColor(color);
-		batch.draw(texture, x, y, originX, originY, width, height, scaleX,
+		batch.draw(texture, x - width/2, y - height/2, originX, originY, width, height, scaleX,
 				scaleY, rotation, srcX, srcY, srcWidth, srcHeight, flipX, flipY);
 		batch.setColor(previousColor);
 	}
@@ -92,4 +106,5 @@ public class Sprite implements ISprite {
 		kryo.writeObject(output, texture);
 
 	}
+
 }

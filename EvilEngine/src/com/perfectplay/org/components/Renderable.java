@@ -16,6 +16,10 @@ public class Renderable extends Component {
 	// transforms across the x and y axis
 	private boolean horizontalFlip;
 	private boolean verticalFlip;
+	
+	private float scaleX = 1,scaleY = 1;
+	private float width = -1, height = -1;
+	
 	private Color color;
 	private float alpha;
 
@@ -107,5 +111,36 @@ public class Renderable extends Component {
 
 	public void setAlpha(float alpha) {
 		this.alpha = alpha;
+	}
+	
+	public float getWidth(){
+		return width;
+	}
+	public void setWidth(float width){
+		this.width = width;
+	}
+	
+	public float getHeight(){
+		return height;
+	}
+	
+	public void setHeight(float height){
+		this.height = height;
+	}
+	
+	public float getScaleX(){
+		return scaleX;
+	}
+	
+	public void setScaleX(float scaleX){
+		this.scaleX = scaleX;
+	}
+	
+	public float getScaleY(){
+		return scaleY;
+	}
+	
+	public void setScaleY(float scaleY){
+		this.scaleY = scaleY;
 	}
 }
