@@ -41,8 +41,5 @@ public class DepthSortedSpriteLayer extends SpriteLayer {
 	@Override
 	public void update(float dt) {
 		Collections.sort(nodes);
-		for (int i = 0; i < nodes.size(); i++) {
-			nodes.get(i).getRenderableComponent().getSprite().update(dt);
-		}
 	}
 }

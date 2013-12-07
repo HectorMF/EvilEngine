@@ -28,6 +28,4 @@ public interface ISprite extends KryoSerializable {
 	boolean isAnimated();
 
 	boolean isPlaying();
-
-	ISprite clone();
 }

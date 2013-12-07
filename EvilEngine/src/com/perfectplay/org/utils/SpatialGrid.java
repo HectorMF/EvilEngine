@@ -188,7 +188,7 @@ public class SpatialGrid {
 	}
 
 	public void debugRender(ShapeRenderer shapeRenderer) {
-		shapeRenderer.begin(ShapeType.Rectangle);
+		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.setColor(1, 1, 0, 1);
 
 		for (int r = activeRow1; r <= activeRow2; r++) {

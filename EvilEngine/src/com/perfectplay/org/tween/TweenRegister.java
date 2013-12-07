@@ -3,6 +3,7 @@ package com.perfectplay.org.tween;
 import java.util.HashMap;
 
 import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.tween.accessors.TransformAccessor;
 
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;

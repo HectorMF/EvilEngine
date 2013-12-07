@@ -33,6 +33,5 @@ public class FixtureDefSerializer extends Serializer<FixtureDef> {
 		output.writeShort(object.filter.groupIndex);
 		output.writeShort(object.filter.maskBits);
 		kryo.writeClassAndObject(output, object.shape);
-
 	}
 }

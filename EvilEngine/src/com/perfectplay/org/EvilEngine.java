@@ -62,7 +62,7 @@ public class EvilEngine implements ApplicationListener {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		camera = new ParallaxCamera(w, h);
-		camera.position.set(100 + (w / 2), 100 + (h / 2), 0);
+		camera.position.set(-200 + (w / 2),  -200 +(h / 2), 0);
 		camera.update();
 
 		batch = new SpriteBatch();
@@ -134,7 +134,7 @@ public class EvilEngine implements ApplicationListener {
 		  body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero,
 		  0f, .5f, .5f, .5f));
 		  e.addComponent(body);
-		  Renderable tr = new Renderable(aSprite.clone(),layer);
+		  Renderable tr = new Renderable(aSprite,layer);
 		  tr.setWidth(50);
 		  tr.setHeight(50);
 		  e.addComponent(tr); 
@@ -161,7 +161,7 @@ public class EvilEngine implements ApplicationListener {
 		  BodylessSpatial(); sp.setPosition(100, 200,10); 
 		  sp.setDimension(100,100,
 		  10); e.addComponent(new Transform(sp)); 
-		  e.addComponent(new Renderable(aSprite.clone(),layer));
+		  e.addComponent(new Renderable(aSprite,layer));
 		  //e.addComponent(testScript); 
 		 // e.getComponent(Scripting.class).addScript(TestScript.class);
 		  e.addToWorld();

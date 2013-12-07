@@ -10,6 +10,7 @@ import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.graphics.SpriteManager;
 import com.perfectplay.org.level.SpriteLayer;
 import com.perfectplay.org.utils.ParallaxCamera;
 
@@ -84,8 +85,9 @@ public class RenderSystem extends EntitySystem {
 
 	@Override
 	protected final void processEntities(ImmutableBag<Entity> entities) {
+		SpriteManager.update(world.getDelta());
 		for (SpriteLayer layer : layers) {
-			layer.update(world.getDelta() * 1000);
+			layer.update(world.getDelta());
 			batch.setProjectionMatrix(camera.calculateParallaxMatrix(layer.getParallaxSpeedX(), layer.getParallaxSpeedY()));
 			batch.begin();
 			layer.render(batch);

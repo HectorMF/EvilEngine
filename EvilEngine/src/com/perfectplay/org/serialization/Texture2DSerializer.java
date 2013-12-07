@@ -20,7 +20,6 @@ public class Texture2DSerializer extends Serializer<Texture2D> {
 	public void write(Kryo kryo, Output output, Texture2D object) {
 		kryo.writeObject(output, object.getType());
 		output.writeString(object.getPath());
-
 	}
 
 }

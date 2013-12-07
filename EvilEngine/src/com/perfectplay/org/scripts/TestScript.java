@@ -5,8 +5,8 @@ import aurelienribon.tweenengine.Tween;
 
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.scripting.Script;
-import com.perfectplay.org.tween.TransformAccessor;
 import com.perfectplay.org.tween.TweenRegister;
+import com.perfectplay.org.tween.accessors.TransformAccessor;
 
 public class TestScript extends Script{
 

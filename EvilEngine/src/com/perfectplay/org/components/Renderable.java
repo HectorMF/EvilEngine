@@ -38,6 +38,7 @@ public class Renderable extends Component {
 
 	public Renderable(ISprite sprite, Vector2 offset, Vector2 origin,
 			Color color, float alpha, SpriteLayer layer) {
+		
 		this.sprite = sprite;
 		this.offset = offset;
 		this.color = color;

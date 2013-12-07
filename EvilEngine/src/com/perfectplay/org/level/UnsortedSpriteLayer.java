@@ -36,8 +36,5 @@ public class UnsortedSpriteLayer extends SpriteLayer {
 
 	@Override
 	public void update(float dt) {
-		for (int i = 0; i < nodes.size(); i++) {
-			nodes.get(i).getRenderableComponent().getSprite().update(dt);
-		}
 	}
 }

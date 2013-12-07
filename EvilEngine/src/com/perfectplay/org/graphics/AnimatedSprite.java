@@ -31,6 +31,7 @@ public class AnimatedSprite implements ISprite {
 		this.looping = looping;
 		this.playing = playing;
 		this.currentFrame = 0;
+		SpriteManager.add(this);
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class AnimatedSprite implements ISprite {
 		if (interval < 0)
 			return;
 		// add the elapsed time since the last update
-		counter += dt;
+		counter += dt * 1000;
 		// check to see if the frame delay has been reached
 
 		if (interval <= counter) {
@@ -76,7 +77,6 @@ public class AnimatedSprite implements ISprite {
 		playing = true;
 	}
 
-
 	@Override
 	public void draw(SpriteBatch batch, float x, float y, float scaleX,
 			float scaleY, float rotation, boolean flipX, boolean flipY,
@@ -107,11 +107,6 @@ public class AnimatedSprite implements ISprite {
 	@Override
 	public boolean isAnimated() {
 		return true;
-	}
-
-	@Override
-	public ISprite clone() {
-		return new AnimatedSprite(frames, interval);
 	}
 
 	@Override
