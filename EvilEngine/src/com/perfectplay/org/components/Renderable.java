@@ -50,8 +50,9 @@ public class Renderable extends Component {
 		this.layerID = layer.getID();
 	}
 	
-	public void setLayer(int id){
+	public Renderable setLayer(int id){
 		this.layerID = id;
+		return this;
 	}
 	
 	public int getLayer(){
@@ -62,86 +63,98 @@ public class Renderable extends Component {
 		return sprite;
 	}
 
-	public void setSprite(ISprite sprite) {
+	public Renderable setSprite(ISprite sprite) {
 		this.sprite = sprite;
+		return this;
 	}
 
 	public Vector2 getOffset() {
 		return offset;
 	}
 
-	public void setOffset(Vector2 offset) {
+	public Renderable setOffset(Vector2 offset) {
 		this.offset = offset;
+		return this;
 	}
 
 	public Vector2 getOrigin() {
 		return origin;
 	}
 
-	public void setOrigin(Vector2 origin) {
+	public Renderable setOrigin(Vector2 origin) {
 		this.origin = origin;
+		return this;
 	}
 
 	public boolean getHorizontalFlip() {
 		return horizontalFlip;
 	}
 
-	public void setHorizontalFlip(boolean flip) {
+	public Renderable setHorizontalFlip(boolean flip) {
 		this.horizontalFlip = flip;
+		return this;
 	}
 
 	public boolean getVerticalFlip() {
 		return verticalFlip;
 	}
 
-	public void setVerticalFlip(boolean flip) {
+	public Renderable setVerticalFlip(boolean flip) {
 		this.verticalFlip = flip;
+		return this;
 	}
 
 	public Color getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
+	public Renderable setColor(Color color) {
 		this.color = color;
+		return this;
 	}
 
 	public float getAlpha() {
 		return alpha;
 	}
 
-	public void setAlpha(float alpha) {
+	public Renderable setAlpha(float alpha) {
 		this.alpha = alpha;
+		return this;
 	}
 	
 	public float getWidth(){
 		return width;
 	}
-	public void setWidth(float width){
+	
+	public Renderable setWidth(float width){
 		this.width = width;
+		return this;
 	}
 	
 	public float getHeight(){
 		return height;
 	}
 	
-	public void setHeight(float height){
+	public Renderable setHeight(float height){
 		this.height = height;
+		return this;
 	}
 	
 	public float getScaleX(){
 		return scaleX;
 	}
 	
-	public void setScaleX(float scaleX){
+	public Renderable setScaleX(float scaleX){
 		this.scaleX = scaleX;
+		return this;
 	}
 	
 	public float getScaleY(){
 		return scaleY;
 	}
 	
-	public void setScaleY(float scaleY){
+	public Renderable setScaleY(float scaleY){
 		this.scaleY = scaleY;
+		return this;
 	}
 }

@@ -57,12 +57,10 @@ public class Scripting extends Component {
 	public void addScript(Class<? extends Script> classScript) {
 		try {
 			Script script = classScript.newInstance();
-			script.initialize(); 
 			if(this.scripts.get(classScript) != null)
 				this.removeScriptByDelegates(classScript);
 			this.scripts.put(classScript, script);
 			this.addScriptByDelegates(script, classScript);
-			
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {

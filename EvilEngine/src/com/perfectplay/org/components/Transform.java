@@ -22,9 +22,11 @@ public class Transform extends Component implements Spatial{
 		this.spatial = spatial;
 	}
 	
-	public void setSpatial(Spatial spatial) {
+	public Transform setSpatial(Spatial spatial) {
 		this.spatial = spatial;
+		return this;
 	}
+	
 	public Spatial getSpatial(){
 		return spatial;
 	}
@@ -61,18 +63,21 @@ public class Transform extends Component implements Spatial{
 	}
 
 	@Override
-	public void setX(float x) {
+	public Transform setX(float x) {
 		spatial.setX(x);
+		return this;
 	}
 
 	@Override
-	public void setY(float y) {
+	public Transform setY(float y) {
 		spatial.setY(y);
+		return this;
 	}
 
 	@Override
-	public void setZ(float z) {
+	public Transform setZ(float z) {
 		spatial.setZ(z);
+		return this;
 	}
 
 	@Override
@@ -81,8 +86,9 @@ public class Transform extends Component implements Spatial{
 	}
 
 	@Override
-	public void setPosition(float x, float y, float z) {
+	public Transform setPosition(float x, float y, float z) {
 		spatial.setPosition(x, y, z);
+		return this;
 	}
 
 	@Override
@@ -91,8 +97,9 @@ public class Transform extends Component implements Spatial{
 	}
 
 	@Override
-	public void setRotation(float rotation) {
+	public Transform setRotation(float rotation) {
 		spatial.setRotation(rotation);
+		return this;
 	}
 
 	@Override
@@ -111,18 +118,21 @@ public class Transform extends Component implements Spatial{
 	}
 
 	@Override
-	public void setWidth(float width) {
+	public Transform setWidth(float width) {
 		spatial.setWidth(width);
+		return this;
 	}
 
 	@Override
-	public void setHeight(float height) {
+	public Transform setHeight(float height) {
 		spatial.setHeight(height);
+		return this;
 	}
 
 	@Override
-	public void setDepth(float depth) {
+	public Transform setDepth(float depth) {
 		spatial.setDepth(depth);
+		return this;
 	}
 
 	@Override
@@ -131,7 +141,8 @@ public class Transform extends Component implements Spatial{
 	}
 
 	@Override
-	public void setDimension(float width, float height, float depth) {
+	public Transform setDimension(float width, float height, float depth) {
 		spatial.setDimension(width, height, depth);
+		return this;
 	}
 }

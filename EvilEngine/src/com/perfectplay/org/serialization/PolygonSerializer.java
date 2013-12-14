@@ -33,8 +33,6 @@ public class PolygonSerializer extends Serializer<PolygonShape> {
 			output.writeFloat(vertex.x);
 			output.writeFloat(vertex.y);
 		}
-		System.out.println("Serialized a poly");
-
 	}
 
 }

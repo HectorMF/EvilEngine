@@ -39,9 +39,10 @@ public class RigidBodySpatial implements Spatial {
 	}
 
 	@Override
-	public void setPosition(float x, float y, float z) {
+	public RigidBodySpatial setPosition(float x, float y, float z) {
 		this.z = z;
 		body.setTransform(Pixel.toMeter(x), Pixel.toMeter(y), (float)Math.toRadians(getRotation()));
+		return this;
 	}
 
 	@Override
@@ -50,9 +51,9 @@ public class RigidBodySpatial implements Spatial {
 	}
 
 	@Override
-	public void setRotation(float rotation) {
-		body.setTransform(body.getPosition().x, body.getPosition().y,
-				(float) Math.toRadians(rotation));
+	public RigidBodySpatial setRotation(float rotation) {
+		body.setTransform(body.getPosition().x, body.getPosition().y, (float) Math.toRadians(rotation));
+		return this;
 	}
 
 	@Override
@@ -71,47 +72,55 @@ public class RigidBodySpatial implements Spatial {
 	}
 
 	@Override
-	public void setDimension(float width, float height, float depth) {
+	public RigidBodySpatial setDimension(float width, float height, float depth) {
 		this.width = width;
 		this.height = height;
 		this.depth = depth;
+		return this;
 	}
 
 	@Override
-	public void setSpatial(Spatial spatial) {
+	public RigidBodySpatial setSpatial(Spatial spatial) {
 		setPosition(spatial.getX(), spatial.getY(), spatial.getZ());
 		setRotation(spatial.getRotation());
 		setDimension(spatial.getWidth(), spatial.getHeight(), spatial.getDepth());
+		return this;
 	}
 
 	@Override
-	public void setX(float x) {
+	public RigidBodySpatial setX(float x) {
 		setPosition(x,getY(),getZ());
+		return this;
 	}
 
 	@Override
-	public void setY(float y) {
+	public RigidBodySpatial setY(float y) {
 		setPosition(getX(),y,getZ());
+		return this;
 	}
 
 	@Override
-	public void setZ(float z) {
+	public RigidBodySpatial setZ(float z) {
 		this.z = z;
+		return this;
 	}
 
 	@Override
-	public void setWidth(float width) {
+	public RigidBodySpatial setWidth(float width) {
 		this.width = width;
+		return this;
 	}
 
 	@Override
-	public void setHeight(float height) {
+	public RigidBodySpatial setHeight(float height) {
 		this.height = height;
+		return this;
 	}
 
 	@Override
-	public void setDepth(float depth) {
+	public RigidBodySpatial setDepth(float depth) {
 		this.depth = depth;
+		return this;
 	}
 
 	@Override

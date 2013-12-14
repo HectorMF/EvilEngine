@@ -28,10 +28,11 @@ public class BodylessSpatial implements Spatial{
 	}
 
 	@Override
-	public void setPosition(float x, float y, float z) {
+	public BodylessSpatial setPosition(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		return this;
 	}
 
 	@Override
@@ -40,8 +41,9 @@ public class BodylessSpatial implements Spatial{
 	}
 
 	@Override
-	public void setRotation(float rotation) {
+	public BodylessSpatial setRotation(float rotation) {
 		this.rotation = rotation;
+		return this;
 	}
 
 	@Override
@@ -60,47 +62,55 @@ public class BodylessSpatial implements Spatial{
 	}
 
 	@Override
-	public void setDimension(float width, float height, float depth) {
+	public BodylessSpatial setDimension(float width, float height, float depth) {
 		this.width = width;
 		this.height = height;
 		this.depth = depth;
+		return this;
 	}
 
 	@Override
-	public void setSpatial(Spatial spatial) {
+	public BodylessSpatial setSpatial(Spatial spatial) {
 		setPosition(spatial.getX(), spatial.getY(), spatial.getZ());
 		setRotation(spatial.getRotation());
 		setDimension(spatial.getWidth(), spatial.getHeight(), spatial.getDepth());
+		return this;
 	}
 
 	@Override
-	public void setX(float x) {
+	public BodylessSpatial setX(float x) {
 		this.x = x;
+		return this;
 	}
 
 	@Override
-	public void setY(float y) {
+	public BodylessSpatial setY(float y) {
 		this.y = y;
+		return this;
 	}
 
 	@Override
-	public void setZ(float z) {
+	public BodylessSpatial setZ(float z) {
 		this.z = z;
+		return this;
 	}
 
 	@Override
-	public void setWidth(float width) {
+	public BodylessSpatial setWidth(float width) {
 		this.width = width;
+		return this;
 	}
 
 	@Override
-	public void setHeight(float height) {
+	public BodylessSpatial setHeight(float height) {
 		this.height = height;
+		return this;
 	}
 
 	@Override
-	public void setDepth(float depth) {
+	public BodylessSpatial setDepth(float depth) {
 		this.depth = depth;
+		return this;
 	}
 
 	@Override
