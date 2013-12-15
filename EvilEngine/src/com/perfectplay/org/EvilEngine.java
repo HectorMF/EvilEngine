@@ -53,7 +53,7 @@ public class EvilEngine implements ApplicationListener {
 		render = new Box2DDebugRenderer();
 		debug = new ShapeRenderer();
 		
-		//create the level
+		/*//create the level
 		level = new Level(4000,4000,100, new Vector2(0,-2f),false);
 		level.setSpriteBatch(batch);
 		level.setCamera(camera);
@@ -67,13 +67,13 @@ public class EvilEngine implements ApplicationListener {
 		Texture2D texture = new Texture2D(Gdx.files.internal("data/forest.png"));
 		Texture2D texture2 = new Texture2D(Gdx.files.internal("data/fire.png.bmp"));
 		
-		/*
+		
 		 * Set the filters for the textures to determine how they scale
 		 * scaling should depend on the content of the image, as choosing different filters
 		 * could result in unwanted blur/sharpness.
 		 * TextureFilter.Nearest looks at neighboring pixels to determine how to scale
 		 * TextureFilter.Linear scales linearly
-		 */
+		 
 		texture.setFilter(TextureFilter.Linear,TextureFilter.Nearest);
 		texture2.setFilter(TextureFilter.Linear,TextureFilter.Nearest);
 
@@ -145,7 +145,7 @@ public class EvilEngine implements ApplicationListener {
 		body.addFixture(def2); 
 		e.addComponent(body); 
 		e.addComponent(new Transform().setPosition(100, 100,1).setDimension(100,100,100));
-		e.addComponent(new Renderable(new Sprite(texture),new Vector2(0,0),Vector2.Zero, Color.RED, 1f,layer)
+		e.addComponent(new Renderable(new Sprite(texture),new Vector2(0,0),Vector2.Zero, Color.RED, 1,1, 1f,layer)
 						.setWidth(Gdx.graphics.getWidth()/2).setHeight(16));
 		e.addComponent(tweenScripts);
 		e.addToWorld();
@@ -153,10 +153,13 @@ public class EvilEngine implements ApplicationListener {
 		//serialize the level. Level.process is called so that all entities are added to world etc.
 		LevelSerializer s = new LevelSerializer(); 
 		level.process();
-		s.WriteLevel(level, "test.bin");
-
-		//LevelSerializer ls = new LevelSerializer();
-		//level = ls.ReadLevel("test.bin");
+		s.WriteLevel(level, "test.bin");*/
+		
+		LevelSerializer ls = new LevelSerializer();
+		level = ls.ReadLevel("test.bin");
+		level.setCamera(camera);
+		level.setSpriteBatch(batch);
+		level.initialize();
 	}
 
 	@Override

@@ -26,19 +26,20 @@ public class Renderable extends Component {
 	private int layerID = -1;
 	
 	public Renderable(ISprite sprite) {
-		this(sprite, Vector2.Zero, Vector2.Zero, Color.WHITE, 1f, null);
+		this(sprite, Vector2.Zero, Vector2.Zero, Color.WHITE, 1f, 1f,1f, null);
 	}
 	public Renderable(ISprite sprite, SpriteLayer layer) {
-		this(sprite, Vector2.Zero, Vector2.Zero, Color.WHITE, 1f, layer);
+		this(sprite, Vector2.Zero, Vector2.Zero, Color.WHITE, 1f, 1f, 1f, layer);
 	}
 	
 	public Renderable(ISprite sprite, Vector2 offset, Vector2 origin, Color color, float alpha){
-		this(sprite, offset, origin, color, alpha, null);
+		this(sprite, offset, origin, color, 1f, 1f, alpha, null);
 	}
-
-	public Renderable(ISprite sprite, Vector2 offset, Vector2 origin,
-			Color color, float alpha, SpriteLayer layer) {
-		
+	
+	public Renderable(ISprite sprite, float width, float height, Vector2 origin, Vector2 offset,
+						Color color, float alpha, SpriteLayer layer) {
+		this.height = height;
+		this.width = width;
 		this.sprite = sprite;
 		this.offset = offset;
 		this.color = color;
@@ -47,7 +48,22 @@ public class Renderable extends Component {
 		this.horizontalFlip = false;
 		this.verticalFlip = false;
 		if(layer != null)
-		this.layerID = layer.getID();
+			this.layerID = layer.getID();
+	}
+	
+	public Renderable(ISprite sprite, Vector2 origin, Vector2 offset,
+			Color color, float scaleX, float scaleY, float alpha, SpriteLayer layer) {
+			this.scaleX = scaleX;
+			this.scaleY = scaleY;
+			this.sprite = sprite;
+			this.offset = offset;
+			this.color = color;
+			this.alpha = alpha;
+			this.origin = origin;
+			this.horizontalFlip = false;
+			this.verticalFlip = false;
+			if(layer != null)
+				this.layerID = layer.getID();
 	}
 	
 	public Renderable setLayer(int id){

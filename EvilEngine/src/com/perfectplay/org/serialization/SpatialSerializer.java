@@ -5,7 +5,6 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.perfectplay.org.components.Transform;
-import com.perfectplay.org.utils.BodylessSpatial;
 import com.perfectplay.org.utils.Spatial;
 
 public class SpatialSerializer extends Serializer<Transform> {
@@ -13,12 +12,11 @@ public class SpatialSerializer extends Serializer<Transform> {
 	@Override
 	public Transform read(Kryo kryo, Input input,
 			Class<Transform> type) {
-		Spatial spatial = new BodylessSpatial();
-		spatial.setPosition(input.readFloat(), input.readFloat(),
-				input.readFloat());
-		spatial.setRotation(input.readFloat());
-		spatial.setDimension(input.readFloat(), input.readFloat(), input.readFloat());
-		return new Transform(spatial);
+		Transform temp = new Transform();
+		temp.setPosition(input.readFloat(), input.readFloat(), input.readFloat());
+		temp.setRotation(input.readFloat());
+		temp.setDimension(input.readFloat(), input.readFloat(), input.readFloat());
+		return temp;
 	}
 
 	@Override

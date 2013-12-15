@@ -14,6 +14,7 @@ public class GwtLauncher extends GwtApplication {
 
 	@Override
 	public ApplicationListener getApplicationListener () {
+		System.out.println("working");
 		return new EvilEngine();
 	}
 }
