@@ -41,4 +41,6 @@ public interface Spatial{
 	public abstract Spatial setDimension(float width, float height, float depth);
 
 	public abstract Spatial setSpatial(Spatial spatial);
+	
+	public abstract boolean equals(Spatial spatial);
 }

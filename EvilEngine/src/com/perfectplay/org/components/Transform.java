@@ -11,7 +11,6 @@ import com.perfectplay.org.utils.Spatial;
 public class Transform extends Component implements Spatial{
 	private Spatial spatial;
 	private ArrayList<Bucket> buckets;
-	private boolean isDirty;
 
 	public Transform(){
 		this(new BodylessSpatial());
@@ -33,14 +32,6 @@ public class Transform extends Component implements Spatial{
 	
 	public ArrayList<Bucket> getBuckets() {
 		return buckets;
-	}
-
-	public boolean isDirty() {
-		return isDirty;
-	}
-
-	public void setDirty(boolean dirty) {
-		this.isDirty = dirty;
 	}
 
 	public void setBuckets(ArrayList<Bucket> buckets) {
@@ -144,5 +135,14 @@ public class Transform extends Component implements Spatial{
 	public Transform setDimension(float width, float height, float depth) {
 		spatial.setDimension(width, height, depth);
 		return this;
+	}
+	
+	@Override
+	public boolean equals(Spatial spatial) {
+		if(getPosition().equals(spatial.getPosition()))
+			if(getDimension().equals(spatial.getDimension()))
+				if(getRotation() == spatial.getRotation())
+					return true;
+		return false;
 	}
 }

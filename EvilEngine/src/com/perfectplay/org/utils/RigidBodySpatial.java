@@ -127,4 +127,13 @@ public class RigidBodySpatial implements Spatial {
 	public Vector3 getDimension() {
 		return new Vector3(width,height,depth);
 	}
+	
+	@Override
+	public boolean equals(Spatial spatial) {
+		if(getPosition().equals(spatial.getPosition()))
+			if(getDimension().equals(spatial.getDimension()))
+				if(getRotation() == spatial.getRotation())
+					return true;
+		return false;
+	}
 }

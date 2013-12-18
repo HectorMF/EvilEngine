@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.perfectplay.org.components.Scripting;
-import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.scripting.Delegate;
 import com.perfectplay.org.scripting.delegates.CollisionDelegate;
 import com.perfectplay.org.scripting.delegates.RegionDelegate;
@@ -72,10 +71,10 @@ public class RegionContactListener implements ContactListener {
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		Fixture fixtureA = contact.getFixtureA();
-		Fixture fixtureB = contact.getFixtureB();
-		Entity entityA = (Entity) fixtureA.getBody().getUserData();
-		Entity entityB = (Entity) fixtureB.getBody().getUserData();
+	//	Fixture fixtureA = contact.getFixtureA();
+	//	Fixture fixtureB = contact.getFixtureB();
+		//Entity entityA = (Entity) fixtureA.getBody().getUserData();
+		//Entity entityB = (Entity) fixtureB.getBody().getUserData();
 		boolean contactOccured = dynamicFilter.shouldCollide(
 				contact.getFixtureA(), contact.getFixtureB());
 		contact.setEnabled(contactOccured);
@@ -87,10 +86,7 @@ public class RegionContactListener implements ContactListener {
 
 			// fixtureA.get
 		}
-		if (entityA.getComponent(Transform.class).isDirty()
-				|| entityB.getComponent(Transform.class).isDirty()) {
 
-		}
 
 	}
 

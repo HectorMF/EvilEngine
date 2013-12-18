@@ -48,7 +48,7 @@ public class PhysicsSystem extends EntitySystem {
 	@Override
 	protected void removed(Entity e) {
 		super.removed(e);
-		//physics.get(e).getBody().setActive(false);
+		physics.get(e).getBody().setActive(false);
 	}
 
 	public static World getWorld() {
