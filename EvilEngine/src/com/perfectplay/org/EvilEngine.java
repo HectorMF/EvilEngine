@@ -192,7 +192,7 @@ public class EvilEngine implements ApplicationListener {
 
 		//debug rendering
 		render.render(PhysicsSystem.getWorld(), camera.combined.cpy().scl(100f));
-		level.getSpatialSystem().getSpatialGrid().debugRender(debug);
+		level.spatialGridSystem.getSpatialGrid().debugRender(debug);
 	}
 
 	@Override

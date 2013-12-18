@@ -54,23 +54,26 @@ public class Scripting extends Component {
 		}
 	}
 	
-	public void addScript(Class<? extends Script> classScript) {
+	public Scripting addScript(Class<? extends Script> classScript) {
 		try {
 			Script script = classScript.newInstance();
 			if(this.scripts.get(classScript) != null)
 				this.removeScriptByDelegates(classScript);
 			this.scripts.put(classScript, script);
 			this.addScriptByDelegates(script, classScript);
+			return this;
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void removeScript(Class<? extends Script> classScript) {
+	public Scripting removeScript(Class<? extends Script> classScript) {
 		this.scripts.remove(classScript);
 		this.removeScriptByDelegates(classScript);
+		return this;
 	}
 	
 	public int size(){

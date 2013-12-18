@@ -87,8 +87,7 @@ public class LevelSerializer extends Serializer<Level> {
 
 		int layers = input.readInt();
 		for (int k = 0; k < layers; k++) {
-			level.getRenderSystem().addLayer(
-					(SpriteLayer) kryo.readClassAndObject(input));
+			level.addLayer((SpriteLayer) kryo.readClassAndObject(input));
 		}
 
 		long count = input.readLong();
@@ -118,11 +117,11 @@ public class LevelSerializer extends Serializer<Level> {
 		output.writeFloat(object.getGravity().x);
 		output.writeFloat(object.getGravity().y);
 
-		int layers = object.getRenderSystem().getLayerCount();
+		int layers = object.getLayerCount();
 		output.writeInt(layers);
 		for (int k = 0; k < layers; k++) {
 			kryo.writeClassAndObject(output,
-					object.getRenderSystem().getLayer(k));
+					object.getLayer(k));
 		}
 		long count = object.getEntityManager().getTotalCreated();
 		ArrayList<Integer> activeEntities = new ArrayList<Integer>();

@@ -9,18 +9,19 @@ import com.perfectplay.org.systems.RegionSystem;
 import com.perfectplay.org.systems.ScriptSystem;
 import com.perfectplay.org.systems.SpatialGridSystem;
 import com.perfectplay.org.systems.RenderSystem;
-import com.perfectplay.org.tween.TweenRegister;
+import com.perfectplay.org.systems.TweenSystem;
 import com.perfectplay.org.utils.ParallaxCamera;
 import com.perfectplay.org.utils.SpatialGrid;
 
 public class Level extends World {
 
 	// World Systems to be used in the level
-	private RenderSystem renderSystem;
-	private SpatialGridSystem spatialGridSystem;
-	private PhysicsSystem physicsSystem;
-	private RegionSystem regionSystem;
-	private ScriptSystem scriptSystem;
+	public final RenderSystem renderSystem;
+	public final SpatialGridSystem spatialGridSystem;
+	public final PhysicsSystem physicsSystem;
+	public final RegionSystem regionSystem;
+	public final ScriptSystem scriptSystem;
+	public final TweenSystem tweenSystem;
 
 	//parameters
 	private int width, height;
@@ -38,12 +39,13 @@ public class Level extends World {
 		// can grab these systems if needed later
 		physicsSystem = setSystem(new PhysicsSystem(
 				new com.badlogic.gdx.physics.box2d.World(gravity, doSleep)),
-				true);
-		regionSystem = setSystem(new RegionSystem(), true);
-		renderSystem = setSystem(new RenderSystem(null), true);
+				false);
+		regionSystem = setSystem(new RegionSystem(), false);
+		renderSystem = setSystem(new RenderSystem(null), false);
 		SpatialGrid grid = new SpatialGrid(width, height, bucketSize);
-		spatialGridSystem = setSystem(new SpatialGridSystem(grid), true);
+		spatialGridSystem = setSystem(new SpatialGridSystem(grid), false);
 		scriptSystem = setSystem(new ScriptSystem(), false);
+		tweenSystem = setSystem(new TweenSystem(), false);
 		this.setManager(new ScriptManager());
 	}
 
@@ -61,15 +63,6 @@ public class Level extends World {
 		renderSystem.process();
 	}
 
-	@Override
-	public void process() {
-		super.process();
-		TweenRegister.update(this.getDelta());
-		spatialGridSystem.process();
-		physicsSystem.process();
-		regionSystem.process();
-	}
-	
 	public int getWidth() {
 		return width;
 	}
@@ -89,25 +82,25 @@ public class Level extends World {
 	public boolean isActivelySimulating() {
 		return doSleep;
 	}
-
-	public RenderSystem getRenderSystem() {
-		return renderSystem;
+	
+	public void addLayer(int index, SpriteLayer layer) {
+		renderSystem.addLayer(index, layer);
 	}
 
-	public PhysicsSystem getPhysicsSystem() {
-		return physicsSystem;
+	public void addLayer(SpriteLayer layer) {
+		renderSystem.addLayer(layer);
 	}
-
-	public RegionSystem getRegionSystem() {
-		return regionSystem;
+	
+	public void removeLayer(int index){
+		renderSystem.removeLayer(index);
 	}
-
-	public ScriptSystem getScriptSystem() {
-		return scriptSystem;
+	
+	public SpriteLayer getLayer(int index){
+		return renderSystem.getLayer(index);
 	}
-
-	public SpatialGridSystem getSpatialSystem() {
-		return spatialGridSystem;
+	
+	public int getLayerCount() {
+		return renderSystem.getLayerCount();
 	}
 	
 	public void setSpriteBatch(SpriteBatch batch){
