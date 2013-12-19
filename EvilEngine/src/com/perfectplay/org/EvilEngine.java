@@ -17,7 +17,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.RigidBody;
-import com.perfectplay.org.components.Scripting;
+import com.perfectplay.org.components.Scripts;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;

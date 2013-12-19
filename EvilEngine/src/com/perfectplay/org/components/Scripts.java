@@ -10,11 +10,11 @@ import com.perfectplay.org.scripting.Delegate;
 import com.perfectplay.org.scripting.DelegateManager;
 import com.perfectplay.org.scripting.Script;
 
-public class Scripting extends Component {
+public class Scripts extends Component {
 	private HashMap<Class<? extends Script>, Script> scripts;
 	private HashMap<Integer, List<Script>> scriptsByDelegate;
 	
-	public Scripting() {
+	public Scripts() {
 		this.scripts = new HashMap<Class<? extends Script>,Script>();
 		this.scriptsByDelegate = new HashMap<Integer, List<Script>>();
 	}
@@ -54,7 +54,7 @@ public class Scripting extends Component {
 		}
 	}
 	
-	public Scripting addScript(Class<? extends Script> classScript) {
+	public Scripts addScript(Class<? extends Script> classScript) {
 		try {
 			Script script = classScript.newInstance();
 			if(this.scripts.get(classScript) != null)
@@ -70,7 +70,7 @@ public class Scripting extends Component {
 		return null;
 	}
 	
-	public Scripting removeScript(Class<? extends Script> classScript) {
+	public Scripts removeScript(Class<? extends Script> classScript) {
 		this.scripts.remove(classScript);
 		this.removeScriptByDelegates(classScript);
 		return this;

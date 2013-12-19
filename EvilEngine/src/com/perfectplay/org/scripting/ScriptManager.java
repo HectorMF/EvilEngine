@@ -9,14 +9,14 @@ import com.artemis.ComponentType;
 import com.artemis.Entity;
 import com.artemis.Manager;
 import com.artemis.utils.Bag;
-import com.perfectplay.org.components.Scripting;
+import com.perfectplay.org.components.Scripts;
 import com.perfectplay.org.scripting.delegates.WorldDelegate;
 import com.perfectplay.org.utils.ComponentBag;
 
 public class ScriptManager extends Manager{
 	private static HashMap<Integer, ComponentBag> componentsByEntity; 
 	
-	private static ComponentType scriptType = ComponentType.getTypeFor(Scripting.class);
+	private static ComponentType scriptType = ComponentType.getTypeFor(Scripts.class);
 	
 	public static void setScriptEntity(Entity entity, Script script){
 		if(componentsByEntity.containsKey(entity.getId())){
@@ -35,7 +35,7 @@ public class ScriptManager extends Manager{
 	
 	@Override
 	public void added(Entity e) {
-		Scripting component = (Scripting) e.getComponent(scriptType);
+		Scripts component = (Scripts) e.getComponent(scriptType);
 		if(component != null){
 			//This entity has a scripting component. Add it's components to the bag
 			componentsByEntity.put(e.getId(), new ComponentBag(e,e.getComponents(new Bag<Component>())));
@@ -50,7 +50,7 @@ public class ScriptManager extends Manager{
 	
 	@Override
 	public void changed(Entity e) {
-		Scripting component = (Scripting) e.getComponent(scriptType);
+		Scripts component = (Scripts) e.getComponent(scriptType);
 		if(component != null){
 			//update the mapped entity component pair
 			componentsByEntity.put(e.getId(), new ComponentBag(e,e.getComponents(new Bag<Component>())));
@@ -66,7 +66,7 @@ public class ScriptManager extends Manager{
 	public void deleted(Entity e) {
 		if(componentsByEntity.containsKey(e.getId())){
 			//for all world delegates, call onRemove();
-			Scripting component = (Scripting) e.getComponent(scriptType);
+			Scripts component = (Scripts) e.getComponent(scriptType);
 			if(component != null){
 				List<WorldDelegate> delegates = component.getDelegates(WorldDelegate.class);
 				for(int j = 0; j < delegates.size(); j++){
@@ -82,7 +82,7 @@ public class ScriptManager extends Manager{
 	public void disabled(Entity e) {
 		if(componentsByEntity.containsKey(e.getId())){
 			//for all world delegates, call onDisable();
-			Scripting component = (Scripting) e.getComponent(scriptType);
+			Scripts component = (Scripts) e.getComponent(scriptType);
 			if(component != null){
 				List<WorldDelegate> delegates = component.getDelegates(WorldDelegate.class);
 				for(int j = 0; j < delegates.size(); j++){
@@ -97,7 +97,7 @@ public class ScriptManager extends Manager{
 	public void enabled(Entity e) {
 		if(componentsByEntity.containsKey(e.getId())){
 			//for all world delegates, call onEnable();
-			Scripting component = (Scripting) e.getComponent(scriptType);
+			Scripts component = (Scripts) e.getComponent(scriptType);
 			if(component != null){
 				List<WorldDelegate> delegates = component.getDelegates(WorldDelegate.class);
 				for(int j = 0; j < delegates.size(); j++){

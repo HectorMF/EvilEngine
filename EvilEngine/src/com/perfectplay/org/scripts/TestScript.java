@@ -8,8 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.RigidBody;
-import com.perfectplay.org.components.Scripting;
+import com.perfectplay.org.components.Scripts;
 import com.perfectplay.org.components.Transform;
+import com.perfectplay.org.components.Tweens;
 import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.SpriteManager;
 import com.perfectplay.org.scripting.Script;
@@ -40,6 +41,8 @@ public class TestScript extends Script{
 		Timeline timeline = Timeline.createSequence().beginParallel().push(rotate).push(move1).end().push(move2).repeatYoyo(-1,0);
 		
 		TweenSystem.start(timeline);
+		entity.addComponent(new Tweens().addTween("test1",move1).addTween("test",timeline).setCurrentTween("test"));
+		entity.changedInWorld();
 		test = (AnimatedSprite) SpriteManager.sprites.toArray()[0];
 		System.out.println(test);
 	}
@@ -63,7 +66,7 @@ public class TestScript extends Script{
 			e.addComponent(body); 
 			e.addComponent(new Transform().setPosition((count%10)*50, (count/10)*50, 10).setDimension(100, 100, 10)); 
 			e.addComponent(new Renderable(test,world.getLayer(0)).setScaleX(1).setScaleY(1)); 
-			e.addComponent(new Scripting().addScript(TestScript.class));
+			e.addComponent(new Scripts().addScript(TestScript.class));
 			e.addToWorld();
 		}
 		

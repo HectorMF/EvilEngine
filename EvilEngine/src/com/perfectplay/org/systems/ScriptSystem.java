@@ -6,17 +6,17 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
-import com.perfectplay.org.components.Scripting;
+import com.perfectplay.org.components.Scripts;
 import com.perfectplay.org.scripting.Script;
 import com.perfectplay.org.scripting.ScriptManager;
 
 public class ScriptSystem extends EntitySystem {
 	@Mapper
-	ComponentMapper<Scripting> scripts;
+	ComponentMapper<Scripts> scripts;
 	
 	@SuppressWarnings("unchecked")
 	public ScriptSystem() {
-		super(Aspect.getAspectForAll(Scripting.class));
+		super(Aspect.getAspectForAll(Scripts.class));
 	}
 
 	@Override

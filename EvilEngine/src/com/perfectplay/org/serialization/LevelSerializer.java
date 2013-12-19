@@ -18,7 +18,7 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.perfectplay.org.components.Renderable;
 import com.perfectplay.org.components.RigidBody;
-import com.perfectplay.org.components.Scripting;
+import com.perfectplay.org.components.Scripts;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.graphics.Texture2D;
 import com.perfectplay.org.level.DepthSortedSpriteLayer;
@@ -46,7 +46,7 @@ public class LevelSerializer extends Serializer<Level> {
 		kryo.register(FixtureDef.class, new FixtureDefSerializer());
 		kryo.register(PolygonShape.class, new PolygonSerializer());
 		kryo.register(CircleShape.class, new CircleSerializer());
-		kryo.register(Scripting.class, new ScriptSerializer());
+		kryo.register(Scripts.class, new ScriptSerializer());
 	}
 
 	public void WriteLevel(Level level, String path) {

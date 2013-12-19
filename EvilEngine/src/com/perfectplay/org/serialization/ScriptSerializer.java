@@ -6,16 +6,16 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.perfectplay.org.components.Scripting;
+import com.perfectplay.org.components.Scripts;
 import com.perfectplay.org.scripting.Script;
 
-public class ScriptSerializer  extends Serializer<Scripting> {
+public class ScriptSerializer  extends Serializer<Scripts> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Scripting read(Kryo kryo, Input input, Class<Scripting> type) {
+	public Scripts read(Kryo kryo, Input input, Class<Scripts> type) {
 		int size = input.readInt();
-		Scripting scripts = new Scripting();
+		Scripts scripts = new Scripts();
 		for(int i = 0; i < size; i++){
 			scripts.addScript(kryo.readClass(input).getType());
 		}
@@ -23,7 +23,7 @@ public class ScriptSerializer  extends Serializer<Scripting> {
 	}
 
 	@Override
-	public void write(Kryo kryo, Output output, Scripting object) {
+	public void write(Kryo kryo, Output output, Scripts object) {
 		Collection<Script> scripts = object.getScripts();
 		output.writeInt(scripts.size());
 		for(Script script : scripts){
