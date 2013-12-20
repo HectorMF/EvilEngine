@@ -29,6 +29,7 @@ public class ComponentBag {
 	public <T extends Component> void add(T component){
 		components.put(component.getClass(), component);
 		entity.addComponent(component);
+		entity.changedInWorld();
 	}
 	
 	public <T extends Component> void remove(T component){
@@ -38,6 +39,7 @@ public class ComponentBag {
 	public <T extends Component> void remove(Class<T> componentType){
 		components.remove(componentType);
 		entity.removeComponent(componentType);
+		entity.changedInWorld();
 	}
 	
 	@SuppressWarnings("unchecked")

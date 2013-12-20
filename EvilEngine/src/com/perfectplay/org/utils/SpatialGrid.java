@@ -83,7 +83,6 @@ public class SpatialGrid {
 	}
 
 	public void updateEntity(Entity entity, Transform transform) {
-
 		removeEntity(entity, transform);
 		insertEntity(entity, transform);
 	}
@@ -95,7 +94,6 @@ public class SpatialGrid {
 	 * bucket.getEntities()) if(entity != e) entities.add(entity); } return
 	 * entities; }
 	 */
-
 	public void activateBucketsOnScreen(int x, int y, int width, int height) {
 
 		// int x= x1 + 100;
@@ -186,7 +184,7 @@ public class SpatialGrid {
 						bucketList.add(buckets[r][c]);
 		return bucketList;
 	}
-
+	
 	public void debugRender(ShapeRenderer shapeRenderer) {
 		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.setColor(1, 1, 0, 1);

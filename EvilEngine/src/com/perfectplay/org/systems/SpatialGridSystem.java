@@ -69,6 +69,8 @@ public class SpatialGridSystem extends EntitySystem {
 	protected void process(Entity e) {
 		Transform transform = transforms.get(e);
 		if (!oldTransforms.get(e).equals(transform)) {
+			
+			//System.out.println("Entity:" + e + "-" + oldTransforms.get(e).getPosition() + ":" + transform.getPosition());
 			oldTransforms.put(e, new BodylessSpatial().setSpatial(transform));
 			spatialGrid.updateEntity(e, transform);
 		}

@@ -29,17 +29,15 @@ public class TestScript extends Script{
 		Transform transform = components.get(Transform.class);
 		
 		//rotates 360 over 3 seconds
-		Tween rotate = Tween.to(transform,TransformAccessor.ROTATION, 3f).target(360);
+		Tween rotate = Tween.to(transform,TransformAccessor.ROTATION, 2f).target(360).repeatYoyo(-1, 0);
 		//move to 200,150,10 over 2 seconds
 		Tween move1 = Tween.to(transform, TransformAccessor.POSITION, 2f).target(200,150,10);
 		//move to 500,100,0 over 3 seconds
 		Tween move2 = Tween.to(transform, TransformAccessor.POSITION, 3f).target(500,100,0);
 		
-		Timeline timeline = Timeline.createSequence().beginParallel().push(rotate).push(move1).end().push(move2).repeatYoyo(-1,0);
+		Timeline timeline = Timeline.createSequence().beginParallel().push(move1).end().push(move2).repeatYoyo(-1,0);
 		
-		entity.addComponent(new Tweens().add("test1", move1).add("test",timeline).start("test"));
-		entity.changedInWorld();
-		
+		components.add(new Tweens().add("test1", rotate).add("test",timeline).start("test").start("test1"));
 	}
 
 	/*
