@@ -195,14 +195,12 @@ public class SpatialGrid {
 			for (int c = activeCol1; c <= activeCol2; c++) {
 				if (c >= 0 && r >= 0)
 					if (c < columns && r < rows)
+						if(buckets[r][c].size() > 0)
 						shapeRenderer.rect(c * bucketSize, r * bucketSize,
 								bucketSize, bucketSize);
 			}
 		}
 
-		shapeRenderer.setColor(1, 0, 1, 1);
-		shapeRenderer.rect(0 * bucketSize, 0 * bucketSize, bucketSize,
-				bucketSize);
 		shapeRenderer.end();
 	}
 

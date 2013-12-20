@@ -54,7 +54,7 @@ public class Scripts extends Component {
 		}
 	}
 	
-	public Scripts addScript(Class<? extends Script> classScript) {
+	public Scripts add(Class<? extends Script> classScript) {
 		try {
 			Script script = classScript.newInstance();
 			if(this.scripts.get(classScript) != null)
@@ -70,7 +70,7 @@ public class Scripts extends Component {
 		return null;
 	}
 	
-	public Scripts removeScript(Class<? extends Script> classScript) {
+	public Scripts remove(Class<? extends Script> classScript) {
 		this.scripts.remove(classScript);
 		this.removeScriptByDelegates(classScript);
 		return this;
@@ -80,7 +80,7 @@ public class Scripts extends Component {
 		return scripts.size();
 	}
 	
-	public Script getScript(Class<? extends Script> classScript){
+	public Script get(Class<? extends Script> classScript){
 		return scripts.get(classScript);
 	}
 	

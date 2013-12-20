@@ -11,15 +11,12 @@ import com.perfectplay.org.components.RigidBody;
 import com.perfectplay.org.components.Scripts;
 import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.components.Tweens;
-import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.SpriteManager;
 import com.perfectplay.org.scripting.Script;
-import com.perfectplay.org.systems.TweenSystem;
 import com.perfectplay.org.tween.accessors.TransformAccessor;
 
 public class TestScript extends Script{
 
-	private AnimatedSprite test;
 	private static int count = 0;
 	/*
 	 * Use as a constructor for your Script. 
@@ -40,11 +37,9 @@ public class TestScript extends Script{
 		
 		Timeline timeline = Timeline.createSequence().beginParallel().push(rotate).push(move1).end().push(move2).repeatYoyo(-1,0);
 		
-		TweenSystem.start(timeline);
-		entity.addComponent(new Tweens().addTween("test1",move1).addTween("test",timeline).setCurrentTween("test"));
+		entity.addComponent(new Tweens().add("test1", move1).add("test",timeline).start("test"));
 		entity.changedInWorld();
-		test = (AnimatedSprite) SpriteManager.sprites.toArray()[0];
-		System.out.println(test);
+		
 	}
 
 	/*
@@ -55,8 +50,8 @@ public class TestScript extends Script{
 		
 		//need to limit count to less that 64 because of limitations with collisions. 
 		//since we are spawning so many on top of one another, the system freaks out.
-		
-		if(count < 100){
+		int numPerRow = 30;
+		if(count < 300){
 			count++;
 			Entity e = world.createEntity();
 			RigidBody body = new RigidBody(e, BodyType.KinematicBody);
@@ -64,9 +59,9 @@ public class TestScript extends Script{
 			body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f)); 
 			//add the component to the entity
 			e.addComponent(body); 
-			e.addComponent(new Transform().setPosition((count%10)*50, (count/10)*50, 10).setDimension(100, 100, 10)); 
-			e.addComponent(new Renderable(test,world.getLayer(0)).setScaleX(1).setScaleY(1)); 
-			e.addComponent(new Scripts().addScript(TestScript.class));
+			e.addComponent(new Transform().setPosition((count%numPerRow)*50, (count/numPerRow)*50, 10).setDimension(100, 100, 10)); 
+			e.addComponent(new Renderable(SpriteManager.getSprites()[0], world.getLayer(0))); 
+			e.addComponent(new Scripts().add(TestScript.class));
 			e.addToWorld();
 		}
 		

@@ -17,7 +17,7 @@ public class ScriptSerializer  extends Serializer<Scripts> {
 		int size = input.readInt();
 		Scripts scripts = new Scripts();
 		for(int i = 0; i < size; i++){
-			scripts.addScript(kryo.readClass(input).getType());
+			scripts.add(kryo.readClass(input).getType());
 		}
 		return scripts;
 	}
