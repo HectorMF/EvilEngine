@@ -22,7 +22,7 @@ public class RegionSystem extends EntitySystem {
 	public RegionSystem() {
 		super(Aspect.getAspectForAll(Transform.class, EventRegion.class));
 		contactListener = new RegionContactListener();
-		PhysicsSystem.getWorld().setContactListener(contactListener);
+	//	PhysicsSystem.getWorld().setContactListener(contactListener);
 	}
 
 	@Override

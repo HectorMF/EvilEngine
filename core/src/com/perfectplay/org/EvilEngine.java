@@ -2,19 +2,31 @@
 
 import java.util.ArrayList;
 
+import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.perfectplay.org.components.Renderable;
+import com.perfectplay.org.components.RigidBody;
+import com.perfectplay.org.components.Scripts;
+import com.perfectplay.org.components.Transform;
 import com.perfectplay.org.graphics.AnimatedSprite;
 import com.perfectplay.org.graphics.Sprite;
 import com.perfectplay.org.graphics.SpriteManager;
 import com.perfectplay.org.graphics.Texture2D;
+import com.perfectplay.org.level.DepthSortedSpriteLayer;
 import com.perfectplay.org.level.Level;
 import com.perfectplay.org.level.UnsortedSpriteLayer;
+import com.perfectplay.org.scripts.TestScript;
 import com.perfectplay.org.serialization.LevelSerializer;
 import com.perfectplay.org.systems.PhysicsSystem;
 import com.perfectplay.org.utils.ParallaxCamera;
@@ -34,6 +46,7 @@ public class EvilEngine implements ApplicationListener {
 		// set up camera
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
+		
 		camera = new ParallaxCamera(w, h);
 		camera.position.set(-200 + (w / 2),  -200 +(h / 2), 0);
 		camera.update();
@@ -43,26 +56,27 @@ public class EvilEngine implements ApplicationListener {
 		render = new Box2DDebugRenderer();
 		debug = new ShapeRenderer();
 		
-		/*//create the level
+		//create the level
 		level = new Level(4000,4000,100, new Vector2(0,-2f),false);
 		level.setSpriteBatch(batch);
 		level.setCamera(camera);
 		//create a DSSL and add it to the level
 		DepthSortedSpriteLayer layer = new DepthSortedSpriteLayer(); 
 		//a pass-through method should be made so that level.addLayer(layer) can be called
-		level.getRenderSystem().addLayer(layer); 
-		level.initialize();
+		level.addLayer(layer);
+		//level.initialize();
 		
 		//Load in some textures
 		Texture2D texture = new Texture2D(Gdx.files.internal("data/forest.png"));
 		Texture2D texture2 = new Texture2D(Gdx.files.internal("data/fire.png.bmp"));
 		
 		
-		 * Set the filters for the textures to determine how they scale
+		/* Set the filters for the textures to determine how they scale
 		 * scaling should depend on the content of the image, as choosing different filters
 		 * could result in unwanted blur/sharpness.
 		 * TextureFilter.Nearest looks at neighboring pixels to determine how to scale
 		 * TextureFilter.Linear scales linearly
+		 */
 		 
 		texture.setFilter(TextureFilter.Linear,TextureFilter.Nearest);
 		texture2.setFilter(TextureFilter.Linear,TextureFilter.Nearest);
@@ -88,10 +102,20 @@ public class EvilEngine implements ApplicationListener {
 		//create the animated Sprite with the frames and a 90 ms delay
 		AnimatedSprite animatedSprite = new AnimatedSprite(frames,90); 
 		
-		//Create a new Scripting component and a script to it
-		Scripting tweenScripts = new Scripting(); 
-		tweenScripts.addScript(TestScript.class);
+		Texture2D texture3 = new Texture2D(Gdx.files.internal("data/finn.bmp"));
 		
+		ArrayList<Sprite> frames2 = new ArrayList<Sprite>(); 
+		for(int i = 0; i < 110; i++){	
+			frames2.add(new Sprite(texture3,(i%10)*189,(i/10)*102,189,102));
+		}
+		AnimatedSprite animatedSprite2 = new AnimatedSprite(frames2,100); 
+	//	texture.dispose();
+		SpriteManager.register("Finn", animatedSprite2);
+		
+		
+		//Create a new Scripting component and a script to it
+		Scripts tweenScripts = new Scripts(); 
+		tweenScripts.add(TestScript.class);		
 		
 		//create an entity
 		Entity e = level.createEntity();
@@ -100,16 +124,16 @@ public class EvilEngine implements ApplicationListener {
 		//should be used for bodies that won't move
 		RigidBody body = new RigidBody(e, BodyType.DynamicBody);
 		//add a fixture(a shape) to the body. here we add a box.
-		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f)); 
+		body.addFixture(RigidBody.createBoxFixture(50f, 100f, Vector2.Zero, 0f, .5f, .5f, .5f)); 
 		//add the component to the entity
 		e.addComponent(body); 
-		e.addComponent(new Transform().setPosition(150, 500, 2).setDimension(100, 100, 10)); 
+		e.addComponent(new Transform().setPosition(150, 500).setDimension(100, 100)); 
 		e.addComponent(new Renderable(animatedSprite,layer)); 
 		e.addToWorld();
 		 
 		
 		e = level.createEntity();
-		e.addComponent(new Transform().setPosition(0, 0, 10).setDimension(40, 40, 40));
+		e.addComponent(new Transform().setPosition(0, 0).setDimension(40, 40));
 		body = new RigidBody(e, BodyType.StaticBody);
 		body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero,0f, .5f, .5f, .5f));
 		e.addComponent(body);
@@ -122,9 +146,9 @@ public class EvilEngine implements ApplicationListener {
 		body = new RigidBody(e, BodyType.DynamicBody);
 		body.addFixture( RigidBody.createCircleFixture(.5f,Vector2.Zero,0f,.5f,.5f));
 		body.addFixture(RigidBody.createBoxFixture(110f, 60f, Vector2.Zero, 0f, .4f, .6f, .9f)); 
-		body.getBody().setFixedRotation(true);
+		//body.getBody().setFixedRotation(true);
 		e.addComponent(body);
-		e.addComponent(new Transform().setPosition(100, 200,10).setDimension(100,100,10)); 
+		e.addComponent(new Transform().setPosition(100, 200).setDimension(100,100)); 
 		e.addComponent(new Renderable(animatedSprite,layer));
 		e.addToWorld();
 		  
@@ -134,7 +158,7 @@ public class EvilEngine implements ApplicationListener {
 		FixtureDef def2 = RigidBody.createBoxFixture(Gdx.graphics.getWidth()/2, 16f,Vector2.Zero, 0f, .5f, 0f, .5f);
 		body.addFixture(def2); 
 		e.addComponent(body); 
-		e.addComponent(new Transform().setPosition(100, 100,1).setDimension(100,100,100));
+		e.addComponent(new Transform().setPosition(100, 100).setDimension(100,100));
 		e.addComponent(new Renderable(new Sprite(texture),new Vector2(0,0),Vector2.Zero, Color.RED, 1,1, 1f,layer)
 						.setWidth(Gdx.graphics.getWidth()/2).setHeight(16));
 		e.addComponent(tweenScripts);
@@ -142,26 +166,18 @@ public class EvilEngine implements ApplicationListener {
 		
 		//serialize the level. Level.process is called so that all entities are added to world etc.
 		LevelSerializer s = new LevelSerializer(); 
-		level.process();
-		s.WriteLevel(level, "test.bin");*/
-		Texture2D texture = new Texture2D(Gdx.files.internal("data/finn.bmp"));
+		//level.process();
+		//s.WriteLevel(level, "test.bin");
+
+		//LevelSerializer ls = new LevelSerializer();
 		
-		ArrayList<Sprite> frames = new ArrayList<Sprite>(); 
-		for(int i = 0; i < 110; i++){	
-			frames.add(new Sprite(texture,(i%10)*189,(i/10)*102,189,102));
-		}
-		AnimatedSprite animatedSprite = new AnimatedSprite(frames,100); 
-	//	texture.dispose();
-		SpriteManager.register("Finn", animatedSprite);
-		LevelSerializer ls = new LevelSerializer();
-		
-		level = ls.ReadLevel(Gdx.files.internal("data/test.bin"));
+	//	level = ls.ReadLevel(Gdx.files.internal("data/test.bin"));
 		level.setCamera(camera);
 		level.setSpriteBatch(batch);
-		UnsortedSpriteLayer layer = new UnsortedSpriteLayer();
+		/*UnsortedSpriteLayer layer = new UnsortedSpriteLayer();
 		layer.setParallaxSpeedX(1f);
 		layer.setParallaxSpeedY(1f);
-		level.addLayer(layer);
+		level.addLayer(layer);*/
 		level.initialize();
 	}
 
@@ -195,11 +211,15 @@ public class EvilEngine implements ApplicationListener {
 
 		//debug rendering
 		render.render(PhysicsSystem.getWorld(), camera.combined.cpy().scl(100f));
-		level.spatialGridSystem.getSpatialGrid().debugRender(debug);
+		//level.spatialGridSystem.getSpatialGrid().debugRender(debug);
 	}
 
 	@Override
-	public void resize(int width, int height) { }
+	public void resize(int width, int height) { 
+		
+		camera.viewportHeight = height;
+		camera.viewportWidth = width;
+	}
 
 	@Override
 	public void pause() { }

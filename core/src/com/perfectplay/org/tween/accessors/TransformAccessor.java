@@ -7,12 +7,10 @@ import com.perfectplay.org.components.Transform;
 public class TransformAccessor implements TweenAccessor<Transform>{
     public static final int X = 1;
     public static final int Y = 2;
-    public static final int Z = 3;
     public static final int POSITION = 4;
     public static final int ROTATION = 5;
     public static final int WIDTH = 6;
     public static final int HEIGHT = 7;
-    public static final int DEPTH = 8;
     public static final int DIMENSION = 9;
     
 	@Override
@@ -24,14 +22,10 @@ public class TransformAccessor implements TweenAccessor<Transform>{
         	case Y: 
         		returnValues[0] = target.getY(); 
         	return 1;
-        	case Z: 
-        		returnValues[0] = target.getZ(); 
-        	return 1;
         	case POSITION:
         		returnValues[0] = target.getX();
         		returnValues[1] = target.getY();
-        		returnValues[2] = target.getZ();
-        	return 3;
+        	return 2;
         	case ROTATION: 
         		returnValues[0] = target.getRotation(); 
         	return 1;
@@ -40,15 +34,11 @@ public class TransformAccessor implements TweenAccessor<Transform>{
         	return 1;
         	case HEIGHT: 
         		returnValues[0] = target.getHeight(); 
-        	return 1;
-        	case DEPTH: 
-        		returnValues[0] = target.getDepth(); 
-        	return 1;       		
+        	return 1;     		
         	case DIMENSION:
         		returnValues[0] = target.getWidth();
         		returnValues[1] = target.getHeight();
-        		returnValues[2] = target.getDepth();
-        	return 3;     
+        	return 2;     
            	default: assert false; return -1;
        }
 	}
@@ -62,13 +52,9 @@ public class TransformAccessor implements TweenAccessor<Transform>{
         	case Y: 
         		target.setY(newValues[0]); 
         	break;
-        	case Z: 
-        		target.setZ(newValues[0]); 
-        	break;
         	case POSITION:
         		target.setX(newValues[0]);
         		target.setY(newValues[1]);
-        		target.setZ(newValues[2]);
             break;
         	case ROTATION: 
         		target.setRotation(newValues[0]); 
@@ -78,14 +64,10 @@ public class TransformAccessor implements TweenAccessor<Transform>{
         	break;
         	case HEIGHT: 
         		target.setHeight(newValues[0]); 
-        	break;
-        	case DEPTH: 
-        		target.setDepth(newValues[0]); 
-        	break;      		
+        	break; 		
         	case DIMENSION:
         		target.setWidth(newValues[0]);
         		target.setHeight(newValues[1]);
-        		target.setDepth(newValues[2]);
         	break;  
         	default: assert false; break;
 		}

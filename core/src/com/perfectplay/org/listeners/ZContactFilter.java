@@ -11,6 +11,12 @@ public class ZContactFilter implements ContactFilter {
 
 	@Override
 	public boolean shouldCollide(Fixture fixtureA, Fixture fixtureB) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+/*
+	@Override
+	public boolean shouldCollide(Fixture fixtureA, Fixture fixtureB) {
 		Entity entityA = (Entity) fixtureA.getBody().getUserData();
 		Entity entityB = (Entity) fixtureB.getBody().getUserData();
 
@@ -42,5 +48,5 @@ public class ZContactFilter implements ContactFilter {
 			return collide;
 		}
 		return false;
-	}
+	}*/
 }

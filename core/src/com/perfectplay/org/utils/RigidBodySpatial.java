@@ -1,21 +1,18 @@
 package com.perfectplay.org.utils;
 
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class RigidBodySpatial implements Spatial {
 	private Body body;
-	private float z;
+	
 	private float width;
 	private float height;
-	private float depth;
 
 	public RigidBodySpatial(Body body) {
 		this.body = body;
-		this.z = 0;
 		this.width = 0;
 		this.height = 0;
-		this.depth = 0;
 	}
 
 	@Override
@@ -29,18 +26,12 @@ public class RigidBodySpatial implements Spatial {
 	}
 
 	@Override
-	public float getZ() {
-		return z;
+	public Vector2 getPosition() {
+		return new Vector2(getX(), getY());
 	}
 
 	@Override
-	public Vector3 getPosition() {
-		return new Vector3(getX(), getY(), getZ());
-	}
-
-	@Override
-	public RigidBodySpatial setPosition(float x, float y, float z) {
-		this.z = z;
+	public RigidBodySpatial setPosition(float x, float y) {
 		body.setTransform(Pixel.toMeter(x), Pixel.toMeter(y), (float)Math.toRadians(getRotation()));
 		return this;
 	}
@@ -67,41 +58,29 @@ public class RigidBodySpatial implements Spatial {
 	}
 
 	@Override
-	public float getDepth() {
-		return depth;
-	}
-
-	@Override
-	public RigidBodySpatial setDimension(float width, float height, float depth) {
+	public RigidBodySpatial setDimension(float width, float height) {
 		this.width = width;
 		this.height = height;
-		this.depth = depth;
 		return this;
 	}
 
 	@Override
 	public RigidBodySpatial setSpatial(Spatial spatial) {
-		setPosition(spatial.getX(), spatial.getY(), spatial.getZ());
+		setPosition(spatial.getX(), spatial.getY());
 		setRotation(spatial.getRotation());
-		setDimension(spatial.getWidth(), spatial.getHeight(), spatial.getDepth());
+		setDimension(spatial.getWidth(), spatial.getHeight());
 		return this;
 	}
 
 	@Override
 	public RigidBodySpatial setX(float x) {
-		setPosition(x,getY(),getZ());
+		setPosition(x, getY());
 		return this;
 	}
 
 	@Override
 	public RigidBodySpatial setY(float y) {
-		setPosition(getX(),y,getZ());
-		return this;
-	}
-
-	@Override
-	public RigidBodySpatial setZ(float z) {
-		this.z = z;
+		setPosition(getX(), y);
 		return this;
 	}
 
@@ -118,14 +97,8 @@ public class RigidBodySpatial implements Spatial {
 	}
 
 	@Override
-	public RigidBodySpatial setDepth(float depth) {
-		this.depth = depth;
-		return this;
-	}
-
-	@Override
-	public Vector3 getDimension() {
-		return new Vector3(width,height,depth);
+	public Vector2 getDimension() {
+		return new Vector2(width,height);
 	}
 	
 	@Override

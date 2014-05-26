@@ -3,7 +3,7 @@ package com.perfectplay.org.components;
 import java.util.ArrayList;
 
 import com.artemis.Component;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.perfectplay.org.utils.BodylessSpatial;
 import com.perfectplay.org.utils.Bucket;
 import com.perfectplay.org.utils.Spatial;
@@ -49,11 +49,6 @@ public class Transform extends Component implements Spatial{
 	}
 
 	@Override
-	public float getZ() {
-		return spatial.getZ();
-	}
-
-	@Override
 	public Transform setX(float x) {
 		spatial.setX(x);
 		return this;
@@ -66,19 +61,13 @@ public class Transform extends Component implements Spatial{
 	}
 
 	@Override
-	public Transform setZ(float z) {
-		spatial.setZ(z);
-		return this;
-	}
-
-	@Override
-	public Vector3 getPosition() {
+	public Vector2 getPosition() {
 		return spatial.getPosition();
 	}
 
 	@Override
-	public Transform setPosition(float x, float y, float z) {
-		spatial.setPosition(x, y, z);
+	public Transform setPosition(float x, float y) {
+		spatial.setPosition(x, y);
 		return this;
 	}
 
@@ -104,11 +93,6 @@ public class Transform extends Component implements Spatial{
 	}
 
 	@Override
-	public float getDepth() {
-		return spatial.getDepth();
-	}
-
-	@Override
 	public Transform setWidth(float width) {
 		spatial.setWidth(width);
 		return this;
@@ -121,19 +105,13 @@ public class Transform extends Component implements Spatial{
 	}
 
 	@Override
-	public Transform setDepth(float depth) {
-		spatial.setDepth(depth);
-		return this;
-	}
-
-	@Override
-	public Vector3 getDimension() {
+	public Vector2 getDimension() {
 		return spatial.getDimension();
 	}
 
 	@Override
-	public Transform setDimension(float width, float height, float depth) {
-		spatial.setDimension(width, height, depth);
+	public Transform setDimension(float width, float height) {
+		spatial.setDimension(width, height);
 		return this;
 	}
 	

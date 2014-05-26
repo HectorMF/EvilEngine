@@ -34,9 +34,9 @@ public class TestScript extends Script{
 		//rotates 360 over 3 seconds
 		Tween rotate = Tween.to(transform,TransformAccessor.ROTATION, 2f).target(360).repeatYoyo(-1, 0);
 		//move to 200,150,10 over 2 seconds
-		Tween move1 = Tween.to(transform, TransformAccessor.POSITION, 2f).target(200,150,10);
+		Tween move1 = Tween.to(transform, TransformAccessor.POSITION, 2f).target(200,150);
 		//move to 500,100,0 over 3 seconds
-		Tween move2 = Tween.to(transform, TransformAccessor.POSITION, 3f).target(500,100,0);
+		Tween move2 = Tween.to(transform, TransformAccessor.POSITION, 3f).target(500,100);
 		
 		Timeline timeline = Timeline.createSequence().beginParallel().push(move1).end().push(move2).repeatYoyo(-1,0);
 		
@@ -60,11 +60,11 @@ public class TestScript extends Script{
 				Entity e = world.createEntity();
 				RigidBody body = new RigidBody(e, BodyType.KinematicBody);
 				//add a fixture(a shape) to the body. here we add a box.
-				body.addFixture(RigidBody.createBoxFixture(50f, 50f, Vector2.Zero, 0f, .5f, .5f, .5f)); 
+				body.addFixture(RigidBody.createBoxFixture(189f, 112f, Vector2.Zero, 0f, .5f, .5f, .5f)); 
 				//add the component to the entity
 				e.addComponent(body); 
-				e.addComponent(new Transform().setPosition((count%numPerRow)*180, (count/numPerRow)*100, 10).setDimension(100, 100, 10)); 
-				e.addComponent(new Renderable(SpriteManager.get("Finn"), world.getLayer(1))); 
+				e.addComponent(new Transform().setPosition((count%numPerRow)*180, (count/numPerRow)*100).setDimension(189, 112)); 
+				e.addComponent(new Renderable(SpriteManager.get("Finn"), world.getLayer(0)).setWidth(189).setHeight(112)); 
 			//	world.getLayer(1).setParallaxSpeedX(count%5);
 				e.addComponent(new Scripts().add(TestScript.class));
 				e.addToWorld();

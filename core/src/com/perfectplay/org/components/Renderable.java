@@ -9,6 +9,7 @@ import com.perfectplay.org.level.SpriteLayer;
 public class Renderable extends Component {
 
 	private ISprite sprite;
+	private float zIndex;
 	// offset from x and y spatial coordinate
 	private Vector2 offset;
 	// coordinate used as the center of rotation
@@ -38,6 +39,7 @@ public class Renderable extends Component {
 	
 	public Renderable(ISprite sprite, float width, float height, Vector2 origin, Vector2 offset,
 						Color color, float alpha, SpriteLayer layer) {
+		this.zIndex = 1;
 		this.height = height;
 		this.width = width;
 		this.sprite = sprite;
@@ -53,6 +55,7 @@ public class Renderable extends Component {
 	
 	public Renderable(ISprite sprite, Vector2 origin, Vector2 offset,
 			Color color, float scaleX, float scaleY, float alpha, SpriteLayer layer) {
+			this.zIndex = 1;
 			this.scaleX = scaleX;
 			this.scaleY = scaleY;
 			this.sprite = sprite;
@@ -171,6 +174,15 @@ public class Renderable extends Component {
 	
 	public Renderable setScaleY(float scaleY){
 		this.scaleY = scaleY;
+		return this;
+	}
+	
+	public float getZIndex(){
+		return zIndex;
+	}
+	
+	public Renderable setZIndex(float index){
+		this.zIndex = index;
 		return this;
 	}
 }

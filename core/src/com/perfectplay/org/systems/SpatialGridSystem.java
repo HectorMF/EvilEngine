@@ -60,14 +60,14 @@ public class SpatialGridSystem extends EntitySystem {
 	}
 	
 	private void updateSpatialGrid() {
-		/*spatialGrid.activateBucketsOnScreen(
+	/*	spatialGrid.activateBucketsOnScreen(
 				(int) (camera.position.x - (camera.viewportWidth / 2)),
 				(int) (camera.position.y - (camera.viewportHeight / 2)),
 				(int) camera.viewportWidth, (int) camera.viewportHeight);*/
 	}
 	
 	protected void process(Entity e) {
-	/*	Transform transform = transforms.get(e);
+		/*Transform transform = transforms.get(e);
 		if (!oldTransforms.get(e).equals(transform)) {
 			
 			//System.out.println("Entity:" + e + "-" + oldTransforms.get(e).getPosition() + ":" + transform.getPosition());
