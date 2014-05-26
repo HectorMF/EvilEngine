@@ -4,6 +4,9 @@ import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 
 import com.artemis.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.perfectplay.org.components.Renderable;
@@ -50,10 +53,17 @@ public class TestScript extends Script{
 	@Override
 	public void onUpdate() {
 		//System.out.println(entity.getId() + " : UPDATE");
+		if(Gdx.input.isKeyPressed(Keys.A)){
+			System.out.println("Working");
+			components.get(Transform.class).setPosition(10, 10).setRotation(0);
+			components.get(Tweens.class).stop("test");
+			components.get(Tweens.class).stop("test1");
+			
+		}
 		int numPerRow = 10;
 		counter+= world.delta;
 		
-		System.out.println(entity.getId()  + " : " + counter);
+		//System.out.println(entity.getId()  + " : " + counter);
 		if(count < 100){
 				counter = 0;
 				count++;
@@ -68,9 +78,9 @@ public class TestScript extends Script{
 			//	world.getLayer(1).setParallaxSpeedX(count%5);
 				e.addComponent(new Scripts().add(TestScript.class));
 				e.addToWorld();
-				entity.removeComponent(Scripts.class);
+				//entity.removeComponent(Scripts.class);
 		}else{
-			entity.removeComponent(Scripts.class);
+			//entity.removeComponent(Scripts.class);
 		}
 		
 	}
