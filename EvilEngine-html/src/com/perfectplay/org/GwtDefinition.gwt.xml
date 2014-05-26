@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<module>
-    <entry-point class="com.perfectplay.org.client.GwtLauncher"/>
-    <set-configuration-property name="gdx.assetpath" value="../EvilEngine-android/assets"/>
-    <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt"/>
-    <inherits name="EvilEngine"/>
-</module>

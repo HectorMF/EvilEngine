@@ -1,8 +1,0 @@
-d:
-d:data
-i:data/castlea.jpg
-i:data/fire.gif
-i:data/fire.png.bmp
-i:data/forest.png
-i:data/libgdx.png
-i:data/test.png
